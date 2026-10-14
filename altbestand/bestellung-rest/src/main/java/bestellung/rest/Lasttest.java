@@ -3,7 +3,7 @@ package bestellung.rest;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +65,8 @@ public class Lasttest {
     }
 
     static int sendeBestellung(int port) throws IOException {
-        HttpURLConnection verbindung = (HttpURLConnection) new URL("http://localhost:" + port + "/bestellungen")
-                .openConnection();
+        HttpURLConnection verbindung = (HttpURLConnection) URI.create("http://localhost:" + port + "/bestellungen")
+                .toURL().openConnection();
         verbindung.setRequestMethod("POST");
         verbindung.setDoOutput(true);
         verbindung.setRequestProperty("Content-Type", "application/json");

@@ -20,10 +20,11 @@
   <properties>
     <!--
       DAS RELEASE STEHT HIER – und nur hier, solange ein Modul es nicht ausdrücklich
-      überschreibt. Der Startstand ist Java 8. Hochstellen je Modul in dessen pom.xml
-      oder für einen Versuch auf der Kommandozeile: -Dmaven.compiler.release=21
+      überschreibt. Der Startstand war Java 8; seit der Übung „Kompatibilität“ ist es 21,
+      das Release, das jedes Kurs-JDK übersetzen kann. Für einen Versuch auf der
+      Kommandozeile: -Dmaven.compiler.release=25
     -->
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 

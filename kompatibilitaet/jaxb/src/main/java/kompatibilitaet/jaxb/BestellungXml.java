@@ -2,9 +2,9 @@ package kompatibilitaet.jaxb;
 
 import java.math.BigDecimal;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Eine Bestellung, wie sie an das Warenwirtschaftssystem geht.

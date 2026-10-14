@@ -30,7 +30,8 @@ Release.
 ```
 
 Der Altbestand übersetzt und seine Tests laufen – auch auf Deinem neuen JDK.
-Übersetzt wird er dabei für Java 8 (`--release 8`).
+Auf `main` wird er dabei für Java 8 übersetzt (`--release 8`), ab der Lösung zur
+Übung „Kompatibilität“ für Java 21.
 
 Das ganze Projekt auf einmal:
 
@@ -38,8 +39,10 @@ Das ganze Projekt auf einmal:
 ./mvnw verify -fae -Dmaven.test.failure.ignore=true
 ```
 
-Auf JDK 21 oder 25 schlagen dabei Tests in `kompatibilitaet/` fehl. **Das ist
-Absicht** – um diese Brüche geht es in der Übung.
+Auf `main` schlagen dabei auf JDK 21 oder 25 Tests in `kompatibilitaet/` fehl.
+**Das ist Absicht** – um diese Brüche geht es in der Übung. Was jeweils bricht und
+wie es behoben ist, steht nach der Übung in
+[`kompatibilitaet/README.md`](kompatibilitaet/README.md).
 
 ## Das Release umstellen
 
@@ -71,13 +74,14 @@ Suchen, nicht im Ergebnis.
 
 ## Die Pipeline
 
-[`build.yml`](.github/workflows/build.yml) prüft zweierlei:
+[`build.yml`](.github/workflows/build.yml) wandert mit dem Code:
 
-- **Altbestand auf Java 8** – das ganze Projekt auf JDK 8. Muss grün sein: So lief
-  der Code, bevor wir ihn angefasst haben.
-- **Bestandsaufnahme auf JDK 21 und 25** – derselbe Code auf den neuen JDKs.
-  Fehlschlagende Tests brechen den Lauf nicht ab; welche es sind, steht in der
-  Zusammenfassung des Laufs.
+- **Auf `main`** prüft sie zweierlei: den **Altbestand auf Java 8** – muss grün sein,
+  so lief der Code, bevor wir ihn angefasst haben – und eine **Bestandsaufnahme auf
+  JDK 21 und 25**, deren fehlschlagende Tests den Lauf nicht abbrechen, sondern in
+  der Zusammenfassung des Laufs stehen.
+- **Ab der Lösung zur Übung „Kompatibilität“** baut sie streng auf JDK 21 und 25:
+  Die Brüche sind behoben, jeder rote Test ist wieder ein Fehler.
 
 ## Gut zu wissen
 
