@@ -1,0 +1,15 @@
+# Spielwiese
+
+Hier probierst Du Neuerungen aus, ohne ein Projekt anzulegen. Jede Datei ist ein
+eigenständiges Programm, das Java direkt aus dem Quelltext startet – ohne Maven und
+ohne vorheriges `javac`:
+
+```shell
+java spielwiese/Versionsinfo.java
+```
+
+Das funktioniert seit Java 11 (JEP 330); seit Java 22 darf ein solches Programm auch
+weitere Quelldateien im selben Ordner nutzen (JEP 458).
+
+Lege für jeden Versuch eine neue Datei an. Was hier liegt, wird von keinem Build
+übersetzt und von keinem Test geprüft.
