@@ -1,0 +1,18 @@
+# Ergebnisse von Maven und der IDE
+target/
+*.class
+out/
+bin/
+
+# IDE-Dateien – das Projekt wird über die pom.xml importiert.
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# Betriebssystem
+.DS_Store
+Thumbs.db

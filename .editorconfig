@@ -1,0 +1,28 @@
+# Gilt für dieses Repository; weiter oben liegende Dateien werden nicht gelesen.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.java]
+indent_size = 4
+
+# Markdown wird NICHT formatiert. Zwei Leerzeichen am Zeilenende sind dort ein
+# harter Zeilenumbruch, und die Einrückung von Listen trägt Bedeutung.
+[*.md]
+trim_trailing_whitespace = false
+indent_style = unset
+indent_size = unset
+
+# Die Batch-Datei des Maven-Wrappers wird so ausgeliefert und nicht angefasst.
+[*.{bat,cmd}]
+end_of_line = crlf
+
+# Absichtlich NICHT UTF-8: Export eines Windows-Altsystems (Modul zeichensatz).
+[kompatibilitaet/zeichensatz/src/test/resources/*.csv]
+charset = unset
