@@ -38,7 +38,7 @@ public class BestellImport {
                 prüfungen.add(pool.submit(new Callable<Boolean>() {
                     @Override
                     public Boolean call() {
-                        return bonitätsprüfung.istKreditwürdig(bestellung.getKunde().getKundennummer());
+                        return bonitätsprüfung.istKreditwürdig(bestellung.getKunde().kundennummer());
                     }
                 }));
             }
@@ -50,7 +50,7 @@ public class BestellImport {
                     service.anlegen(bestellung);
                     angenommen++;
                 } else {
-                    abgelehnt.add(bestellung.getKunde().getKundennummer());
+                    abgelehnt.add(bestellung.getKunde().kundennummer());
                 }
             }
             return new ImportErgebnis(angenommen, abgelehnt, (System.nanoTime() - start) / 1_000_000);

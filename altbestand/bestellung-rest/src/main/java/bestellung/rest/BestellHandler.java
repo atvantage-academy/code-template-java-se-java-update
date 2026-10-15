@@ -92,8 +92,8 @@ public class BestellHandler implements HttpHandler {
         JsonNode anfrage = json.readTree(lies(exchange.getRequestBody()));
         Bestellung bestellung = mapper.ausJson(anfrage);
         for (Position position : bestellung.getPositionen()) {
-            if (!lagerdienst.istVorrätig(position.getArtikelnummer())) {
-                throw new IllegalStateException("Nicht vorrätig: " + position.getArtikelnummer());
+            if (!lagerdienst.istVorrätig(position.artikelnummer())) {
+                throw new IllegalStateException("Nicht vorrätig: " + position.artikelnummer());
             }
         }
         Bestellung angelegt = service.anlegen(bestellung);

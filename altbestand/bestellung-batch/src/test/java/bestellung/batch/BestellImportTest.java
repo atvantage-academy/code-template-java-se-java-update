@@ -19,7 +19,7 @@ class BestellImportTest {
     void liestDieBeispieldatei() throws IOException {
         List<Bestellung> bestellungen = new CsvLeser().lies(getClass().getResourceAsStream("/bestellungen.csv"));
         assertEquals(200, bestellungen.size());
-        assertEquals("K-3000", bestellungen.get(0).getKunde().getKundennummer());
+        assertEquals("K-3000", bestellungen.get(0).getKunde().kundennummer());
     }
 
     @Test

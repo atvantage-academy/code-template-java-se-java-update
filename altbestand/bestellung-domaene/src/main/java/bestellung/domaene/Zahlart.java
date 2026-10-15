@@ -3,14 +3,10 @@ package bestellung.domaene;
 /**
  * Wie eine Bestellung bezahlt wird.
  *
- * <p>Die Unterklassen stehen in diesem Paket – mehr soll es nicht geben. Sicherstellen
- * lässt sich das mit Java 8 nicht; der package-private Konstruktor hält nur
- * fremde Pakete ab.
+ * <p>Versiegelt: Es gibt genau diese vier Zahlarten, und der Compiler weiß das. Eine
+ * fünfte muss hier eingetragen werden – sonst übersetzt sie nicht.
  */
-public abstract class Zahlart {
+public sealed interface Zahlart permits Rechnung, Lastschrift, Kreditkarte, PayPal {
 
-    Zahlart() {
-    }
-
-    public abstract <R> R accept(ZahlartVisitor<R> visitor);
+    <R> R accept(ZahlartVisitor<R> visitor);
 }

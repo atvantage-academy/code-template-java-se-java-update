@@ -3,25 +3,10 @@ package bestellung.domaene;
 /**
  * Kauf auf Rechnung mit einem Zahlungsziel in Tagen.
  */
-public final class Rechnung extends Zahlart {
-
-    private final int zahlungszielTage;
-
-    public Rechnung(int zahlungszielTage) {
-        this.zahlungszielTage = zahlungszielTage;
-    }
-
-    public int getZahlungszielTage() {
-        return zahlungszielTage;
-    }
+public record Rechnung(int zahlungszielTage) implements Zahlart {
 
     @Override
     public <R> R accept(ZahlartVisitor<R> visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public String toString() {
-        return "Rechnung{zahlungszielTage=" + zahlungszielTage + "}";
     }
 }

@@ -6,22 +6,11 @@ import java.util.Objects;
 /**
  * Zahlung per Kreditkarte.
  */
-public final class Kreditkarte extends Zahlart {
+public record Kreditkarte(String kartennummer, YearMonth gültigBis) implements Zahlart {
 
-    private final String kartennummer;
-    private final YearMonth gültigBis;
-
-    public Kreditkarte(String kartennummer, YearMonth gültigBis) {
-        this.kartennummer = Objects.requireNonNull(kartennummer, "kartennummer");
-        this.gültigBis = Objects.requireNonNull(gültigBis, "gültigBis");
-    }
-
-    public String getKartennummer() {
-        return kartennummer;
-    }
-
-    public YearMonth getGültigBis() {
-        return gültigBis;
+    public Kreditkarte {
+        Objects.requireNonNull(kartennummer, "kartennummer");
+        Objects.requireNonNull(gültigBis, "gültigBis");
     }
 
     @Override
@@ -29,9 +18,13 @@ public final class Kreditkarte extends Zahlart {
         return visitor.visit(this);
     }
 
+    /**
+     * Das {@code toString} des Records zeigte die ganze Kartennummer – in jedem Log.
+     * Deshalb bleibt es hier selbst geschrieben.
+     */
     @Override
     public String toString() {
-        return "Kreditkarte{kartennummer=****" + kartennummer.substring(kartennummer.length() - 4)
-                + ", gültigBis=" + gültigBis + "}";
+        return "Kreditkarte[kartennummer=****" + kartennummer.substring(kartennummer.length() - 4)
+                + ", gültigBis=" + gültigBis + "]";
     }
 }
