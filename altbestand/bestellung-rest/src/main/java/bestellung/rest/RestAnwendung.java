@@ -16,9 +16,9 @@ import bestellung.extern.Lagerdienst;
 /**
  * Startet die REST-Schnittstelle der Bestellabwicklung.
  *
- * <p>Ein Thread je Anfrage aus einem festen Pool – die klassische Antwort auf
- * „Wie viele Anfragen schafft der Server gleichzeitig?“: so viele, wie Threads im
- * Pool sind.
+ * <p>Ein virtueller Thread je Anfrage. Die alte Antwort auf „Wie viele Anfragen
+ * schafft der Server gleichzeitig?“ – so viele, wie Threads im Pool sind – gilt
+ * nicht mehr: Wer auf das Lager wartet, belegt keinen Thread des Betriebssystems.
  *
  * <pre>
  * ./mvnw -pl altbestand/bestellung-rest -am install -DskipTests
@@ -27,8 +27,8 @@ import bestellung.extern.Lagerdienst;
  */
 public class RestAnwendung {
 
-    public static final int THREADS = 10;
     public static final long LAGER_LATENZ_MILLIS = 100;
+    static final int BACKLOG = 1000;
 
     private final HttpServer server;
     private final ExecutorService executor;
@@ -37,8 +37,11 @@ public class RestAnwendung {
         BestellService service = new BestellService(new InMemoryBestellRepository());
         Beispieldaten.befülle(service);
 
-        executor = Executors.newFixedThreadPool(THREADS);
-        server = HttpServer.create(new InetSocketAddress(port), 0);
+        executor = Executors.newVirtualThreadPerTaskExecutor();
+        // Die Warteschlange für neue Verbindungen. 0 hieß „Vorgabe des Systems“ (oft 50);
+        // mit festem Pool fiel das nie auf. Mit virtuellen Threads ist der Pool kein
+        // Engpass mehr – und die zu kurze Warteschlange wird der nächste.
+        server = HttpServer.create(new InetSocketAddress(port), BACKLOG);
         server.createContext("/bestellungen",
                 new BestellHandler(service, new Lagerdienst(LAGER_LATENZ_MILLIS), new BestellMapper()));
         server.setExecutor(executor);
