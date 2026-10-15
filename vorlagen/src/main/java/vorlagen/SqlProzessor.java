@@ -8,7 +8,7 @@ public class SqlProzessor implements Vorlagenprozessor<SqlAbfrage> {
 
     @Override
     public SqlAbfrage verarbeite(Vorlage vorlage) {
-        // TODO Übung „Bau Dein eigenes STR“
-        throw new UnsupportedOperationException("Noch nicht gebaut – das ist Deine Übung.");
+        // Die Werte kommen nie in den Text: Zwischen die Fragmente tritt nur ein „?“.
+        return new SqlAbfrage(String.join("?", vorlage.fragmente()), vorlage.werte());
     }
 }

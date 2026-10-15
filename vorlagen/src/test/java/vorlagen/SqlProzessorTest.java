@@ -15,14 +15,12 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Der SqlProzessor gegen eine echte Datenbank (H2 im Speicher) – und zum Vergleich,
  * was passiert, wenn man SQL einfach als Text zusammensetzt.
  */
-@Disabled("Übung „Bau Dein eigenes STR“ – entferne diese Zeile, wenn Du den SqlProzessor baust")
 class SqlProzessorTest {
 
     /** Eine Eingabe, wie sie ein Angreifer in ein Suchfeld tippt. */

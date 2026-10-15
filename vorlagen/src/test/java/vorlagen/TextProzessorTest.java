@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("Übung „Bau Dein eigenes STR“ – entferne diese Zeile, wenn Du den TextProzessor baust")
 class TextProzessorTest {
 
     private final Vorlagenprozessor<String> STR = new TextProzessor();
