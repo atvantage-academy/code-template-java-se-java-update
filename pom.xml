@@ -15,6 +15,7 @@
   <modules>
     <module>altbestand</module>
     <module>kompatibilitaet</module>
+    <module>vorlagen</module>
   </modules>
 
   <properties>
