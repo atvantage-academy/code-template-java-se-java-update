@@ -54,16 +54,15 @@ public class CsvLeser {
     }
 
     private Zahlart zahlart(String art, String detail, int nummer) {
-        if ("RECHNUNG".equals(art)) {
-            return new Rechnung(Integer.parseInt(detail));
-        } else if ("LASTSCHRIFT".equals(art)) {
-            return new Lastschrift(detail);
-        } else if ("KREDITKARTE".equals(art)) {
-            String[] teile = detail.split("\\|");
-            return new Kreditkarte(teile[0], YearMonth.parse(teile[1]));
-        } else if ("PAYPAL".equals(art)) {
-            return new PayPal(detail);
-        }
-        throw new IllegalArgumentException("Zeile " + nummer + ": unbekannte Zahlart " + art);
+        return switch (art) {
+            case "RECHNUNG" -> new Rechnung(Integer.parseInt(detail));
+            case "LASTSCHRIFT" -> new Lastschrift(detail);
+            case "KREDITKARTE" -> {
+                var teile = detail.split("\\|");
+                yield new Kreditkarte(teile[0], YearMonth.parse(teile[1]));
+            }
+            case "PAYPAL" -> new PayPal(detail);
+            default -> throw new IllegalArgumentException("Zeile " + nummer + ": unbekannte Zahlart " + art);
+        };
     }
 }

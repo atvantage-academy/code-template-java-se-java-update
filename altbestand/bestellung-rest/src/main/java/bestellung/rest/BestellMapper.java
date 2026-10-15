@@ -76,18 +76,15 @@ public class BestellMapper {
     }
 
     private Zahlart zahlart(JsonNode json) {
-        String art = pflicht(json, "art").asText();
-        if ("RECHNUNG".equals(art)) {
-            return new Rechnung(pflicht(json, "zahlungszielTage").asInt());
-        } else if ("LASTSCHRIFT".equals(art)) {
-            return new Lastschrift(pflicht(json, "iban").asText());
-        } else if ("KREDITKARTE".equals(art)) {
-            return new Kreditkarte(pflicht(json, "kartennummer").asText(),
+        var art = pflicht(json, "art").asText();
+        return switch (art) {
+            case "RECHNUNG" -> new Rechnung(pflicht(json, "zahlungszielTage").asInt());
+            case "LASTSCHRIFT" -> new Lastschrift(pflicht(json, "iban").asText());
+            case "KREDITKARTE" -> new Kreditkarte(pflicht(json, "kartennummer").asText(),
                     YearMonth.parse(pflicht(json, "gueltigBis").asText()));
-        } else if ("PAYPAL".equals(art)) {
-            return new PayPal(pflicht(json, "konto").asText());
-        }
-        throw new IllegalArgumentException("Unbekannte Zahlart: " + art);
+            case "PAYPAL" -> new PayPal(pflicht(json, "konto").asText());
+            default -> throw new IllegalArgumentException("Unbekannte Zahlart: " + art);
+        };
     }
 
     private static JsonNode pflicht(JsonNode json, String feld) {
