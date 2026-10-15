@@ -13,3 +13,7 @@ weitere Quelldateien im selben Ordner nutzen (JEP 458).
 
 Lege für jeden Versuch eine neue Datei an. Was hier liegt, wird von keinem Build
 übersetzt und von keinem Test geprüft.
+
+Einige Dateien zeigen, was nach Java 25 kommt (`FinalesFeld`, `PrimitiveMuster`,
+`Gleichzeitig`). Sie brauchen ein neueres JDK oder `--enable-preview`; wie sie
+starten, steht jeweils im Kommentar am Anfang der Datei.
