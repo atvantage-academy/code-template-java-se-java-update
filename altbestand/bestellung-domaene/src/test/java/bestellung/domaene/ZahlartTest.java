@@ -21,6 +21,12 @@ class ZahlartTest {
     }
 
     @Test
+    void rechnungOhneZahlungszielIstSofortZahlbar() {
+        assertEquals("Rechnung, sofort zahlbar", ZahlartBeschreibung.beschreibe(new Rechnung(0)));
+        assertEquals("Rechnung, zahlbar innerhalb von 14 Tagen", ZahlartBeschreibung.beschreibe(new Rechnung(14)));
+    }
+
+    @Test
     void beschreibungMaskiertNummern() {
         assertEquals("Lastschrift von ******************2051",
                 ZahlartBeschreibung.beschreibe(new Lastschrift("DE02 1203 0000 0000 2020 51")));

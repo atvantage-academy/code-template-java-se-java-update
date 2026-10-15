@@ -13,11 +13,6 @@ public record Kreditkarte(String kartennummer, YearMonth gültigBis) implements 
         Objects.requireNonNull(gültigBis, "gültigBis");
     }
 
-    @Override
-    public <R> R accept(ZahlartVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
-
     /**
      * Das {@code toString} des Records zeigte die ganze Kartennummer – in jedem Log.
      * Deshalb bleibt es hier selbst geschrieben.
