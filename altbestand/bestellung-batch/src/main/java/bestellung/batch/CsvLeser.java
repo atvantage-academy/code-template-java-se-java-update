@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import bestellung.domaene.Bestellung;
@@ -28,20 +27,17 @@ import bestellung.domaene.Zahlart;
 public class CsvLeser {
 
     public List<Bestellung> lies(InputStream ein) throws IOException {
-        List<Bestellung> bestellungen = new ArrayList<Bestellung>();
-        BufferedReader leser = new BufferedReader(new InputStreamReader(ein, StandardCharsets.UTF_8));
-        try {
-            String zeile = leser.readLine();
-            int nummer = 1;
+        var bestellungen = new ArrayList<Bestellung>();
+        try (var leser = new BufferedReader(new InputStreamReader(ein, StandardCharsets.UTF_8))) {
+            var zeile = leser.readLine();
+            var nummer = 1;
             while ((zeile = leser.readLine()) != null) {
                 nummer++;
-                if (zeile.trim().isEmpty()) {
+                if (zeile.isBlank()) {
                     continue;
                 }
                 bestellungen.add(parse(zeile, nummer));
             }
-        } finally {
-            leser.close();
         }
         return bestellungen;
     }
@@ -51,9 +47,9 @@ public class CsvLeser {
         if (felder.length != 9) {
             throw new IllegalArgumentException("Zeile " + nummer + ": 9 Felder erwartet, " + felder.length + " gefunden");
         }
-        Kunde kunde = new Kunde(felder[0], felder[1], null);
-        Position position = new Position(felder[2], felder[3], Integer.parseInt(felder[4]), new BigDecimal(felder[5]));
-        return new Bestellung(kunde, Collections.singletonList(position), zahlart(felder[6], felder[7], nummer),
+        var kunde = new Kunde(felder[0], felder[1], null);
+        var position = new Position(felder[2], felder[3], Integer.parseInt(felder[4]), new BigDecimal(felder[5]));
+        return new Bestellung(kunde, List.of(position), zahlart(felder[6], felder[7], nummer),
                 LocalDate.parse(felder[8]));
     }
 

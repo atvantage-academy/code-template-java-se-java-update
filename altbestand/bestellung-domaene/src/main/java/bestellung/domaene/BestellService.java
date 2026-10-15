@@ -1,8 +1,6 @@
 package bestellung.domaene;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +41,10 @@ public class BestellService {
      * Alle Bestellungen, die neueste zuerst; bei gleichem Datum nach ID.
      */
     public List<Bestellung> alleNeuesteZuerst() {
-        List<Bestellung> alle = new ArrayList<Bestellung>(repository.alle());
-        Collections.sort(alle, new Comparator<Bestellung>() {
-            @Override
-            public int compare(Bestellung a, Bestellung b) {
-                int nachDatum = b.getBestelltAm().compareTo(a.getBestelltAm());
-                return nachDatum != 0 ? nachDatum : a.getId().compareTo(b.getId());
-            }
-        });
-        return alle;
+        return repository.alle().stream()
+                .sorted(Comparator.comparing(Bestellung::getBestelltAm).reversed()
+                        .thenComparing(Bestellung::getId))
+                .toList();
     }
 
     /**
@@ -63,11 +56,8 @@ public class BestellService {
     }
 
     public Bestellung stornieren(String id) {
-        Optional<Bestellung> gefunden = repository.finde(id);
-        if (!gefunden.isPresent()) {
-            throw new IllegalArgumentException("Keine Bestellung mit der ID " + id);
-        }
-        Bestellung bestellung = gefunden.get();
+        var bestellung = repository.finde(id)
+                .orElseThrow(() -> new IllegalArgumentException("Keine Bestellung mit der ID " + id));
         if (bestellung.getStatus() == Status.VERSENDET) {
             throw new IllegalStateException("Eine versendete Bestellung kann nicht storniert werden: " + id);
         }
@@ -91,22 +81,21 @@ public class BestellService {
      * Ein Bericht als Text, etwa für eine E-Mail an den Vertrieb.
      */
     public String bericht() {
-        StringBuilder text = new StringBuilder();
-        text.append("Bestellbericht\n");
-        text.append("==============\n");
-        text.append("\n");
-        for (Bestellung bestellung : alleNeuesteZuerst()) {
-            text.append(String.format("%-8s %-10s %-12s %10s EUR%n",
-                    bestellung.getId(),
-                    bestellung.getBestelltAm(),
-                    bestellung.getStatus(),
-                    gesamtbetrag(bestellung)));
-        }
-        text.append("\n");
-        text.append("Umsatz je Zahlart:\n");
-        for (Map.Entry<String, BigDecimal> eintrag : umsatzJeZahlart().entrySet()) {
-            text.append(String.format("  %-12s %10s EUR%n", eintrag.getKey(), eintrag.getValue()));
-        }
-        return text.toString();
+        var bestellungen = alleNeuesteZuerst().stream()
+                .map(b -> "%-8s %-10s %-12s %10s EUR".formatted(
+                        b.getId(), b.getBestelltAm(), b.getStatus(), gesamtbetrag(b)))
+                .collect(Collectors.joining("\n"));
+        var umsatz = umsatzJeZahlart().entrySet().stream()
+                .map(e -> "  %-12s %10s EUR".formatted(e.getKey(), e.getValue()))
+                .collect(Collectors.joining("\n"));
+        return """
+                Bestellbericht
+                ==============
+
+                %s
+
+                Umsatz je Zahlart:
+                %s
+                """.formatted(bestellungen, umsatz);
     }
 }
