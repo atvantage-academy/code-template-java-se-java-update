@@ -21,7 +21,44 @@
   </dependencies>
 
   <build>
+    <!--
+      STARTBAR OHNE MAVEN: „package“ legt das JAR als target/bestellung-batch.jar ab und die
+      Abhängigkeiten daneben nach target/lib; das Manifest nennt Startklasse und
+      Klassenpfad. So lässt sich die JVM direkt mit Optionen starten:
+        java -jar altbestand/bestellung-batch/target/bestellung-batch.jar
+    -->
+    <finalName>${project.artifactId}</finalName>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>bestellung.batch.BatchAnwendung</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>abhaengigkeiten-kopieren</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
