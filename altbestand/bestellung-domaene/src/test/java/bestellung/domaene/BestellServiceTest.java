@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -71,5 +72,30 @@ class BestellServiceTest {
         for (int i = 1; i <= 4; i++) {
             assertTrue(bericht.contains("B-0000" + i), "fehlt: B-0000" + i);
         }
+    }
+
+    /**
+     * Hält den Bericht zeichengenau fest: Wer ihn umbaut, sieht hier sofort, ob sich am
+     * Ergebnis etwas geändert hat. Verglichen wird Zeile für Zeile, damit das
+     * Zeilenende des Betriebssystems keine Rolle spielt.
+     */
+    @Test
+    void berichtBleibtZeichengenauGleich() {
+        String[] erwartet = {
+                "Bestellbericht",
+                "==============",
+                "",
+                "B-00004  2026-09-07 NEU               91.57 EUR",
+                "B-00002  2026-09-03 NEU              661.33 EUR",
+                "B-00003  2026-09-03 NEU              118.47 EUR",
+                "B-00001  2026-09-01 NEU               51.80 EUR",
+                "",
+                "Umsatz je Zahlart:",
+                "  Kreditkarte      661.33 EUR",
+                "  Lastschrift      118.47 EUR",
+                "  PayPal            91.57 EUR",
+                "  Rechnung          51.80 EUR"
+        };
+        assertEquals(Arrays.asList(erwartet), Arrays.asList(service.bericht().split("\\R")));
     }
 }

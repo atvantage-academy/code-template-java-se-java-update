@@ -14,6 +14,7 @@ Release.
 |--------|--------|
 | [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du die neuen Sprachmittel, APIs und Virtual Threads aus. |
 | [`kompatibilitaet/`](kompatibilitaet) | **Je Bruchstelle ein Modul.** Jedes startet auf Java 8 und läuft dort. Was beim Umstieg bricht, siehst Du, wenn Du das Release hochstellst oder den Code auf einem neuen JDK laufen lässt. |
+| [`vorlagen/`](vorlagen) | Das Gerüst für die Übung **„Bau Dein eigenes `STR`“**: Vorlagen, wie sie die String Templates aus Java 21 kannten, und zwei Prozessoren, die Du selbst baust. Die Tests sind bis dahin abgeschaltet. |
 | [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
 
 ## Voraussetzungen
