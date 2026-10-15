@@ -28,18 +28,18 @@ public class BestellMapper {
     public Map<String, Object> alsJson(Bestellung bestellung, BigDecimal gesamtbetrag) {
         Map<String, Object> json = new LinkedHashMap<String, Object>();
         json.put("id", bestellung.getId());
-        json.put("kundennummer", bestellung.getKunde().getKundennummer());
-        json.put("kunde", bestellung.getKunde().getName());
+        json.put("kundennummer", bestellung.getKunde().kundennummer());
+        json.put("kunde", bestellung.getKunde().name());
         json.put("bestelltAm", bestellung.getBestelltAm().toString());
         json.put("status", bestellung.getStatus().name());
         json.put("zahlart", ZahlartBeschreibung.beschreibe(bestellung.getZahlart()));
         List<Map<String, Object>> positionen = new ArrayList<Map<String, Object>>();
         for (Position position : bestellung.getPositionen()) {
             Map<String, Object> p = new LinkedHashMap<String, Object>();
-            p.put("artikelnummer", position.getArtikelnummer());
-            p.put("bezeichnung", position.getBezeichnung());
-            p.put("menge", position.getMenge());
-            p.put("einzelpreis", position.getEinzelpreis());
+            p.put("artikelnummer", position.artikelnummer());
+            p.put("bezeichnung", position.bezeichnung());
+            p.put("menge", position.menge());
+            p.put("einzelpreis", position.einzelpreis());
             positionen.add(p);
         }
         json.put("positionen", positionen);

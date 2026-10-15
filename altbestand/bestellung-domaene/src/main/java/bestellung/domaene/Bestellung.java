@@ -83,7 +83,7 @@ public class Bestellung {
     public BigDecimal getWarenwert() {
         BigDecimal summe = BigDecimal.ZERO;
         for (Position position : positionen) {
-            summe = summe.add(position.getSumme());
+            summe = summe.add(position.summe());
         }
         return summe;
     }
@@ -107,7 +107,7 @@ public class Bestellung {
 
     @Override
     public String toString() {
-        return "Bestellung{id=" + id + ", kunde=" + kunde.getKundennummer() + ", positionen="
+        return "Bestellung{id=" + id + ", kunde=" + kunde.kundennummer() + ", positionen="
                 + positionen.size() + ", zahlart=" + zahlart + ", status=" + status + "}";
     }
 }

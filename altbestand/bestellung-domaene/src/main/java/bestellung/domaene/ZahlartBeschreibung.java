@@ -16,17 +16,17 @@ public final class ZahlartBeschreibung {
     public static String beschreibe(Zahlart zahlart) {
         if (zahlart instanceof Rechnung) {
             Rechnung rechnung = (Rechnung) zahlart;
-            return "Rechnung, zahlbar innerhalb von " + rechnung.getZahlungszielTage() + " Tagen";
+            return "Rechnung, zahlbar innerhalb von " + rechnung.zahlungszielTage() + " Tagen";
         } else if (zahlart instanceof Lastschrift) {
             Lastschrift lastschrift = (Lastschrift) zahlart;
-            return "Lastschrift von " + maskiere(lastschrift.getIban());
+            return "Lastschrift von " + maskiere(lastschrift.iban());
         } else if (zahlart instanceof Kreditkarte) {
             Kreditkarte kreditkarte = (Kreditkarte) zahlart;
-            return "Kreditkarte " + maskiere(kreditkarte.getKartennummer())
-                    + ", gültig bis " + kreditkarte.getGültigBis().format(MONAT_JAHR);
+            return "Kreditkarte " + maskiere(kreditkarte.kartennummer())
+                    + ", gültig bis " + kreditkarte.gültigBis().format(MONAT_JAHR);
         } else if (zahlart instanceof PayPal) {
             PayPal payPal = (PayPal) zahlart;
-            return "PayPal (" + payPal.getKonto() + ")";
+            return "PayPal (" + payPal.konto() + ")";
         } else {
             throw new IllegalArgumentException("Unbekannte Zahlart: " + zahlart);
         }

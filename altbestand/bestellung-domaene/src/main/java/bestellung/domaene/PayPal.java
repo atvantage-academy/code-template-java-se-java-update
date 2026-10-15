@@ -5,25 +5,14 @@ import java.util.Objects;
 /**
  * Zahlung über ein PayPal-Konto.
  */
-public final class PayPal extends Zahlart {
+public record PayPal(String konto) implements Zahlart {
 
-    private final String konto;
-
-    public PayPal(String konto) {
-        this.konto = Objects.requireNonNull(konto, "konto");
-    }
-
-    public String getKonto() {
-        return konto;
+    public PayPal {
+        Objects.requireNonNull(konto, "konto");
     }
 
     @Override
     public <R> R accept(ZahlartVisitor<R> visitor) {
         return visitor.visit(this);
-    }
-
-    @Override
-    public String toString() {
-        return "PayPal{konto=" + konto + "}";
     }
 }
