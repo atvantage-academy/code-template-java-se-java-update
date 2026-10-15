@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Ein Erzeuger liefert Werte nacheinander ab – Unterklassen rufen dazu {@link #yield(Object)}.
- * Der Name stammt aus anderen Sprachen, in denen Generatoren so arbeiten.
+ * Ein Erzeuger liefert Werte nacheinander ab – Unterklassen rufen dazu {@link #liefere(Object)}.
+ * Bis Java 13 hieß die Methode {@code yield} wie in anderen Sprachen; seit Java 14 ist
+ * {@code yield} ein eingeschränkter Bezeichner der Switch-Expressions.
  */
 public abstract class Erzeuger<T> {
 
@@ -13,7 +14,7 @@ public abstract class Erzeuger<T> {
 
     protected abstract void erzeuge();
 
-    protected void yield(T wert) {
+    protected void liefere(T wert) {
         werte.add(wert);
     }
 

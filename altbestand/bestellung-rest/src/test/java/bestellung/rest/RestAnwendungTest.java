@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.AfterEach;
@@ -51,7 +51,7 @@ class RestAnwendungTest {
     }
 
     private HttpURLConnection öffne(String pfad) throws IOException {
-        return (HttpURLConnection) new URL("http://localhost:" + anwendung.getPort() + pfad).openConnection();
+        return (HttpURLConnection) URI.create("http://localhost:" + anwendung.getPort() + pfad).toURL().openConnection();
     }
 
     private static String lies(InputStream ein) {

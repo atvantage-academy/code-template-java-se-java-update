@@ -3,10 +3,10 @@ package kompatibilitaet.jaxb;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 
 /**
- * Schreibt und liest Bestellungen als XML – mit JAXB, das bis Java 8 im JDK steckte.
+ * Schreibt und liest Bestellungen als XML – mit Jakarta XML Binding, das bis Java 10 als JAXB im JDK steckte.
  */
 public final class XmlExport {
 

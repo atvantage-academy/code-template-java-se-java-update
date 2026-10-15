@@ -1,9 +1,7 @@
-# DER ALTBESTAND LIEF AUF JAVA 8 – das prüft der erste Job, und er muss grün sein.
-#
-# Der zweite Job ist eine BESTANDSAUFNAHME: derselbe, unveränderte Code auf JDK 21 und
-# JDK 25. Fehlschlagende Tests brechen ihn nicht ab, sondern landen in der
-# Zusammenfassung des Laufs – sie sind der Lernstoff des Moduls „kompatibilitaet“.
-# Auf den Lösungsbranches wandert die Pipeline mit dem Code auf die neuen JDKs.
+# SEIT DER ÜBUNG „KOMPATIBILITÄT“ IST DER CODE AUF JAVA 21 ANGEKOMMEN: Alle Brüche sind
+# behoben, übersetzt wird mit --release 21. Die Pipeline baut deshalb streng auf beiden
+# Kurs-JDKs – jeder fehlschlagende Test bricht den Lauf ab. Java 8 prüft sie nicht mehr:
+# Der Code nutzt jetzt APIs, die es dort nicht gibt.
 name: Build
 
 on:
@@ -12,21 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  java-8:
-    name: Altbestand auf Java 8
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '8'
-          cache: maven
-      - name: Bauen und testen
-        run: ./mvnw -B -ntp verify
-
-  bestandsaufnahme:
-    name: Bestandsaufnahme auf JDK ${{ matrix.java }}
+  build:
+    name: Bauen und testen auf JDK ${{ matrix.java }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,21 +24,5 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: maven
-      - name: Bauen und testen, ohne bei Testfehlern abzubrechen
-        run: ./mvnw -B -ntp -fae verify -Dmaven.test.failure.ignore=true
-      - name: Zusammenfassung
-        if: always()
-        run: |
-          {
-            echo "## Was auf JDK ${{ matrix.java }} bricht"
-            echo
-            echo "Unveränderter Code, übersetzt mit \`--release 8\`."
-            echo
-            echo "| Modul | Testklasse |"
-            echo "|-------|------------|"
-            for bericht in $(grep -l -E '<(failure|error)' $(find . -path '*/target/surefire-reports/TEST-*.xml') 2>/dev/null); do
-              modul=${bericht%%/target/*}
-              klasse=$(basename "$bericht" .xml)
-              echo "| \`${modul#./}\` | \`${klasse#TEST-}\` |"
-            done
-          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Bauen und testen
+        run: ./mvnw -B -ntp verify
