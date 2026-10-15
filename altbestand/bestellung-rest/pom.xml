@@ -13,6 +13,15 @@
   <artifactId>bestellung-rest</artifactId>
   <name>Altbestand · REST-Schnittstelle</name>
 
+  <properties>
+    <!--
+      Was exec:java startet. Als Property, nicht fest im Plugin: So lässt sich auf der
+      Kommandozeile der Lasttest wählen (-Dexec.mainClass=bestellung.rest.Lasttest).
+      Eine feste <mainClass> in der Plugin-Konfiguration ginge dem immer vor.
+    -->
+    <exec.mainClass>bestellung.rest.RestAnwendung</exec.mainClass>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>de.atvantage.academy.javaupdate</groupId>
@@ -29,9 +38,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>bestellung.rest.RestAnwendung</mainClass>
-        </configuration>
       </plugin>
     </plugins>
   </build>
