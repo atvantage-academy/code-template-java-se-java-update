@@ -117,4 +117,30 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <!--
+      DER STAND VORHER, MIT ECHTEM JDK 8 (optional): mvn clean verify -Pjdk8
+      Mit dem Profil laufen die Tests auf einem JDK 8, übersetzt wird weiter mit Deinem
+      JDK und dem Release des Moduls. Dann sind auch die Laufzeitbrüche grün, bevor Du
+      etwas umstellst – mit JDK 21 oder 25 allein treten sie schon mit Release 8 auf.
+      Voraussetzung: ein installiertes JDK 8, eingetragen in ~/.m2/toolchains.xml.
+    -->
+    <profile>
+      <id>jdk8</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <jdkToolchain>
+                <version>1.8</version>
+              </jdkToolchain>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
