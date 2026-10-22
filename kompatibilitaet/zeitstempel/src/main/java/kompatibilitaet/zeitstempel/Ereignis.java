@@ -1,12 +1,21 @@
 package kompatibilitaet.zeitstempel;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.Objects;
 
 /**
- * Etwas, das zu einem Zeitpunkt passiert ist.
+ * Etwas, das zu einem Zeitpunkt passiert ist – auf die Millisekunde genau.
  */
 public final class Ereignis {
+
+    /**
+     * Seit Java 15 liefert {@link Instant#now()} je nach Betriebssystem mehr als Millisekunden.
+     * Gespeichert werden aber Millisekunden – also legt die Uhr die Genauigkeit fest,
+     * nicht das JDK. {@link Clock#tickMillis} gibt es seit Java 9.
+     */
+    private static final Clock UHR = Clock.tickMillis(ZoneOffset.UTC);
 
     private final String art;
     private final Instant zeitpunkt;
@@ -17,7 +26,7 @@ public final class Ereignis {
     }
 
     public static Ereignis jetzt(String art) {
-        return new Ereignis(art, Instant.now());
+        return new Ereignis(art, Instant.now(UHR));
     }
 
     public String getArt() {
