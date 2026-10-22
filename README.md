@@ -14,7 +14,7 @@ Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen and
 |--------|--------|
 | [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du Virtual Threads und die Laufzeit der JVM aus. |
 | [`kompatibilitaet/`](kompatibilitaet) | **Je Bruchstelle ein Modul.** Jedes startet auf Java 8 und läuft dort. Was beim Umstieg bricht, siehst Du, wenn Du das Release hochstellst oder den Code auf einem neuen JDK laufen lässt. |
-| [`neuerungen/`](neuerungen) | **Je Neuerung in Syntax und API ein Modul**, mit einem kleinen Beispiel und seinem Test. Auch diese Module starten auf Java 8. |
+| [`neuerungen/`](neuerungen) | **Je Neuerung in Syntax und API ein Modul.** Darin eine Klasse im Stil von Java 8 mit ihrem Test – die baust Du mit dem neuen Sprachmittel um – und unter `beispiel/` ein kleines Programm, das Du direkt aus dem Quelltext startest (`java neuerungen/«modul»/beispiel/«Datei».java`). Kein Build übersetzt die Beispiele; so bleibt jedes Modul auf Java 8 baubar. |
 | [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
 | [`.run/`](.run), [`eclipse/`](eclipse) | Fertige Run Configurations für IntelliJ IDEA und Eclipse. |
 

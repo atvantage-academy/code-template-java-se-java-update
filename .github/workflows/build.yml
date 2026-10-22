@@ -11,7 +11,8 @@
 # AUF EINEM LÖSUNGSBRANCH (loesung/«modul») laufen diese drei Jobs nicht: Dort ist ein
 # Modul hochgestellt, und auf JDK 8 übersetzt es nicht mehr. Stattdessen prüft der Job
 # „Lösung“ genau dieses Modul streng auf JDK 21 und 25 – die übrigen Module brechen
-# dort weiter, wie auf main.
+# dort weiter, wie auf main. Steht das Modul auf einem Release über 21, läuft es nur
+# auf JDK 25.
 name: Build
 
 on:
@@ -108,6 +109,12 @@ jobs:
           if [ -z "$modul" ]; then
             echo "Kein Modul zu $BRANCH gefunden – baue das ganze Projekt."
             mvn -B -ntp verify
-          else
-            mvn -B -ntp verify -pl "$modul" -am
+            exit
           fi
+          # Ein Modul auf Release 25 übersetzt kein JDK 21 – dann entfällt dieser Lauf.
+          release=$(sed -n 's:.*<maven.compiler.release>\([0-9]*\)</maven.compiler.release>.*:\1:p' "$modul/pom.xml" | head -n 1)
+          if [ -n "$release" ] && [ "$release" -gt "${{ matrix.java }}" ]; then
+            echo "Release $release in $modul braucht ein neueres JDK als ${{ matrix.java }} – übersprungen." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          mvn -B -ntp verify -pl "$modul" -am
