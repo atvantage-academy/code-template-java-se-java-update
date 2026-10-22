@@ -14,6 +14,9 @@ weitere Quelldateien im selben Ordner nutzen (JEP 458).
 Lege für jeden Versuch eine neue Datei an. Was hier liegt, wird von keinem Build
 übersetzt und von keinem Test geprüft.
 
+`Leerzeile` zeigt den Unterschied zwischen `--release 8` und `-source 8 -target 8`;
+wie sie übersetzt wird, steht im Kommentar am Anfang der Datei.
+
 Einige Dateien zeigen, was nach Java 25 kommt (`FinalesFeld`, `PrimitiveMuster`,
 `Gleichzeitig`). Sie brauchen ein neueres JDK oder `--enable-preview`; wie sie
 starten, steht jeweils im Kommentar am Anfang der Datei.
