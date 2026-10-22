@@ -15,6 +15,39 @@
 
   <properties>
     <!-- Hier hochstellen. -->
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
   </properties>
+
+  <!--
+    EINE NOTLÖSUNG, KEINE BEHEBUNG. Seit Java 16 kapselt das JDK seine Interna standardmäßig
+    (JEP 396), seit 17 ohne Schalter für alles auf einmal (JEP 403). Die Option „add-opens“ öffnet genau
+    ein Paket für den Zugriff per Reflection – und muss überall stehen, wo der Code läuft:
+    im Test, im Startskript, im Manifest eines ausführbaren JARs. Die Ursache bleibt:
+    Der Monitor hängt an einem privaten Feld, das das JDK jederzeit umbauen darf. Behoben
+    ist das erst, wenn die Frage „wie viel ist reserviert?“ anders beantwortet wird – mit
+    einem Heap-Histogramm oder Java Flight Recorder statt im Anwendungscode.
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>--add-opens java.base/java.util=ALL-UNNAMED</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <!-- Wirkt nur beim Start mit „java -jar“. -->
+              <Add-Opens>java.base/java.util</Add-Opens>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
