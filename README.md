@@ -124,7 +124,7 @@ Suchen, nicht im Ergebnis.
 
 ## Die Pipeline
 
-[`build.yml`](.github/workflows/build.yml) prüft dreierlei:
+[`build.yml`](.github/workflows/build.yml) prüft auf `main` dreierlei:
 
 - **Altbestand auf Java 8** – das ganze Projekt auf JDK 8. Muss grün sein: So lief
   der Code, bevor wir ihn angefasst haben.
@@ -133,6 +133,10 @@ Suchen, nicht im Ergebnis.
 - **Bestandsaufnahme auf JDK 21 und 25** – derselbe Code auf den neuen JDKs.
   Fehlschlagende Tests brechen den Lauf nicht ab; welche es sind, steht in der
   Zusammenfassung des Laufs.
+
+Auf einem Lösungsbranch `loesung/«modul»` laufen diese drei nicht. Dort prüft
+stattdessen **Lösung auf JDK 21 und 25** genau das Modul der Übung – streng, jeder
+Testfehler ist ein Fehler.
 
 ## Gut zu wissen
 
