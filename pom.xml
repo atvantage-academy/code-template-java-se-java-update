@@ -134,8 +134,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+              <!-- Ein Bereich: JDK 8 steht in toolchains.xml mal als 1.8, mal als 8. -->
               <jdkToolchain>
-                <version>1.8</version>
+                <version>[1.8,9)</version>
               </jdkToolchain>
             </configuration>
           </plugin>
