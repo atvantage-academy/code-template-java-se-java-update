@@ -15,14 +15,14 @@
   <modules>
     <module>altbestand</module>
     <module>kompatibilitaet</module>
-    <module>vorlagen</module>
+    <module>neuerungen</module>
   </modules>
 
   <properties>
     <!--
-      DAS RELEASE STEHT HIER – und nur hier, solange ein Modul es nicht ausdrücklich
-      überschreibt. Der Startstand ist Java 8. Hochstellen je Modul in dessen pom.xml
-      oder für einen Versuch auf der Kommandozeile: -Dmaven.compiler.release=21
+      DER STARTSTAND IST JAVA 8. Jedes Übungsmodul setzt das Release noch einmal in
+      seiner eigenen pom.xml – dort stellst Du es hoch, Modul für Modul, so wie bei einer
+      echten Migration. Nach jedem Umstellen mit „clean“ bauen.
     -->
     <maven.compiler.release>8</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
