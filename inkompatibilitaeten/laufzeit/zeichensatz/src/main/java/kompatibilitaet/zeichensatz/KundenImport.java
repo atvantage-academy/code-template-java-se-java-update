@@ -4,14 +4,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Liest die Kundenliste, die das Altsystem jede Nacht als CSV ablegt.
- * Der {@link FileReader} nimmt dafür den Standard-Zeichensatz der JVM.
+ * Das Altsystem schreibt windows-1252 – das steht jetzt im Code, statt sich auf den
+ * Standard-Zeichensatz der JVM zu verlassen, der seit Java 18 überall UTF-8 ist.
  */
 public final class KundenImport {
+
+    private static final Charset ALTSYSTEM = Charset.forName("windows-1252");
 
     private KundenImport() {
     }
@@ -21,7 +25,7 @@ public final class KundenImport {
      */
     public static Map<String, String> lies(File datei) throws IOException {
         Map<String, String> kunden = new LinkedHashMap<String, String>();
-        BufferedReader leser = new BufferedReader(new FileReader(datei));
+        BufferedReader leser = new BufferedReader(new FileReader(datei, ALTSYSTEM));
         try {
             String zeile = leser.readLine();
             while ((zeile = leser.readLine()) != null) {
