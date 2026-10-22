@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Wertet Zeilen aus einer Importdatei aus. An mehreren Stellen braucht der Code eine
- * Variable, die er nie liest – mit Java 8 bekommt sie trotzdem einen Namen.
+ * Wertet Zeilen aus einer Importdatei aus. Wo der Code eine Variable braucht, aber nie
+ * liest, steht seit Java 22 „_“ (JEP 456).
  */
 public final class Auswertung {
 
@@ -21,7 +21,7 @@ public final class Auswertung {
             try {
                 Integer.parseInt(text.trim());
                 anzahl++;
-            } catch (NumberFormatException ignoriert) {
+            } catch (NumberFormatException _) {
                 // keine Zahl – zählt nicht
             }
         }
@@ -31,7 +31,7 @@ public final class Auswertung {
     /** Wie viele Zeilen die Datei hat. */
     public static int anzahlZeilen(Iterable<String> zeilen) {
         int anzahl = 0;
-        for (String zeile : zeilen) {
+        for (String _ : zeilen) {
             anzahl++;
         }
         return anzahl;
@@ -42,7 +42,7 @@ public final class Auswertung {
         Map<String, List<String>> ergebnis = new TreeMap<String, List<String>>();
         for (String zeile : zeilen) {
             String[] felder = zeile.split(";");
-            ergebnis.computeIfAbsent(felder[0], kundennummer -> new ArrayList<String>()).add(felder[1]);
+            ergebnis.computeIfAbsent(felder[0], _ -> new ArrayList<String>()).add(felder[1]);
         }
         return ergebnis;
     }
@@ -50,7 +50,7 @@ public final class Auswertung {
     /** Die Summe aller Mengen, gleich welcher Artikel. */
     public static int gesamtmenge(Map<String, Integer> mengeJeArtikel) {
         int[] summe = {0};
-        mengeJeArtikel.forEach((artikelnummer, menge) -> summe[0] += menge);
+        mengeJeArtikel.forEach((_, menge) -> summe[0] += menge);
         return summe[0];
     }
 }
