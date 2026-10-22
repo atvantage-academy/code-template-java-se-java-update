@@ -44,5 +44,23 @@
         </plugins>
       </build>
     </profile>
+    <!--
+      Dasselbe für -Pjdk8: Dort läuft Maven auf Deinem neuen JDK, die Tests aber auf
+      JDK 8 – die Aktivierung oben sieht nur das JDK von Maven und griffe nicht.
+    -->
+    <profile>
+      <id>jdk8</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>-Dfile.encoding=windows-1252</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>

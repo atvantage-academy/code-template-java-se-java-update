@@ -21,8 +21,8 @@ import bestellung.extern.Lagerdienst;
  * Pool sind.
  *
  * <pre>
- * ./mvnw -pl altbestand/bestellung-rest -am install -DskipTests
- * ./mvnw -pl altbestand/bestellung-rest exec:java
+ * mvn -pl altbestand/bestellung-rest -am install -DskipTests
+ * mvn -pl altbestand/bestellung-rest exec:java
  * </pre>
  */
 public class RestAnwendung {

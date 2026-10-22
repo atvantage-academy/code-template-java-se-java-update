@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>java-update</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>neuerungen</artifactId>
+  <packaging>pom</packaging>
+  <name>Neuerungen</name>
+  <description>Je Neuerung in Syntax und API ein Modul. Jedes startet auf Java 8.</description>
+
+  <modules>
+    <module>collection-factories</module>
+    <module>private-interface-methoden</module>
+    <module>unbenannte-variablen</module>
+    <module>var</module>
+    <module>switch-expressions</module>
+    <module>text-bloecke</module>
+    <module>records</module>
+    <module>pattern-matching</module>
+    <module>sealed-classes</module>
+    <module>kompakte-quelldateien</module>
+    <module>markdown-javadoc</module>
+    <module>scoped-values</module>
+    <module>flexible-konstruktoren</module>
+  </modules>
+</project>

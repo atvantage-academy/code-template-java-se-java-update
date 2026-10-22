@@ -14,9 +14,9 @@ import bestellung.extern.Bonitätsprüfung;
  * Der nächtliche Import: liest eine CSV-Datei und legt die geprüften Bestellungen an.
  *
  * <pre>
- * ./mvnw -pl altbestand/bestellung-batch -am install -DskipTests
- * ./mvnw -pl altbestand/bestellung-batch exec:java              # mitgelieferte Beispieldatei
- * ./mvnw -pl altbestand/bestellung-batch exec:java -Dexec.args=pfad/zur/datei.csv
+ * mvn -pl altbestand/bestellung-batch -am install -DskipTests
+ * mvn -pl altbestand/bestellung-batch exec:java              # mitgelieferte Beispieldatei
+ * mvn -pl altbestand/bestellung-batch exec:java -Dexec.args=pfad/zur/datei.csv
  * </pre>
  */
 public class BatchAnwendung {

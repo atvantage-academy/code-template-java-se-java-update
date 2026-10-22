@@ -4,6 +4,9 @@
 # JDK 25. Fehlschlagende Tests brechen ihn nicht ab, sondern landen in der
 # Zusammenfassung des Laufs – sie sind der Lernstoff des Moduls „kompatibilitaet“.
 # Auf den Lösungsbranches wandert die Pipeline mit dem Code auf die neuen JDKs.
+#
+# Der dritte Job prüft das Profil „jdk8“: Maven auf JDK 21, die Tests über Toolchains auf
+# JDK 8 – so, wie es Teilnehmende mit einem zusätzlichen JDK 8 aufrufen.
 name: Build
 
 on:
@@ -23,7 +26,23 @@ jobs:
           java-version: '8'
           cache: maven
       - name: Bauen und testen
-        run: ./mvnw -B -ntp verify
+        run: mvn -B -ntp verify
+
+  toolchain-jdk8:
+    name: Stand vorher über Toolchains (Tests auf JDK 8)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          # Beide landen in ~/.m2/toolchains.xml; Maven selbst läuft auf dem letzten.
+          java-version: |
+            8
+            21
+          cache: maven
+      - name: Bauen und testen
+        run: mvn -B -ntp verify -Pjdk8
 
   bestandsaufnahme:
     name: Bestandsaufnahme auf JDK ${{ matrix.java }}
@@ -40,7 +59,7 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
       - name: Bauen und testen, ohne bei Testfehlern abzubrechen
-        run: ./mvnw -B -ntp -fae verify -Dmaven.test.failure.ignore=true
+        run: mvn -B -ntp -fae verify -Dmaven.test.failure.ignore=true
       - name: Zusammenfassung
         if: always()
         run: |

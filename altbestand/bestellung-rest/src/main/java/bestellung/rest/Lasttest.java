@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
  * wie lange das dauert. Startet den Server selbst.
  *
  * <pre>
- * ./mvnw -pl altbestand/bestellung-rest exec:java -Dexec.mainClass=bestellung.rest.Lasttest
+ * mvn -pl altbestand/bestellung-rest exec:java -Dexec.mainClass=bestellung.rest.Lasttest
  * </pre>
  */
 public class Lasttest {
