@@ -50,8 +50,9 @@ Absicht** – um diese Brüche geht es in den Übungen.
 ## In der IDE
 
 Für jedes Übungsmodul gibt es eine Run Configuration, die es baut und testet
-(`clean verify`), benannt wie das Modul – etwa `kompatibilitaet-jaxb`. Dazu kommen
-`RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
+(`clean verify`), benannt wie das Modul – etwa `kompatibilitaet-jaxb`. Die
+Run Configuration `java-update` baut das ganze Projekt, ohne bei Testfehlern
+abzubrechen. Dazu kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
   Du findest sie oben rechts in der Auswahl neben dem Startknopf.
