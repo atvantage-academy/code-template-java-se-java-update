@@ -14,9 +14,4 @@ public final class Kreditkarte extends Zahlart {
     public String getKartennummer() {
         return kartennummer;
     }
-
-    @Override
-    public <R> R accept(ZahlartVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
 }

@@ -1,16 +1,11 @@
 package neuerungen.versiegelt;
 
 /**
- * Wie eine Bestellung bezahlt wird.
- *
- * <p>Es gibt genau vier Zahlarten: {@link Rechnung}, {@link Lastschrift},
- * {@link Kreditkarte} und {@link PayPal}. Sicherstellen lässt sich das mit Java 8
- * nicht; der package-private Konstruktor hält nur fremde Pakete ab.
+ * Wie eine Bestellung bezahlt wird. Es gibt genau vier Zahlarten – das sagt die
+ * {@code permits}-Klausel dem Compiler.
  */
-public abstract class Zahlart {
+public abstract sealed class Zahlart permits Rechnung, Lastschrift, Kreditkarte, PayPal {
 
     Zahlart() {
     }
-
-    public abstract <R> R accept(ZahlartVisitor<R> visitor);
 }
