@@ -14,20 +14,20 @@ public final class Rechnungstext {
     public static List<String> zeilen(Bestellung bestellung) {
         List<String> zeilen = new ArrayList<String>();
         Kunde kunde = bestellung.getKunde();
-        zeilen.add("Rechnung " + bestellung.getNummer() + " für " + kunde.getName()
-                + " (" + kunde.getKundennummer() + ")");
+        zeilen.add("Rechnung " + bestellung.getNummer() + " für " + kunde.name()
+                + " (" + kunde.kundennummer() + ")");
         for (Position position : bestellung.getPositionen()) {
-            zeilen.add(position.getMenge() + " × " + position.getBezeichnung()
-                    + " [" + position.getArtikelnummer() + "] à " + position.getEinzelpreis()
-                    + " EUR = " + position.getSumme() + " EUR");
+            zeilen.add(position.menge() + " × " + position.bezeichnung()
+                    + " [" + position.artikelnummer() + "] à " + position.einzelpreis()
+                    + " EUR = " + position.summe() + " EUR");
         }
         zeilen.add("Gesamt: " + bestellung.getGesamtsumme() + " EUR");
         return zeilen;
     }
 
     public static String zahlungshinweis(Kreditkarte karte) {
-        String nummer = karte.getKartennummer();
+        String nummer = karte.kartennummer();
         return "Abgebucht von Karte ****" + nummer.substring(nummer.length() - 4)
-                + ", gültig bis " + karte.getGültigBis();
+                + ", gültig bis " + karte.gültigBis();
     }
 }
