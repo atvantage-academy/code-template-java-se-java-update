@@ -29,7 +29,3 @@ JDK 21 hält der Flight Recorder das Pinning fest, unter JDK 25 nicht mehr.
 `LocalDate` und Co. setzt – der Compiler warnt schon heute, und mit Project Valhalla
 ändert sich ihr Verhalten. `Wertklassen` vergleicht Records mit und ohne Identität
 und braucht einen Early-Access-Build von JDK 28 mit `--enable-preview`.
-
-Einige Dateien zeigen, was nach Java 25 kommt (`FinalesFeld`, `PrimitiveMuster`,
-`Gleichzeitig`). Sie brauchen ein neueres JDK oder `--enable-preview`; wie sie
-starten, steht jeweils im Kommentar am Anfang der Datei.
