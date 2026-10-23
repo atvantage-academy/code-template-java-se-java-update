@@ -2,9 +2,7 @@ package bestellung.batch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -14,33 +12,28 @@ import bestellung.extern.Bonitätsprüfung;
 
 /**
  * Importiert Bestellungen: Jede wird bei der Auskunftei geprüft und nur angelegt,
- * wenn der Kunde kreditwürdig ist. Die Prüfungen laufen parallel in einem festen
- * Thread-Pool – wie groß er sein darf, ist die alte Streitfrage.
+ * wenn der Kunde kreditwürdig ist. Jede Prüfung bekommt ihren eigenen virtuellen
+ * Thread – die Frage, wie groß ein Pool sein darf, stellt sich nicht mehr.
  */
 public class BestellImport {
 
     private final BestellService service;
     private final Bonitätsprüfung bonitätsprüfung;
-    private final int threads;
 
-    public BestellImport(BestellService service, Bonitätsprüfung bonitätsprüfung, int threads) {
+    public BestellImport(BestellService service, Bonitätsprüfung bonitätsprüfung) {
         this.service = service;
         this.bonitätsprüfung = bonitätsprüfung;
-        this.threads = threads;
     }
 
     public ImportErgebnis importiere(List<Bestellung> bestellungen) throws InterruptedException {
         long start = System.nanoTime();
-        ExecutorService pool = Executors.newFixedThreadPool(threads);
-        try {
-            List<Future<Boolean>> prüfungen = new ArrayList<Future<Boolean>>();
-            for (final Bestellung bestellung : bestellungen) {
-                prüfungen.add(pool.submit(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        return bonitätsprüfung.istKreditwürdig(bestellung.getKunde().getKundennummer());
-                    }
-                }));
+        // Ein ExecutorService ist seit Java 19 AutoCloseable: close() wartet, bis alle
+        // Aufgaben fertig sind.
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            List<Future<Boolean>> prüfungen = new ArrayList<>();
+            for (Bestellung bestellung : bestellungen) {
+                prüfungen.add(executor.submit(
+                        () -> bonitätsprüfung.istKreditwürdig(bestellung.getKunde().getKundennummer())));
             }
             int angenommen = 0;
             List<String> abgelehnt = new ArrayList<String>();
@@ -54,8 +47,6 @@ public class BestellImport {
                 }
             }
             return new ImportErgebnis(angenommen, abgelehnt, (System.nanoTime() - start) / 1_000_000);
-        } finally {
-            pool.shutdown();
         }
     }
 
