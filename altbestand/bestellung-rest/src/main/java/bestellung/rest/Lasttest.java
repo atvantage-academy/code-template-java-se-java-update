@@ -41,8 +41,8 @@ public class Lasttest {
         anwendung.starte();
         try {
             long dauer = miss(anwendung.getPort(), anzahl);
-            System.out.printf("%d Bestellungen in %d ms (Server: %d Threads, Lager-Latenz %d ms)%n",
-                    anzahl, dauer, RestAnwendung.THREADS, RestAnwendung.LAGER_LATENZ_MILLIS);
+            System.out.printf("%d Bestellungen in %d ms (Server: virtuelle Threads, Lager-Latenz %d ms)%n",
+                    anzahl, dauer, RestAnwendung.LAGER_LATENZ_MILLIS);
         } finally {
             anwendung.stoppe();
         }
