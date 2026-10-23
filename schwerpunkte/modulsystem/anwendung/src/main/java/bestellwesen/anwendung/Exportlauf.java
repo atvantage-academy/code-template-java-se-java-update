@@ -7,9 +7,9 @@ import java.util.ServiceLoader;
 import java.util.TreeMap;
 
 import bestellwesen.export.Exportformat;
+import bestellwesen.modell.Betrag;
 import bestellwesen.modell.Bestellung;
 import bestellwesen.modell.Position;
-import bestellwesen.modell.intern.Betragsformat;
 
 /** Exportiert einen kleinen Bestand an Bestellungen in jedes Format, das zur Laufzeit da ist. */
 public final class Exportlauf {
@@ -31,7 +31,7 @@ public final class Exportlauf {
         for (Bestellung bestellung : bestand) {
             gesamt += bestellung.summeCent();
         }
-        System.out.println("Gesamt: " + Betragsformat.alsEuro(gesamt));
+        System.out.println("Gesamt: " + Betrag.alsEuro(gesamt));
     }
 
     /** Je gefundenem Format sein Name und der Export, nach Namen sortiert. */
