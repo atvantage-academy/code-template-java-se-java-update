@@ -105,7 +105,7 @@ jobs:
         env:
           BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
-          modul=$(find kompatibilitaet neuerungen -mindepth 1 -maxdepth 1 -type d -name "${BRANCH#loesung/}" | head -n 1)
+          modul=$(find kompatibilitaet neuerungen schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "${BRANCH#loesung/}" | head -n 1)
           if [ -z "$modul" ]; then
             echo "Kein Modul zu $BRANCH gefunden – baue das ganze Projekt."
             mvn -B -ntp verify
@@ -117,4 +117,9 @@ jobs:
             echo "Release $release in $modul braucht ein neueres JDK als ${{ matrix.java }} – übersprungen." | tee -a "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          mvn -B -ntp verify -pl "$modul" -am
+          # Ein Schwerpunkt besteht aus mehreren Teilen (packaging pom) – dann alle bauen.
+          if grep -q '<packaging>pom</packaging>' "$modul/pom.xml"; then
+            mvn -B -ntp verify -f "$modul/pom.xml"
+          else
+            mvn -B -ntp verify -pl "$modul" -am
+          fi

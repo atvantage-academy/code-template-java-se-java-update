@@ -16,6 +16,7 @@
     <module>altbestand</module>
     <module>kompatibilitaet</module>
     <module>neuerungen</module>
+    <module>schwerpunkte</module>
   </modules>
 
   <properties>

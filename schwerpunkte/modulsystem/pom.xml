@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>schwerpunkte</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>schwerpunkte-modulsystem</artifactId>
+  <packaging>pom</packaging>
+  <name>Schwerpunkte · Modulsystem</name>
+  <description>Ein Export von Bestellungen in drei Teilen: Modell, CSV-Format und Anwendung.</description>
+
+  <modules>
+    <module>modell</module>
+    <module>csv</module>
+    <module>anwendung</module>
+  </modules>
+
+  <properties>
+    <!-- Hier hochstellen. Gilt für alle drei Teile. -->
+    <maven.compiler.release>8</maven.compiler.release>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--
+          Alle drei JARs landen in EINEM Ordner, target/module. Den gibst Du java und
+          jlink als Klassen- bzw. Modulpfad.
+        -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <outputDirectory>${project.basedir}/../target/module</outputDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
