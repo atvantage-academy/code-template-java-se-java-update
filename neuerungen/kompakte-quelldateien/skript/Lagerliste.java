@@ -1,36 +1,27 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
  * Ein kleines Werkzeug: fasst Lagerbewegungen je Artikel zusammen. Es gehört zu keinem
- * Build, Java startet es direkt aus dem Quelltext (JEP 330, ab Java 11):
+ * Build, Java startet es direkt aus dem Quelltext:
  *
  *     java neuerungen/kompakte-quelldateien/skript/Lagerliste.java
  *
- * Geschrieben im Stil von Java 8 – mit allem, was eine Klasse dafür braucht.
+ * Als kompakte Quelldatei (JEP 512, Java 25): keine Klasse, kein static, keine Importe
+ * aus java.base, IO statt System.out.
  */
-public class Lagerliste {
 
-    public static void main(String[] args) {
-        List<String> bewegungen = Arrays.asList(
-                "A-100;Kaffeebecher;12",
-                "A-200;Teekanne;3",
-                "A-100;Kaffeebecher;8",
-                "A-300;Untersetzer;40");
+void main() {
+    var bewegungen = List.of(
+            "A-100;Kaffeebecher;12",
+            "A-200;Teekanne;3",
+            "A-100;Kaffeebecher;8",
+            "A-300;Untersetzer;40");
 
-        Map<String, String> namen = new TreeMap<String, String>();
-        Map<String, Integer> bestand = new TreeMap<String, Integer>();
-        for (String bewegung : bewegungen) {
-            String[] felder = bewegung.split(";");
-            namen.put(felder[0], felder[1]);
-            Integer bisher = bestand.get(felder[0]);
-            bestand.put(felder[0], (bisher == null ? 0 : bisher) + Integer.parseInt(felder[2]));
-        }
-
-        for (Map.Entry<String, Integer> eintrag : bestand.entrySet()) {
-            System.out.println(eintrag.getKey() + " " + namen.get(eintrag.getKey()) + ": " + eintrag.getValue());
-        }
+    var namen = new TreeMap<String, String>();
+    var bestand = new TreeMap<String, Integer>();
+    for (var bewegung : bewegungen) {
+        var felder = bewegung.split(";");
+        namen.put(felder[0], felder[1]);
+        bestand.merge(felder[0], Integer.parseInt(felder[2]), Integer::sum);
     }
+
+    bestand.forEach((artikel, menge) -> IO.println(artikel + " " + namen.get(artikel) + ": " + menge));
 }
