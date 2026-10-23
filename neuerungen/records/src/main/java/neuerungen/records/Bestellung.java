@@ -43,7 +43,7 @@ public final class Bestellung {
     public BigDecimal getGesamtsumme() {
         BigDecimal summe = BigDecimal.ZERO;
         for (Position position : positionen) {
-            summe = summe.add(position.getSumme());
+            summe = summe.add(position.summe());
         }
         return summe;
     }

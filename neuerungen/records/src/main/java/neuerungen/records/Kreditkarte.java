@@ -5,41 +5,13 @@ import java.util.Objects;
 
 /**
  * Die Kreditkarte, mit der eine Bestellung bezahlt wird. Ihre Nummer gehört in keine
- * Log-Datei.
+ * Log-Datei – deshalb schreibt der Record sein {@code toString} selbst.
  */
-public final class Kreditkarte {
+public record Kreditkarte(String kartennummer, YearMonth gültigBis) {
 
-    private final String kartennummer;
-    private final YearMonth gültigBis;
-
-    public Kreditkarte(String kartennummer, YearMonth gültigBis) {
-        this.kartennummer = Objects.requireNonNull(kartennummer, "kartennummer");
-        this.gültigBis = Objects.requireNonNull(gültigBis, "gültigBis");
-    }
-
-    public String getKartennummer() {
-        return kartennummer;
-    }
-
-    public YearMonth getGültigBis() {
-        return gültigBis;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Kreditkarte karte = (Kreditkarte) o;
-        return kartennummer.equals(karte.kartennummer) && gültigBis.equals(karte.gültigBis);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(kartennummer, gültigBis);
+    public Kreditkarte {
+        Objects.requireNonNull(kartennummer, "kartennummer");
+        Objects.requireNonNull(gültigBis, "gültigBis");
     }
 
     @Override
