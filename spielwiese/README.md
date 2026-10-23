@@ -25,6 +25,11 @@ vergleichen lassen, und zeigt mit JDK 25 den Effekt der kompakten Objekt-Header.
 `Angeheftet` lässt virtuelle Threads in einem `synchronized`-Block warten – unter
 JDK 21 hält der Flight Recorder das Pinning fest, unter JDK 25 nicht mehr.
 
+`Wertbasiert` sammelt vier Stellen, an denen Code auf die Identität von `Integer`,
+`LocalDate` und Co. setzt – der Compiler warnt schon heute, und mit Project Valhalla
+ändert sich ihr Verhalten. `Wertklassen` vergleicht Records mit und ohne Identität
+und braucht einen Early-Access-Build von JDK 28 mit `--enable-preview`.
+
 Einige Dateien zeigen, was nach Java 25 kommt (`FinalesFeld`, `PrimitiveMuster`,
 `Gleichzeitig`). Sie brauchen ein neueres JDK oder `--enable-preview`; wie sie
 starten, steht jeweils im Kommentar am Anfang der Datei.
