@@ -3,8 +3,8 @@ package neuerungen.muster;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Beschreibt eine Zahlart für Kundinnen und Kunden – mit einer Kette aus
- * {@code instanceof} und Casts, wie man sie in gewachsenem Code findet.
+ * Beschreibt eine Zahlart für Kundinnen und Kunden – mit einem {@code switch} über
+ * Typ-Muster. Die Hierarchie ist offen, deshalb braucht er einen {@code default}.
  */
 public final class ZahlartBeschreibung {
 
@@ -14,27 +14,17 @@ public final class ZahlartBeschreibung {
     }
 
     public static String beschreibe(Zahlart zahlart) {
-        if (zahlart instanceof Rechnung) {
-            Rechnung rechnung = (Rechnung) zahlart;
-            if (rechnung.getZahlungszielTage() == 0) {
-                return "Rechnung, sofort zahlbar";
-            }
-            return "Rechnung, zahlbar innerhalb von " + rechnung.getZahlungszielTage() + " Tagen";
-        } else if (zahlart instanceof Lastschrift) {
-            Lastschrift lastschrift = (Lastschrift) zahlart;
-            return "Lastschrift von " + maskiere(lastschrift.getIban());
-        } else if (zahlart instanceof Kreditkarte) {
-            Kreditkarte kreditkarte = (Kreditkarte) zahlart;
-            return "Kreditkarte " + maskiere(kreditkarte.getKartennummer())
+        return switch (zahlart) {
+            case null -> "keine Zahlart angegeben";
+            case Rechnung rechnung when rechnung.getZahlungszielTage() == 0 -> "Rechnung, sofort zahlbar";
+            case Rechnung rechnung ->
+                    "Rechnung, zahlbar innerhalb von " + rechnung.getZahlungszielTage() + " Tagen";
+            case Lastschrift lastschrift -> "Lastschrift von " + maskiere(lastschrift.getIban());
+            case Kreditkarte kreditkarte -> "Kreditkarte " + maskiere(kreditkarte.getKartennummer())
                     + ", gültig bis " + kreditkarte.getGültigBis().format(MONAT_JAHR);
-        } else if (zahlart instanceof PayPal) {
-            PayPal payPal = (PayPal) zahlart;
-            return "PayPal (" + payPal.getKonto() + ")";
-        } else if (zahlart == null) {
-            return "keine Zahlart angegeben";
-        } else {
-            throw new IllegalArgumentException("Unbekannte Zahlart: " + zahlart);
-        }
+            case PayPal payPal -> "PayPal (" + payPal.getKonto() + ")";
+            default -> throw new IllegalArgumentException("Unbekannte Zahlart: " + zahlart);
+        };
     }
 
     private static String maskiere(String nummer) {
