@@ -31,9 +31,10 @@ public class RestAnwendung {
     public static final long LAGER_LATENZ_MILLIS = 100;
     /**
      * Wie viele neue Verbindungen auf ihre Annahme warten dürfen. 0 hieße „Vorgabe des
-     * JDK“, also 50 – der Lasttest schickt aber 200 auf einmal. Linux nimmt die
+     * JDK“, also 50 – der Lasttest schickt aber bis zu 100 auf einmal. Linux nimmt die
      * überzähligen eine Sekunde später an; macOS setzt sie zurück („Connection reset“
-     * bzw. „SocketException: Invalid argument“), und der Lasttest bricht ab.
+     * bzw. „SocketException: Invalid argument“), und der Lasttest bricht ab. macOS
+     * kappt den Wert außerdem bei {@code kern.ipc.somaxconn} (128).
      */
     static final int BACKLOG = 1000;
 
