@@ -27,6 +27,14 @@ public class Lasttest {
             + " \"positionen\": [{\"artikelnummer\": \"A-100\", \"bezeichnung\": \"Kaffeebohnen, 1 kg\","
             + " \"menge\": 2, \"einzelpreis\": 18.90}]}";
 
+    /**
+     * Wie viele Bestellungen höchstens gleichzeitig unterwegs sind. macOS nimmt nicht
+     * mehr als 128 Verbindungen in die Warteschlange des Servers auf
+     * ({@code kern.ipc.somaxconn}) und setzt jede weitere zurück – mit mehr
+     * gleichzeitigen Anfragen bräche der Lasttest dort ab.
+     */
+    static final int GLEICHZEITIG = 100;
+
     public static void main(String[] args) throws Exception {
         int anzahl = args.length > 0 ? Integer.parseInt(args[0]) : 200;
         RestAnwendung anwendung = new RestAnwendung(0);
@@ -41,7 +49,7 @@ public class Lasttest {
     }
 
     static long miss(final int port, int anzahl) throws Exception {
-        ExecutorService clients = Executors.newFixedThreadPool(anzahl);
+        ExecutorService clients = Executors.newFixedThreadPool(Math.min(anzahl, GLEICHZEITIG));
         try {
             List<Future<Integer>> antworten = new ArrayList<Future<Integer>>();
             long start = System.nanoTime();
