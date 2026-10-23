@@ -20,6 +20,11 @@ wie sie übersetzt wird, steht im Kommentar am Anfang der Datei.
 `Pakete` verteilt Artikel mit einem Stream Gatherer (JEP 485) auf Pakete und läuft
 nur auf JDK 25.
 
+`Speicherlast` gibt dem Garbage Collector Arbeit, damit sich die Collectoren
+vergleichen lassen, und zeigt mit JDK 25 den Effekt der kompakten Objekt-Header.
+`Angeheftet` lässt virtuelle Threads in einem `synchronized`-Block warten – unter
+JDK 21 hält der Flight Recorder das Pinning fest, unter JDK 25 nicht mehr.
+
 Einige Dateien zeigen, was nach Java 25 kommt (`FinalesFeld`, `PrimitiveMuster`,
 `Gleichzeitig`). Sie brauchen ein neueres JDK oder `--enable-preview`; wie sie
 starten, steht jeweils im Kommentar am Anfang der Datei.
