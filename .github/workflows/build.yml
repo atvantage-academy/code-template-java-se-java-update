@@ -105,7 +105,12 @@ jobs:
         env:
           BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
-          modul=$(find kompatibilitaet neuerungen schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "${BRANCH#loesung/}" | head -n 1)
+          name="${BRANCH#loesung/}"
+          modul=$(find kompatibilitaet neuerungen schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "$name" | head -n 1)
+          # Die Übung zu Virtual Threads hat kein eigenes Modul: Sie stellt den Altbestand um.
+          if [ -z "$modul" ] && [ "$name" = "virtual-threads" ]; then
+            modul=altbestand
+          fi
           if [ -z "$modul" ]; then
             echo "Kein Modul zu $BRANCH gefunden – baue das ganze Projekt."
             mvn -B -ntp verify

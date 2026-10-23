@@ -29,6 +29,13 @@ public class RestAnwendung {
 
     public static final int THREADS = 10;
     public static final long LAGER_LATENZ_MILLIS = 100;
+    /**
+     * Wie viele neue Verbindungen auf ihre Annahme warten dürfen. 0 hieße „Vorgabe des
+     * JDK“, also 50 – der Lasttest schickt aber 200 auf einmal. Linux nimmt die
+     * überzähligen eine Sekunde später an; macOS setzt sie zurück („Connection reset“
+     * bzw. „SocketException: Invalid argument“), und der Lasttest bricht ab.
+     */
+    static final int BACKLOG = 1000;
 
     private final HttpServer server;
     private final ExecutorService executor;
@@ -38,7 +45,7 @@ public class RestAnwendung {
         Beispieldaten.befülle(service);
 
         executor = Executors.newFixedThreadPool(THREADS);
-        server = HttpServer.create(new InetSocketAddress(port), 0);
+        server = HttpServer.create(new InetSocketAddress(port), BACKLOG);
         server.createContext("/bestellungen",
                 new BestellHandler(service, new Lagerdienst(LAGER_LATENZ_MILLIS), new BestellMapper()));
         server.setExecutor(executor);
