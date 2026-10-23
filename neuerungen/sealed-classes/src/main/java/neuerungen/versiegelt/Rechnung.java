@@ -14,9 +14,4 @@ public final class Rechnung extends Zahlart {
     public int getZahlungszielTage() {
         return zahlungszielTage;
     }
-
-    @Override
-    public <R> R accept(ZahlartVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
 }
