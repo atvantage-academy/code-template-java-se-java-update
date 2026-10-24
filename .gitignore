@@ -16,3 +16,8 @@ bin/
 # Betriebssystem
 .DS_Store
 Thumbs.db
+
+# Java-Artefakte
+*.jfr
+*.aot
+*.jsa
