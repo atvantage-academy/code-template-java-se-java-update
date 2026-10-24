@@ -12,12 +12,13 @@
 
   <artifactId>kompatibilitaet-werkzeuge</artifactId>
   <name>Kompatibilität · Werkzeuge</name>
-  <description>Lässt jdeps und jdeprscan des laufenden JDK über die übersetzten Klassen aller Bruch-Module laufen – und über eine eigene Klasse, die eine interne API des JDK nutzt.</description>
+  <description>Lässt jdeps und jdeprscan des laufenden JDK über die übersetzten Klassen aller Bruch-Module laufen – und über eigene Klassen, die interne und abgekündigte APIs des JDK nutzen.</description>
 
   <!--
     Die Abhängigkeiten sorgen nur dafür, dass Maven die Bruch-Module vorher übersetzt.
-    Dazu kommt eine eigene Klasse, Nummernkreis, die sun.misc.Unsafe nutzt – eine interne
-    API des JDK, die jdeps mit „jdk-internals“ meldet. Aufruf (oder Run Configuration gleichen Namens):
+    Dazu kommen eigene Klassen mit typischem Java-8-Code: Nummernkreis nutzt
+    sun.misc.Unsafe, eine interne API des JDK (jdeps mit „jdk-internals“); Lagerbestand,
+    Druckauftrag und Exportwächter nutzen abgekündigte APIs (jdeprscan). Aufruf (oder Run Configuration gleichen Namens):
 
       mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeps
       mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeprscan
