@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>kompatibilitaet</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kompatibilitaet-werkzeuge</artifactId>
+  <packaging>pom</packaging>
+  <name>Kompatibilität · Werkzeuge</name>
+  <description>Lässt jdeps und jdeprscan des laufenden JDK über die übersetzten Klassen aller Bruch-Module laufen.</description>
+
+  <!--
+    KEIN EIGENER CODE. Die Abhängigkeiten sorgen nur dafür, dass Maven die Bruch-Module
+    vorher übersetzt. Aufruf (oder Run Configuration gleichen Namens):
+
+      mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeps
+      mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeprscan
+
+    Ohne Profil passiert nichts – auch nicht auf JDK 8, das jdeprscan nicht kennt.
+  -->
+  <dependencies>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-unterstrich</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-eingeschraenkte-bezeichner</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-jaxb</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-reflection</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-zeichensatz</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-datumsformat</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-zeitstempel</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-sequenced</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>kompatibilitaet-security-manager</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <!-- Ziel-Release, gegen das jdeprscan prüft – hier hochstellen, um 25 zu prüfen. -->
+    <werkzeuge.release>21</werkzeuge.release>
+  </properties>
+
+  <profiles>
+    <!-- jdeps: Welche Abhängigkeiten fehlen dem JDK, welche JDK-Interna werden genutzt? -->
+    <profile>
+      <id>jdeps</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>jdeps-missing-deps</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/jdeps</executable>
+                  <arguments>
+                    <argument>--missing-deps</argument>
+                    <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
+                    <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
+                    <argument>${project.parent.basedir}/jaxb/target/classes</argument>
+                    <argument>${project.parent.basedir}/reflection/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeichensatz/target/classes</argument>
+                    <argument>${project.parent.basedir}/datumsformat/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeitstempel/target/classes</argument>
+                    <argument>${project.parent.basedir}/sequenced/target/classes</argument>
+                    <argument>${project.parent.basedir}/security-manager/target/classes</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jdeps-jdk-internals</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/jdeps</executable>
+                  <arguments>
+                    <argument>--jdk-internals</argument>
+                    <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
+                    <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
+                    <argument>${project.parent.basedir}/jaxb/target/classes</argument>
+                    <argument>${project.parent.basedir}/reflection/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeichensatz/target/classes</argument>
+                    <argument>${project.parent.basedir}/datumsformat/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeitstempel/target/classes</argument>
+                    <argument>${project.parent.basedir}/sequenced/target/classes</argument>
+                    <argument>${project.parent.basedir}/security-manager/target/classes</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- jdeprscan: Welche abgekündigten APIs werden genutzt, und welche davon verschwinden? -->
+    <profile>
+      <id>jdeprscan</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>jdeprscan</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/jdeprscan</executable>
+                  <arguments>
+                    <argument>--release</argument>
+                    <argument>${werkzeuge.release}</argument>
+                    <argument>--for-removal</argument>
+                    <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
+                    <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
+                    <argument>${project.parent.basedir}/jaxb/target/classes</argument>
+                    <argument>${project.parent.basedir}/reflection/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeichensatz/target/classes</argument>
+                    <argument>${project.parent.basedir}/datumsformat/target/classes</argument>
+                    <argument>${project.parent.basedir}/zeitstempel/target/classes</argument>
+                    <argument>${project.parent.basedir}/sequenced/target/classes</argument>
+                    <argument>${project.parent.basedir}/security-manager/target/classes</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
