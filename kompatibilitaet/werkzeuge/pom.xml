@@ -11,13 +11,13 @@
   </parent>
 
   <artifactId>kompatibilitaet-werkzeuge</artifactId>
-  <packaging>pom</packaging>
   <name>Kompatibilität · Werkzeuge</name>
-  <description>Lässt jdeps und jdeprscan des laufenden JDK über die übersetzten Klassen aller Bruch-Module laufen.</description>
+  <description>Lässt jdeps und jdeprscan des laufenden JDK über die übersetzten Klassen aller Bruch-Module laufen – und über eine eigene Klasse, die eine interne API des JDK nutzt.</description>
 
   <!--
-    KEIN EIGENER CODE. Die Abhängigkeiten sorgen nur dafür, dass Maven die Bruch-Module
-    vorher übersetzt. Aufruf (oder Run Configuration gleichen Namens):
+    Die Abhängigkeiten sorgen nur dafür, dass Maven die Bruch-Module vorher übersetzt.
+    Dazu kommt eine eigene Klasse, Nummernkreis, die sun.misc.Unsafe nutzt – eine interne
+    API des JDK, die jdeps mit „jdk-internals“ meldet. Aufruf (oder Run Configuration gleichen Namens):
 
       mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeps
       mvn clean compile -pl kompatibilitaet/werkzeuge -am -Pjdeprscan
@@ -84,6 +84,14 @@
   <properties>
     <!-- Ziel-Release, gegen das jdeprscan prüft – hier hochstellen, um 25 zu prüfen. -->
     <werkzeuge.release>21</werkzeuge.release>
+    <!--
+      ÜBERSETZT MIT „source“ UND „target“ 8 STATT „release“ 8. Mit „release“ kennt javac nur die
+      offizielle API von Java 8; sun.misc.Unsafe gehört nicht dazu, und die Klasse ließe
+      sich gar nicht übersetzen. So, gegen das installierte JDK, bauen viele Altprojekte.
+    -->
+    <maven.compiler.release></maven.compiler.release>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
 
   <profiles>
@@ -106,6 +114,7 @@
                   <executable>${java.home}/bin/jdeps</executable>
                   <arguments>
                     <argument>--missing-deps</argument>
+                    <argument>${project.build.outputDirectory}</argument>
                     <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
                     <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
                     <argument>${project.parent.basedir}/jaxb/target/classes</argument>
@@ -128,6 +137,7 @@
                   <executable>${java.home}/bin/jdeps</executable>
                   <arguments>
                     <argument>--jdk-internals</argument>
+                    <argument>${project.build.outputDirectory}</argument>
                     <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
                     <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
                     <argument>${project.parent.basedir}/jaxb/target/classes</argument>
@@ -167,6 +177,7 @@
                     <argument>--release</argument>
                     <argument>${werkzeuge.release}</argument>
                     <argument>--for-removal</argument>
+                    <argument>${project.build.outputDirectory}</argument>
                     <argument>${project.parent.basedir}/unterstrich/target/classes</argument>
                     <argument>${project.parent.basedir}/eingeschraenkte-bezeichner/target/classes</argument>
                     <argument>${project.parent.basedir}/jaxb/target/classes</argument>
