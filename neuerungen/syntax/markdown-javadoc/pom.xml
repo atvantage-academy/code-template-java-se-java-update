@@ -17,4 +17,23 @@
     <!-- Hier hochstellen. -->
     <maven.compiler.release>8</maven.compiler.release>
   </properties>
+
+  <!--
+    DIE DOKUMENTATION: mvn javadoc:javadoc (oder Run Configuration syntax-markdown-javadoc-doku)
+    erzeugt sie unter target/reports/apidocs. Markdown in /// versteht javadoc ab JDK 23 –
+    auch mit Release 8, denn das Release betrifft den Compiler, nicht javadoc. Jede Meldung
+    von doclint lässt den Lauf scheitern.
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <doclint>all</doclint>
+          <failOnWarnings>true</failOnWarnings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

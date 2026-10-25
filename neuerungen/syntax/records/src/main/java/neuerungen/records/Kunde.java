@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * Wer bestellt. Die E-Mail-Adresse ist freiwillig und darf fehlen.
  */
+// Umbauen: ein Record – wie Position.
 public final class Kunde {
 
     private final String kundennummer;

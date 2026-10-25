@@ -10,6 +10,7 @@ package neuerungen.konstruktoren;
  */
 public final class Bestellnummer extends Kennung {
 
+    // Umbauen: Seit Java 25 dürfen Prüfung und Normalisierung vor super(…) stehen – die Hilfsmethode entfällt.
     public Bestellnummer(String eingabe) {
         super("B", normalisiere(eingabe));
     }
