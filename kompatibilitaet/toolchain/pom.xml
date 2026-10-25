@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>kompatibilitaet</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kompatibilitaet-toolchain</artifactId>
+  <name>Kompatibilität · JDK 8 als Toolchain</name>
+  <description>Prüft, ob die Tests mit dem Profil jdk8 wirklich auf einem JDK 8 laufen.</description>
+
+  <!--
+    Kein Bruch: Mit diesem Modul prüfst Du die Einrichtung von JDK 8 als Toolchain
+    (~/.m2/toolchains.xml). Aufruf (oder Run Configuration gleichen Namens):
+
+      mvn clean verify -pl kompatibilitaet/toolchain -am -Pjdk8
+
+    Ohne das Profil laufen seine Tests nicht – auf Deinem JDK 21 oder 25 wären sie rot.
+  -->
+  <properties>
+    <skipTests>true</skipTests>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>jdk8</id>
+      <properties>
+        <skipTests>false</skipTests>
+      </properties>
+    </profile>
+  </profiles>
+</project>

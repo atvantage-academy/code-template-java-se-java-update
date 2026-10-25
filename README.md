@@ -13,7 +13,7 @@ Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen and
 | Ordner | Inhalt |
 |--------|--------|
 | [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du Virtual Threads und die Laufzeit der JVM aus. |
-| [`kompatibilitaet/`](kompatibilitaet) | **Je Bruchstelle ein Modul.** Jedes startet auf Java 8 und läuft dort. Was beim Umstieg bricht, siehst Du, wenn Du das Release hochstellst oder den Code auf einem neuen JDK laufen lässt. Dazu `kompatibilitaet/werkzeuge`: lässt `jdeps` und `jdeprscan` über alle diese Module laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). |
+| [`kompatibilitaet/`](kompatibilitaet) | **Je Bruchstelle ein Modul.** Jedes startet auf Java 8 und läuft dort. Was beim Umstieg bricht, siehst Du, wenn Du das Release hochstellst oder den Code auf einem neuen JDK laufen lässt. Dazu `kompatibilitaet/werkzeuge`: lässt `jdeps` und `jdeprscan` über alle diese Module laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). Und `kompatibilitaet/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
 | [`neuerungen/`](neuerungen) | **Je Neuerung in Syntax und API ein Modul.** Darin eine Klasse im Stil von Java 8 mit ihrem Test – die baust Du mit dem neuen Sprachmittel um – und unter `beispiel/` ein kleines Programm, das Du direkt aus dem Quelltext startest (`java neuerungen/«modul»/beispiel/«Datei».java`). Kein Build übersetzt die Beispiele; so bleibt jedes Modul auf Java 8 baubar. |
 | [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema, das am Code geübt wird, ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. |
 | [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
@@ -108,6 +108,13 @@ Mit JDK 8 trägst Du es in `~/.m2/toolchains.xml` ein (siehe
     </configuration>
   </toolchain>
 </toolchains>
+```
+
+Ob die Einrichtung stimmt, prüft das Modul `kompatibilitaet/toolchain`: Sein Test ist
+nur grün, wenn er wirklich auf JDK 8 läuft (Run Configuration `kompatibilitaet-toolchain`):
+
+```shell
+mvn clean verify -pl kompatibilitaet/toolchain -am -Pjdk8
 ```
 
 Baue dann mit dem Profil `jdk8` – Maven übersetzt weiter mit Deinem JDK, die Tests

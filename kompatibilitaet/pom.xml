@@ -27,5 +27,7 @@
     <module>security-manager</module>
     <!-- Kein Bruch: lässt jdeps und jdeprscan über alle Module oben laufen. -->
     <module>werkzeuge</module>
+    <!-- Kein Bruch: prüft die Einrichtung von JDK 8 als Toolchain (-Pjdk8). -->
+    <module>toolchain</module>
   </modules>
 </project>
