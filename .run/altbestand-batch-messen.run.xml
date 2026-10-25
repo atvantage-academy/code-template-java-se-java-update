@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="BatchAnwendung" type="Application" factoryName="Application">
+  <configuration default="false" name="altbestand-batch-messen" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="bestellung.batch.BatchAnwendung" />
     <module name="bestellung-batch" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />

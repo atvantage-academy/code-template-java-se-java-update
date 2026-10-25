@@ -16,9 +16,9 @@ import bestellung.extern.Lagerdienst;
 /**
  * Startet die REST-Schnittstelle der Bestellabwicklung.
  *
- * <p>Ein Thread je Anfrage aus einem festen Pool – die klassische Antwort auf
- * „Wie viele Anfragen schafft der Server gleichzeitig?“: so viele, wie Threads im
- * Pool sind.
+ * <p>Ein Thread je Anfrage aus einem festen Pool mit zehn Threads – die klassische
+ * Antwort auf „Wie viele Anfragen schafft der Server gleichzeitig?“: so viele, wie
+ * Threads im Pool sind.
  *
  * <pre>
  * mvn -pl altbestand/bestellung-rest -am install -DskipTests
@@ -27,7 +27,6 @@ import bestellung.extern.Lagerdienst;
  */
 public class RestAnwendung {
 
-    public static final int THREADS = 10;
     public static final long LAGER_LATENZ_MILLIS = 100;
     /**
      * Wie viele neue Verbindungen auf ihre Annahme warten dürfen. 0 hieße „Vorgabe des
@@ -45,7 +44,7 @@ public class RestAnwendung {
         BestellService service = new BestellService(new InMemoryBestellRepository());
         Beispieldaten.befülle(service);
 
-        executor = Executors.newFixedThreadPool(THREADS);
+        executor = Executors.newFixedThreadPool(10);
         server = HttpServer.create(new InetSocketAddress(port), BACKLOG);
         server.createContext("/bestellungen",
                 new BestellHandler(service, new Lagerdienst(LAGER_LATENZ_MILLIS), new BestellMapper()));
