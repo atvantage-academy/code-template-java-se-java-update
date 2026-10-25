@@ -6,8 +6,8 @@ mit `synchronized`.
 
 | Stelle | Vorher | Nachher |
 |--------|--------|---------|
-| `BestellImport` | `Executors.newFixedThreadPool(threads)` | `Executors.newVirtualThreadPerTaskExecutor()` in `try`-with-resources; die Poolgröße entfällt (auch in `BatchAnwendung` und `BestellImportTest`) |
-| `RestAnwendung` | fester Pool mit 10 Threads | `Executors.newVirtualThreadPerTaskExecutor()` |
+| `BestellImport` | `Executors.newFixedThreadPool(8)` | `Executors.newVirtualThreadPerTaskExecutor()` – nur diese Zeile |
+| `RestAnwendung` | `Executors.newFixedThreadPool(10)` | `Executors.newVirtualThreadPerTaskExecutor()` – nur diese Zeile |
 | `Verbindung` | `synchronized` um das Warten | `ReentrantLock` – nur unter Java 21 nötig, ab Java 24 pinnt `synchronized` nicht mehr (JEP 491) |
 
 ## Messwerte

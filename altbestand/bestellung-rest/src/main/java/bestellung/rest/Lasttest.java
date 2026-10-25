@@ -60,7 +60,7 @@ public class Lasttest {
         anwendung.starte();
         try {
             long dauer = miss(anwendung.getPort(), anzahl);
-            System.out.printf("%d Bestellungen in %d ms (Server: virtuelle Threads, Lager-Latenz %d ms, gleichzeitig %d)%n",
+            System.out.printf("%d Bestellungen in %d ms (Lager-Latenz %d ms, gleichzeitig %d)%n",
                     anzahl, dauer, RestAnwendung.LAGER_LATENZ_MILLIS, Math.min(anzahl, GLEICHZEITIG));
         } finally {
             anwendung.stoppe();

@@ -7,6 +7,7 @@ import java.util.Objects;
  * Eine Position einer Bestellung: welcher Artikel, wie oft, zu welchem Preis.
  * Vier Felder – und alles drumherum von Hand geschrieben.
  */
+// Umbauen: ein Record – Felder, Zugriffsmethoden, equals, hashCode und toString erzeugt der Compiler.
 public final class Position {
 
     private final String artikelnummer;

@@ -16,9 +16,9 @@ import bestellung.extern.Lagerdienst;
 /**
  * Startet die REST-Schnittstelle der Bestellabwicklung.
  *
- * <p>Ein virtueller Thread je Anfrage. Die alte Antwort auf „Wie viele Anfragen
- * schafft der Server gleichzeitig?“ – so viele, wie Threads im Pool sind – gilt
- * nicht mehr: Wer auf das Lager wartet, belegt keinen Thread des Betriebssystems.
+ * <p>Ein Thread je Anfrage aus einem festen Pool mit zehn Threads – die klassische
+ * Antwort auf „Wie viele Anfragen schafft der Server gleichzeitig?“: so viele, wie
+ * Threads im Pool sind.
  *
  * <pre>
  * mvn -pl altbestand/bestellung-rest -am install -DskipTests

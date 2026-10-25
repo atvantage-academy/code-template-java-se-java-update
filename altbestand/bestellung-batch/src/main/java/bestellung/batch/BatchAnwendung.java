@@ -34,7 +34,7 @@ public class BatchAnwendung {
                 new Bonitätsprüfung(AUSKUNFT_LATENZ_MILLIS));
         ImportErgebnis ergebnis = bestellImport.importiere(bestellungen);
 
-        System.out.printf("%d Bestellungen gelesen: %s (virtuelle Threads, Auskunft-Latenz %d ms)%n",
+        System.out.printf("%d Bestellungen gelesen: %s (Auskunft-Latenz %d ms)%n",
                 bestellungen.size(), ergebnis, AUSKUNFT_LATENZ_MILLIS);
         System.out.println();
         System.out.println(service.bericht());
