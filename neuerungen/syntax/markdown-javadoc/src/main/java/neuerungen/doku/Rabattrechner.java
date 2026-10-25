@@ -3,6 +3,7 @@ package neuerungen.doku;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+// Umbauen: Markdown mit /// statt HTML – Absätze, Liste, fett, Codeblock.
 /**
  * Berechnet den Rabatt auf eine Bestellung.
  *
@@ -28,6 +29,7 @@ public final class Rabattrechner {
     private Rabattrechner() {
     }
 
+    // Umbauen: Markdown – `0.00` statt <code>, [RoundingMode#HALF_UP] statt {@link}.
     /**
      * Der Rabatt für den Warenwert, auf Cent gerundet.
      *
@@ -45,6 +47,7 @@ public final class Rabattrechner {
         return warenwert.multiply(satz(warenwert)).setScale(2, RoundingMode.HALF_UP);
     }
 
+    // Umbauen: Markdown – `0.05` statt <code>.
     /**
      * Der Rabattsatz für den Warenwert, etwa <code>0.05</code> für 5 %.
      *

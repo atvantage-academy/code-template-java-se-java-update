@@ -15,23 +15,21 @@ import bestellung.extern.Bonitätsprüfung;
 /**
  * Importiert Bestellungen: Jede wird bei der Auskunftei geprüft und nur angelegt,
  * wenn der Kunde kreditwürdig ist. Die Prüfungen laufen parallel in einem festen
- * Thread-Pool – wie groß er sein darf, ist die alte Streitfrage.
+ * Thread-Pool mit acht Threads – wie groß er sein darf, ist die alte Streitfrage.
  */
 public class BestellImport {
 
     private final BestellService service;
     private final Bonitätsprüfung bonitätsprüfung;
-    private final int threads;
 
-    public BestellImport(BestellService service, Bonitätsprüfung bonitätsprüfung, int threads) {
+    public BestellImport(BestellService service, Bonitätsprüfung bonitätsprüfung) {
         this.service = service;
         this.bonitätsprüfung = bonitätsprüfung;
-        this.threads = threads;
     }
 
     public ImportErgebnis importiere(List<Bestellung> bestellungen) throws InterruptedException {
         long start = System.nanoTime();
-        ExecutorService pool = Executors.newFixedThreadPool(threads);
+        ExecutorService pool = Executors.newFixedThreadPool(8);
         try {
             List<Future<Boolean>> prüfungen = new ArrayList<Future<Boolean>>();
             for (final Bestellung bestellung : bestellungen) {
