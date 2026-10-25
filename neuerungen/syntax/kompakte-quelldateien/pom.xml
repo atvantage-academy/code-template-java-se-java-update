@@ -17,4 +17,41 @@
     <!-- Hier hochstellen. -->
     <maven.compiler.release>8</maven.compiler.release>
   </properties>
+
+  <!--
+    DAS WERKZEUG STARTEN: mvn clean compile -pl neuerungen/syntax/kompakte-quelldateien -am -Pstart
+    (oder Run Configuration syntax-kompakte-quelldateien-start). Nach dem Übersetzen startet
+    Maven Lagerliste mit dem java des laufenden JDK – die Ausgabe steht in der Konsole.
+    Ohne Profil passiert nichts.
+  -->
+  <profiles>
+    <profile>
+      <id>start</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>lagerliste</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <arguments>
+                    <argument>-cp</argument>
+                    <argument>${project.build.outputDirectory}</argument>
+                    <argument>Lagerliste</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
