@@ -5,10 +5,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Ein kleines Werkzeug: fasst Lagerbewegungen je Artikel zusammen. Es gehört zu keinem
- * Build, Java startet es direkt aus dem Quelltext (JEP 330, ab Java 11):
- *
- *     java neuerungen/syntax/kompakte-quelldateien/skript/Lagerliste.java
+ * Ein kleines Werkzeug: fasst Lagerbewegungen je Artikel zusammen. Es liegt ohne Paket
+ * in src/main/java, so wie später die kompakte Quelldatei, die kein Paket kennt.
  *
  * Geschrieben im Stil von Java 8 – mit allem, was eine Klasse dafür braucht.
  */
