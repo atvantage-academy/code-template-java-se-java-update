@@ -14,6 +14,7 @@ public final class ZahlartBeschreibung {
     }
 
     public static String beschreibe(Zahlart zahlart) {
+        // Umbauen: erst instanceof mit Muster statt Cast, danach ein switch über Typ-Muster.
         if (zahlart instanceof Rechnung) {
             Rechnung rechnung = (Rechnung) zahlart;
             if (rechnung.getZahlungszielTage() == 0) {
