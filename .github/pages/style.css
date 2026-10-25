@@ -1,0 +1,455 @@
+/*
+ * Project-specific UI. Bootstrap supplies the basic palette and typography.
+ */
+
+/* JetBrains Mono, die Schrift von IntelliJ (variabel, alle Strichstärken) */
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("assets/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("assets/jetbrains-mono-latin-wght-italic.woff2") format("woff2");
+    font-weight: 100 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --bs-font-monospace: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --project-sidebar-width: 320px;
+    --project-sidebar-min: 240px;
+    --project-sidebar-max: 560px;
+    --project-surface: var(--bs-body-bg);
+    --project-surface-2: var(--bs-tertiary-bg);
+    --project-border: var(--bs-border-color);
+    --project-code-bg: color-mix(in srgb, var(--bs-secondary-bg) 70%, transparent);
+    --project-tree-hover: color-mix(in srgb, var(--bs-primary) 8%, transparent);
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: var(--bs-body-font-family);
+    background: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+.app-shell {
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: var(--project-sidebar-width);
+    min-width: var(--project-sidebar-min);
+    max-width: var(--project-sidebar-max);
+    flex: 0 0 var(--project-sidebar-width);
+    overflow-y: auto;
+    border-right: 1px solid var(--project-border);
+    background: var(--project-surface-2);
+}
+
+.app-main {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.sidebar-content {
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+}
+
+.sidebar-splitter {
+    width: 6px;
+    flex: 0 0 6px;
+    cursor: col-resize;
+    background: transparent;
+    border: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar-splitter::after {
+    content: "";
+    position: absolute;
+    inset: 0 2px;
+    background: var(--project-border);
+    opacity: .55;
+}
+
+.sidebar-splitter:hover::after,
+.sidebar-splitter.dragging::after {
+    background: var(--bs-primary);
+    opacity: 1;
+}
+
+body.sidebar-resizing,
+body.sidebar-resizing * {
+    cursor: col-resize !important;
+    user-select: none !important;
+}
+
+.project-header {
+    border-bottom: 1px solid var(--project-border);
+    background: var(--bs-body-bg);
+}
+
+.project-tree .tree-item {
+    border-radius: .375rem;
+}
+
+.project-tree .tree-item:hover {
+    background: var(--project-tree-hover);
+}
+
+.project-tree .tree-link {
+    color: var(--bs-body-color);
+    text-decoration: none;
+}
+
+.project-tree .tree-link:hover {
+    color: var(--bs-primary);
+}
+
+.project-tree .tree-dir {
+    cursor: pointer;
+}
+
+.project-tree .tree-indent {
+    margin-left: 1rem;
+    padding-left: .5rem;
+    border-left: 1px solid var(--project-border);
+}
+
+.code-card {
+    overflow: hidden;
+}
+
+.code-scroll {
+    overflow-x: auto;
+}
+
+.code-table {
+    width: 100%;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--bs-font-monospace);
+    font-size: .875rem;
+}
+
+.code-table td {
+    vertical-align: top;
+}
+
+.code-line-number {
+    width: 1%;
+    min-width: 3.5rem;
+    padding: .08rem .8rem;
+    text-align: right;
+    color: var(--bs-secondary-color);
+    background: var(--project-code-bg);
+    border-right: 1px solid var(--project-border);
+    user-select: none;
+}
+
+.code-line {
+    padding: .08rem 1rem;
+    white-space: pre;
+}
+
+.highlight {
+    color: var(--code-text);
+    background: transparent;
+}
+
+/* Wie in IntelliJ (Standard): keine Ligaturen, != bleibt != */
+.highlight,
+.search-context {
+    font-variant-ligatures: none;
+    font-feature-settings: "calt" 0, "liga" 0;
+}
+
+.highlight pre {
+    margin: 0;
+    background: transparent;
+}
+
+.highlight code {
+    color: inherit;
+}
+
+/* Syntax-Farben wie in IntelliJ IDEA: „IntelliJ Light“ und „Dark“ (neue UI).
+   Pygments erkennt nur die Syntax, nicht die Bedeutung – Felder und lokale
+   Variablen sind daher nicht unterscheidbar und bleiben in Textfarbe. */
+:root,
+[data-bs-theme="light"] {
+    --code-text: #080808;
+    --code-keyword: #0033B3;
+    --code-string: #067D17;
+    --code-escape: #0037A6;
+    --code-number: #1750EB;
+    --code-comment: #8C8C8C;
+    --code-annotation: #9E880D;
+    --code-method: #00627A;
+    --code-variable: #871094;
+    --code-tag: #0033B3;
+    --code-attribute: #174AD4;
+}
+
+[data-bs-theme="dark"] {
+    --code-text: #BCBEC4;
+    --code-keyword: #CF8E6D;
+    --code-string: #6AAB73;
+    --code-escape: #CF8E6D;
+    --code-number: #2AACB8;
+    --code-comment: #7A7E85;
+    --code-annotation: #B3AE60;
+    --code-method: #56A8F5;
+    --code-variable: #C77DBB;
+    --code-tag: #D5B778;
+    --code-attribute: #BABABA;
+}
+
+
+/* Schlüsselwörter, auch Typen (int), Konstanten (true, null), Built-ins */
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt,
+.highlight .bp,
+.highlight .nb {
+    color: var(--code-keyword);
+}
+
+.highlight .s,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .dl,
+.highlight .s2,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .s1 {
+    color: var(--code-string);
+}
+
+.highlight .se {
+    color: var(--code-escape);
+}
+
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .il,
+.highlight .mo {
+    color: var(--code-number);
+}
+
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cpf,
+.highlight .c1,
+.highlight .cs,
+.highlight .sd {
+    color: var(--code-comment);
+    font-style: italic;
+}
+
+.highlight .nd {
+    color: var(--code-annotation);
+}
+
+.highlight .nf,
+.highlight .fm {
+    color: var(--code-method);
+}
+
+.highlight .nv,
+.highlight .vi,
+.highlight .vg,
+.highlight .vc {
+    color: var(--code-variable);
+}
+
+/* XML (pom.xml, SVG): Tags, Attribute, Werte als Strings */
+.highlight .nt,
+.highlight .cp {
+    color: var(--code-tag);
+}
+
+.lang-xml .na,
+.lang-html .na,
+.highlight .ni {
+    color: var(--code-attribute);
+}
+
+/* Schlüssel in .properties und .editorconfig, YAML und JSON */
+.lang-properties .na,
+.lang-ini .na,
+.lang-yaml .nt {
+    color: var(--code-keyword);
+}
+
+.lang-json .nt {
+    color: var(--code-variable);
+}
+
+/* Markdown */
+.highlight .gh,
+.highlight .gu {
+    color: var(--code-keyword);
+    font-weight: 700;
+}
+
+.highlight .ge {
+    font-style: italic;
+}
+
+.highlight .gs {
+    font-weight: 700;
+}
+
+/* Leere Zeilen behalten ihre volle Höhe. */
+.code-line:empty::after {
+    content: " ";
+}
+
+/* Änderungsansicht bei PRs */
+.diff-marker {
+    width: 1%;
+    padding: .08rem .4rem;
+    text-align: center;
+    user-select: none;
+}
+
+.diff-add td {
+    background: var(--bs-success-bg-subtle);
+}
+
+.diff-del td {
+    background: var(--bs-danger-bg-subtle);
+}
+
+.diff-add .diff-marker {
+    color: var(--bs-success-text-emphasis);
+}
+
+.diff-del .diff-marker {
+    color: var(--bs-danger-text-emphasis);
+}
+
+.diff-gap td {
+    padding: .1rem 1rem;
+    color: var(--bs-secondary-color);
+    background: var(--project-code-bg);
+    text-align: center;
+    user-select: none;
+}
+
+.tree-status,
+.file-status {
+    display: inline-block;
+    margin-left: .4rem;
+    padding: 0 .3rem;
+    border-radius: .25rem;
+    font-family: var(--bs-font-monospace);
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.tree-status-A,
+.file-status-A {
+    color: var(--bs-success-text-emphasis);
+    background: var(--bs-success-bg-subtle);
+}
+
+.tree-status-M,
+.file-status-M {
+    color: var(--bs-warning-text-emphasis);
+    background: var(--bs-warning-bg-subtle);
+}
+
+.tree-status-D,
+.file-status-D {
+    color: var(--bs-danger-text-emphasis);
+    background: var(--bs-danger-bg-subtle);
+}
+
+.image-preview {
+    border-bottom: 1px solid var(--project-border);
+    background: var(--bs-white);
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+.search-modal .modal-dialog {
+    max-width: min(900px, calc(100vw - 2rem));
+}
+
+.search-result {
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background: var(--project-tree-hover);
+}
+
+.search-context {
+    margin: 0;
+    padding: .75rem;
+    border-radius: .5rem;
+    background: var(--project-code-bg);
+    font-family: var(--bs-font-monospace);
+    font-size: .8rem;
+    white-space: pre-wrap;
+}
+
+.search-context .match {
+    font-weight: 700;
+    color: var(--bs-primary);
+}
+
+.search-empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--bs-secondary-color);
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        flex-basis: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--project-border);
+    }
+
+    .sidebar-splitter {
+        display: none;
+    }
+
+    .sidebar-content {
+        position: static;
+    }
+}

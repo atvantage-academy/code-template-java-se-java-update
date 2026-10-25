@@ -14,6 +14,7 @@ public interface Preisregel {
 
     /** Der Bruttopreis zu einem Nettopreis, auf Cent gerundet. */
     default BigDecimal brutto(BigDecimal netto) {
+        // Doppelter Code!
         BigDecimal mitSteuer = netto.multiply(BigDecimal.ONE.add(steuersatz()));
         return Preisregel.aufCentRunden(mitSteuer);
     }
@@ -22,10 +23,12 @@ public interface Preisregel {
     default BigDecimal bruttoMitRabatt(BigDecimal netto, int rabattProzent) {
         BigDecimal rabattiert = netto.multiply(BigDecimal.valueOf(100 - rabattProzent))
                 .divide(BigDecimal.valueOf(100));
+        // Doppelter Code!
         BigDecimal mitSteuer = rabattiert.multiply(BigDecimal.ONE.add(steuersatz()));
         return Preisregel.aufCentRunden(mitSteuer);
     }
 
+    // Könnte privat sein!
     /**
      * Nur für die beiden Default-Methoden gedacht. Mit Java 8 muss eine statische
      * Methode im Interface öffentlich sein – damit gehört sie zur API, und jeder darf
