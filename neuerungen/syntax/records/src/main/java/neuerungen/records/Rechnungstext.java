@@ -14,6 +14,7 @@ public final class Rechnungstext {
     public static List<String> zeilen(Bestellung bestellung) {
         List<String> zeilen = new ArrayList<String>();
         Kunde kunde = bestellung.getKunde();
+        // Umbauen: Die Zugriffsmethoden eines Records heißen wie seine Komponenten – name(), nicht getName().
         zeilen.add("Rechnung " + bestellung.getNummer() + " für " + kunde.getName()
                 + " (" + kunde.getKundennummer() + ")");
         for (Position position : bestellung.getPositionen()) {
@@ -26,6 +27,7 @@ public final class Rechnungstext {
     }
 
     public static String zahlungshinweis(Kreditkarte karte) {
+        // Umbauen: ebenso kartennummer() und gültigBis().
         String nummer = karte.getKartennummer();
         return "Abgebucht von Karte ****" + nummer.substring(nummer.length() - 4)
                 + ", gültig bis " + karte.getGültigBis();
