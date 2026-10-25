@@ -72,7 +72,9 @@ Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
 `-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
 ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
 Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile. Dazu
-kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
+kommen zum Starten `altbestand-rest-starten` (die REST-Schnittstelle),
+`altbestand-rest-lasttest` (Lasttest gegen die REST-Schnittstelle) und
+`altbestand-batch-messen` (der Batch-Import mit Zeitmessung).
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
   Du findest sie oben rechts in der Auswahl neben dem Startknopf.
