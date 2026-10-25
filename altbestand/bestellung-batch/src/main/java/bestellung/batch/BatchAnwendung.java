@@ -21,7 +21,6 @@ import bestellung.extern.Bonitätsprüfung;
  */
 public class BatchAnwendung {
 
-    public static final int THREADS = 8;
     public static final long AUSKUNFT_LATENZ_MILLIS = 50;
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -32,11 +31,11 @@ public class BatchAnwendung {
 
         BestellService service = new BestellService(new InMemoryBestellRepository());
         BestellImport bestellImport = new BestellImport(service,
-                new Bonitätsprüfung(AUSKUNFT_LATENZ_MILLIS), THREADS);
+                new Bonitätsprüfung(AUSKUNFT_LATENZ_MILLIS));
         ImportErgebnis ergebnis = bestellImport.importiere(bestellungen);
 
-        System.out.printf("%d Bestellungen gelesen: %s (%d Threads, Auskunft-Latenz %d ms)%n",
-                bestellungen.size(), ergebnis, THREADS, AUSKUNFT_LATENZ_MILLIS);
+        System.out.printf("%d Bestellungen gelesen: %s (Auskunft-Latenz %d ms)%n",
+                bestellungen.size(), ergebnis, AUSKUNFT_LATENZ_MILLIS);
         System.out.println();
         System.out.println(service.bericht());
     }
