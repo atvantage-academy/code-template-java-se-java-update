@@ -65,7 +65,8 @@ Kompatibilitätsschalter ausprobiert, gibt es eine Run Configuration mit dem Sch
 Ende – `laufzeit-datumsformat-compat`, `laufzeit-reflection-add-opens`,
 `laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`.
 `syntax-markdown-javadoc-doku` erzeugt zusätzlich die Dokumentation des Moduls,
-`syntax-kompakte-quelldateien-start` startet das Werkzeug `Lagerliste`. Dazu
+`syntax-kompakte-quelldateien-start` startet das Werkzeug `Lagerliste`. `schwerpunkte-modulsystem-klassenpfad` startet
+den `Exportlauf` des Modulsystems auf dem Klassenpfad. Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
