@@ -54,7 +54,10 @@ Für jedes Übungsmodul gibt es eine Run Configuration, die es baut und testet
 (`clean verify`), benannt wie das Modul – etwa `kompatibilitaet-jaxb`. Die
 Run Configuration `java-update` baut das ganze Projekt, ohne bei Testfehlern
 abzubrechen. `kompatibilitaet-jdeps` und `kompatibilitaet-jdeprscan` lassen die beiden
-Werkzeuge des JDK über die übersetzten Klassen aller Kompatibilitätsmodule laufen. Dazu
+Werkzeuge des JDK über die übersetzten Klassen aller Kompatibilitätsmodule laufen.
+Zu den Brüchen zur Laufzeit gibt es eine zweite mit `-jdk8` am Ende – etwa
+`kompatibilitaet-reflection-jdk8` –, die die Tests auf JDK 8 laufen lässt (siehe
+[Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
@@ -113,6 +116,10 @@ laufen auf JDK 8:
 ```shell
 mvn clean verify -pl kompatibilitaet/jaxb -am -Pjdk8
 ```
+
+In der IDE startest Du dafür die Run Configuration mit `-jdk8` am Ende, etwa
+`kompatibilitaet-jaxb-jdk8`. IntelliJ IDEA und Eclipse lesen `~/.m2/toolchains.xml`
+wie Maven auf der Kommandozeile.
 
 ## Die Lösungen
 
