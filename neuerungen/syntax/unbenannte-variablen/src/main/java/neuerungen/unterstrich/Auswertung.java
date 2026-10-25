@@ -18,6 +18,7 @@ public final class Auswertung {
     public static int anzahlZahlen(List<String> texte) {
         int anzahl = 0;
         for (String text : texte) {
+            // Umbauen: Der catch-Parameter „ignoriert“ wird nie gelesen – seit Java 22 genügt „_“.
             try {
                 Integer.parseInt(text.trim());
                 anzahl++;
@@ -31,6 +32,7 @@ public final class Auswertung {
     /** Wie viele Zeilen die Datei hat. */
     public static int anzahlZeilen(Iterable<String> zeilen) {
         int anzahl = 0;
+        // Umbauen: „zeile“ wird nie gelesen.
         for (String zeile : zeilen) {
             anzahl++;
         }
@@ -42,6 +44,7 @@ public final class Auswertung {
         Map<String, List<String>> ergebnis = new TreeMap<String, List<String>>();
         for (String zeile : zeilen) {
             String[] felder = zeile.split(";");
+            // Umbauen: „kundennummer“ wird nie gelesen.
             ergebnis.computeIfAbsent(felder[0], kundennummer -> new ArrayList<String>()).add(felder[1]);
         }
         return ergebnis;
@@ -50,6 +53,7 @@ public final class Auswertung {
     /** Die Summe aller Mengen, gleich welcher Artikel. */
     public static int gesamtmenge(Map<String, Integer> mengeJeArtikel) {
         int[] summe = {0};
+        // Umbauen: „artikelnummer“ wird nie gelesen.
         mengeJeArtikel.forEach((artikelnummer, menge) -> summe[0] += menge);
         return summe[0];
     }

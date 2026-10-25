@@ -1,3 +1,4 @@
+// Umbauen: Eine kompakte Quelldatei importiert das Modul java.base von selbst.
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.TreeMap;
  *
  * Geschrieben im Stil von Java 8 – mit allem, was eine Klasse dafür braucht.
  */
+// Umbauen: Die Klasse entfällt, aus main wird „void main()“.
 public class Lagerliste {
 
     public static void main(String[] args) {
@@ -30,6 +32,7 @@ public class Lagerliste {
         }
 
         for (Map.Entry<String, Integer> eintrag : bestand.entrySet()) {
+            // Umbauen: IO.println statt System.out.println.
             System.out.println(eintrag.getKey() + " " + namen.get(eintrag.getKey()) + ": " + eintrag.getValue());
         }
     }
