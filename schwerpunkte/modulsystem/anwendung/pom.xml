@@ -161,8 +161,8 @@
       </build>
     </profile>
     <!--
-      Baut mit jlink das Image target/bild, listet seine Module und startet es über das Startskript
-      (unter Windows exportlauf.bat).
+      Baut mit jlink das Image target/bild und listet seine Module. Starten tust Du es
+      selbst über sein Startskript: target/bild/bin/exportlauf (unter Windows exportlauf.bat).
     -->
     <profile>
       <id>image</id>
@@ -207,25 +207,15 @@
                   </arguments>
                 </configuration>
               </execution>
-              <execution>
-                <id>exportlauf</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>${project.basedir}/../target/bild/bin/exportlauf</executable>
-                  <arguments />
-                </configuration>
-              </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
     <!--
-      Baut mit jlink das Image target/bild-mit-csv samt CSV-Format und startet es über das
-      Startskript. Baut vorher auch target/bild, damit Du die Größe beider vergleichen kannst.
+      Baut mit jlink das Image target/bild-mit-csv samt CSV-Format, vorher auch target/bild,
+      damit Du die Größe beider vergleichen kannst. Starten tust Du es selbst über sein
+      Startskript: target/bild-mit-csv/bin/exportlauf.
     -->
     <profile>
       <id>image-mit-csv</id>
@@ -277,17 +267,6 @@
                     <argument>--output</argument>
                     <argument>${project.basedir}/../target/bild-mit-csv</argument>
                   </arguments>
-                </configuration>
-              </execution>
-              <execution>
-                <id>exportlauf</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>${project.basedir}/../target/bild-mit-csv/bin/exportlauf</executable>
-                  <arguments />
                 </configuration>
               </execution>
             </executions>

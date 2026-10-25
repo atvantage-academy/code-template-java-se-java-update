@@ -71,7 +71,7 @@ bauen `schwerpunkte-modulsystem-…` die drei Teile und führen danach je einen 
 Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
 `-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
 ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
-Laufzeit-Image und starten es. Dazu
+Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile. Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
