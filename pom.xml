@@ -14,7 +14,8 @@
 
   <modules>
     <module>altbestand</module>
-    <module>kompatibilitaet</module>
+    <module>ueberblick</module>
+    <module>inkompatibilitaeten</module>
     <module>neuerungen</module>
     <module>schwerpunkte</module>
   </modules>

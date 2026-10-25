@@ -13,21 +13,10 @@
   <artifactId>neuerungen</artifactId>
   <packaging>pom</packaging>
   <name>Neuerungen</name>
-  <description>Je Neuerung in Syntax und API ein Modul. Jedes startet auf Java 8.</description>
+  <description>Je Neuerung ein Modul, getrennt nach Syntax und API. Jedes startet auf Java 8.</description>
 
   <modules>
-    <module>collection-factories</module>
-    <module>private-interface-methoden</module>
-    <module>unbenannte-variablen</module>
-    <module>var</module>
-    <module>switch-expressions</module>
-    <module>text-bloecke</module>
-    <module>records</module>
-    <module>pattern-matching</module>
-    <module>sealed-classes</module>
-    <module>kompakte-quelldateien</module>
-    <module>markdown-javadoc</module>
-    <module>scoped-values</module>
-    <module>flexible-konstruktoren</module>
+    <module>syntax</module>
+    <module>api</module>
   </modules>
 </project>

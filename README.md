@@ -13,8 +13,9 @@ Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen and
 | Ordner | Inhalt |
 |--------|--------|
 | [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du Virtual Threads und die Laufzeit der JVM aus. |
-| [`kompatibilitaet/`](kompatibilitaet) | **Je Bruchstelle ein Modul.** Jedes startet auf Java 8 und läuft dort. Was beim Umstieg bricht, siehst Du, wenn Du das Release hochstellst oder den Code auf einem neuen JDK laufen lässt. Dazu `kompatibilitaet/werkzeuge`: lässt `jdeps` und `jdeprscan` über alle diese Module laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). Und `kompatibilitaet/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
-| [`neuerungen/`](neuerungen) | **Je Neuerung in Syntax und API ein Modul.** Darin eine Klasse im Stil von Java 8 mit ihrem Test – die baust Du mit dem neuen Sprachmittel um – und unter `beispiel/` ein kleines Programm, das Du direkt aus dem Quelltext startest (`java neuerungen/«modul»/beispiel/«Datei».java`). Kein Build übersetzt die Beispiele; so bleibt jedes Modul auf Java 8 baubar. |
+| [`ueberblick/`](ueberblick) | `werkzeuge/` lässt `jdeps` und `jdeprscan` über alle Module der Inkompatibilitäten laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). |
+| [`inkompatibilitaeten/`](inkompatibilitaeten) | **Je Bruchstelle ein Modul**, getrennt nach [`bauzeit/`](inkompatibilitaeten/bauzeit) – der Compiler meldet den Bruch, sobald Du das Release hochstellst – und [`laufzeit/`](inkompatibilitaeten/laufzeit) – der Bruch zeigt sich erst auf dem neuen JDK. Jedes Modul startet auf Java 8 und läuft dort. Dazu `laufzeit/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
+| [`neuerungen/`](neuerungen) | **Je Neuerung ein Modul**, getrennt nach [`syntax/`](neuerungen/syntax) und [`api/`](neuerungen/api). Darin eine Klasse im Stil von Java 8 mit ihrem Test – die baust Du mit der Neuerung um – und unter `beispiel/` ein kleines Programm, das Du direkt aus dem Quelltext startest (`java neuerungen/syntax/«modul»/beispiel/«Datei».java`). Kein Build übersetzt die Beispiele; so bleibt jedes Modul auf Java 8 baubar. |
 | [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema, das am Code geübt wird, ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. |
 | [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
 | [`.run/`](.run), [`eclipse/`](eclipse) | Fertige Run Configurations für IntelliJ IDEA und Eclipse. |
@@ -45,18 +46,20 @@ Baue das ganze Projekt auf einmal, ohne bei Testfehlern abzubrechen:
 mvn verify -fae -Dmaven.test.failure.ignore=true
 ```
 
-Auf JDK 21 oder 25 schlagen dabei Tests in `kompatibilitaet/` fehl. **Das ist
+Auf JDK 21 oder 25 schlagen dabei Tests in `inkompatibilitaeten/` fehl. **Das ist
 Absicht** – um diese Brüche geht es in den Übungen.
 
 ## In der IDE
 
 Für jedes Übungsmodul gibt es eine Run Configuration, die es baut und testet
-(`clean verify`), benannt wie das Modul – etwa `kompatibilitaet-jaxb`. Die
+(`clean verify`), benannt wie das Modul: vorn die Gruppe (`bauzeit`, `laufzeit`,
+`syntax`, `api`), dahinter der Ordner – etwa `laufzeit-jaxb` für
+`inkompatibilitaeten/laufzeit/jaxb`. Die
 Run Configuration `java-update` baut das ganze Projekt, ohne bei Testfehlern
-abzubrechen. `kompatibilitaet-jdeps` und `kompatibilitaet-jdeprscan` lassen die beiden
-Werkzeuge des JDK über die übersetzten Klassen aller Kompatibilitätsmodule laufen.
+abzubrechen. `ueberblick-werkzeuge-jdeps` und `ueberblick-werkzeuge-jdeprscan` lassen die beiden
+Werkzeuge des JDK über die übersetzten Klassen aller Module der Inkompatibilitäten laufen.
 Zu den Brüchen zur Laufzeit gibt es eine zweite mit `-jdk8` am Ende – etwa
-`kompatibilitaet-reflection-jdk8` –, die die Tests auf JDK 8 laufen lässt (siehe
+`laufzeit-reflection-jdk8` –, die die Tests auf JDK 8 laufen lässt (siehe
 [Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
@@ -74,10 +77,10 @@ noch einmal für dieses Modul (für den Altbestand in `altbestand/pom.xml`). Zum
 Hochstellen änderst Du den Wert in der `pom.xml` des Moduls, so wie bei einer echten
 Migration.
 
-Baue danach das Modul neu, zum Beispiel das Modul `kompatibilitaet/jaxb`:
+Baue danach das Modul neu, zum Beispiel das Modul `inkompatibilitaeten/laufzeit/jaxb`:
 
 ```shell
-mvn clean verify -pl kompatibilitaet/jaxb -am
+mvn clean verify -pl inkompatibilitaeten/laufzeit/jaxb -am
 ```
 
 **Immer mit `clean`.** Ändert sich nur das Release, hält Maven die übersetzten
@@ -110,22 +113,22 @@ Mit JDK 8 trägst Du es in `~/.m2/toolchains.xml` ein (siehe
 </toolchains>
 ```
 
-Ob die Einrichtung stimmt, prüft das Modul `kompatibilitaet/toolchain`: Sein Test ist
-nur grün, wenn er wirklich auf JDK 8 läuft (Run Configuration `kompatibilitaet-toolchain`):
+Ob die Einrichtung stimmt, prüft das Modul `inkompatibilitaeten/laufzeit/toolchain`: Sein Test ist
+nur grün, wenn er wirklich auf JDK 8 läuft (Run Configuration `laufzeit-toolchain`):
 
 ```shell
-mvn clean verify -pl kompatibilitaet/toolchain -am -Pjdk8
+mvn clean verify -pl inkompatibilitaeten/laufzeit/toolchain -am -Pjdk8
 ```
 
 Baue dann mit dem Profil `jdk8` – Maven übersetzt weiter mit Deinem JDK, die Tests
 laufen auf JDK 8:
 
 ```shell
-mvn clean verify -pl kompatibilitaet/jaxb -am -Pjdk8
+mvn clean verify -pl inkompatibilitaeten/laufzeit/jaxb -am -Pjdk8
 ```
 
 In der IDE startest Du dafür die Run Configuration mit `-jdk8` am Ende, etwa
-`kompatibilitaet-jaxb-jdk8`. IntelliJ IDEA und Eclipse lesen `~/.m2/toolchains.xml`
+`laufzeit-jaxb-jdk8`. IntelliJ IDEA und Eclipse lesen `~/.m2/toolchains.xml`
 wie Maven auf der Kommandozeile.
 
 ## Die Lösungen

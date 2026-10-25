@@ -1,4 +1,4 @@
 * text=auto eol=lf
 *.cmd text eol=crlf
 # Absichtlich windows-1252-kodiert (Modul zeichensatz) – Git darf daran nichts ändern.
-kompatibilitaet/zeichensatz/src/test/resources/*.csv -text
+inkompatibilitaeten/laufzeit/zeichensatz/src/test/resources/*.csv -text

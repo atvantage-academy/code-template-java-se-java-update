@@ -2,7 +2,7 @@
 #
 # Der zweite Job ist eine BESTANDSAUFNAHME: derselbe, unveränderte Code auf JDK 21 und
 # JDK 25. Fehlschlagende Tests brechen ihn nicht ab, sondern landen in der
-# Zusammenfassung des Laufs – sie sind der Lernstoff des Moduls „kompatibilitaet“.
+# Zusammenfassung des Laufs – sie sind der Lernstoff des Ordners „inkompatibilitaeten“.
 # Auf den Lösungsbranches wandert die Pipeline mit dem Code auf die neuen JDKs.
 #
 # Der dritte Job prüft das Profil „jdk8“: Maven auf JDK 21, die Tests über Toolchains auf
@@ -106,7 +106,7 @@ jobs:
           BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
           name="${BRANCH#loesung/}"
-          modul=$(find kompatibilitaet neuerungen schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "$name" | head -n 1)
+          modul=$(find inkompatibilitaeten/bauzeit inkompatibilitaeten/laufzeit neuerungen/syntax neuerungen/api schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "$name" | head -n 1)
           # Die Übung zu Virtual Threads hat kein eigenes Modul: Sie stellt den Altbestand um.
           if [ -z "$modul" ] && [ "$name" = "virtual-threads" ]; then
             modul=altbestand
