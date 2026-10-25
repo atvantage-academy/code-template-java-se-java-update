@@ -65,8 +65,16 @@ Kompatibilitätsschalter ausprobiert, gibt es eine Run Configuration mit dem Sch
 Ende – `laufzeit-datumsformat-compat`, `laufzeit-reflection-add-opens`,
 `laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`.
 `syntax-markdown-javadoc-doku` erzeugt zusätzlich die Dokumentation des Moduls,
-`syntax-kompakte-quelldateien-start` startet das Werkzeug `Lagerliste`. Dazu
-kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
+`syntax-kompakte-quelldateien-start` startet das Werkzeug `Lagerliste`. Zum Modulsystem
+bauen `schwerpunkte-modulsystem-…` die drei Teile und führen danach je einen Befehl der
+Übung aus: `-klassenpfad` und `-modulpfad-automatisch` starten den `Exportlauf` auf dem
+Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
+`-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
+ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
+Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile. Dazu
+kommen zum Starten `altbestand-rest-starten` (die REST-Schnittstelle),
+`altbestand-rest-lasttest` (Lasttest gegen die REST-Schnittstelle) und
+`altbestand-batch-messen` (der Batch-Import mit Zeitmessung).
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
   Du findest sie oben rechts in der Auswahl neben dem Startknopf.
@@ -142,7 +150,10 @@ Zu jeder Übung gibt es einen Branch `loesung/«übung»`. Er zweigt von `main` 
 trägt den Stand **nach** dieser Übung; sein Pull Request zeigt im Diff genau, was die
 Übung verändert. Die Übungen hängen nicht voneinander ab – jede startet auf `main`.
 
-➜ [Alle Lösungen ansehen](https://github.com/atvantage-academy/code-template-java-se-java-update/pulls)
+➜ [Alle Lösungen ansehen](https://atvantage-academy.github.io/code-template-java-se-java-update/) –
+auf einer Seite zum Durchklicken: Musterlösung wählen, geänderte Dateien ansehen, je
+Datei die Änderung oder den kompletten Stand. Dieselben Lösungen als Pull Requests:
+[auf GitHub](https://github.com/atvantage-academy/code-template-java-se-java-update/pulls).
 
 **Sieh erst nach, wenn Du es selbst versucht hast.** Der Wert einer Übung liegt im
 Suchen, nicht im Ergebnis.
@@ -162,6 +173,11 @@ Suchen, nicht im Ergebnis.
 Auf einem Lösungsbranch `loesung/«modul»` laufen diese drei nicht. Dort prüft
 stattdessen **Lösung auf JDK 21 und 25** genau das Modul der Übung – streng, jeder
 Testfehler ist ein Fehler.
+
+[`pages.yml`](.github/workflows/pages.yml) erzeugt die Seite mit den Lösungen und
+veröffentlicht sie auf GitHub Pages – bei jedem Push auf `main` und bei jeder Änderung
+an einem Pull Request. Wie man sie lokal erzeugt, steht in
+[`.github/pages/README-local.md`](.github/pages/README-local.md).
 
 ## Gut zu wissen
 
