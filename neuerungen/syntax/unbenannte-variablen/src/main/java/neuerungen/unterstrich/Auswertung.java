@@ -7,7 +7,8 @@ import java.util.TreeMap;
 
 /**
  * Wertet Zeilen aus einer Importdatei aus. An mehreren Stellen braucht der Code eine
- * Variable, die er nie liest – mit Java 8 bekommt sie trotzdem einen Namen.
+ * Variable, die er nie liest – mit Java 8 bekommt sie trotzdem einen Namen, einmal
+ * sogar „_“.
  */
 public final class Auswertung {
 
@@ -18,11 +19,12 @@ public final class Auswertung {
     public static int anzahlZahlen(List<String> texte) {
         int anzahl = 0;
         for (String text : texte) {
-            // Umbauen: Der catch-Parameter „ignoriert“ wird nie gelesen – seit Java 22 genügt „_“.
+            // „_“ als Name: bis Release 8 erlaubt (mit Warnung), ab Release 9 ein Fehler,
+            // seit Java 22 eine unbenannte Variable.
             try {
                 Integer.parseInt(text.trim());
                 anzahl++;
-            } catch (NumberFormatException ignoriert) {
+            } catch (NumberFormatException _) {
                 // keine Zahl – zählt nicht
             }
         }
