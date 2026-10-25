@@ -7,6 +7,7 @@ import java.math.RoundingMode;
  * Berechnet die Gebühr, die eine Zahlart für einen Betrag kostet – als Visitor, damit
  * der Compiler meldet, wenn eine Zahlart fehlt.
  */
+// Umbauen: Über eine versiegelte Zahlart genügt ein switch ohne default – der Visitor entfällt.
 public final class GebührenRechner implements ZahlartVisitor<BigDecimal> {
 
     private static final BigDecimal RECHNUNGSGEBÜHR = new BigDecimal("1.50");
