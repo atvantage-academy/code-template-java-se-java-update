@@ -63,7 +63,8 @@ Zu den Brüchen zur Laufzeit gibt es eine zweite mit `-jdk8` am Ende – etwa
 [Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Wo eine Übung einen
 Kompatibilitätsschalter ausprobiert, gibt es eine Run Configuration mit dem Schalter am
 Ende – `laufzeit-datumsformat-compat`, `laufzeit-reflection-add-opens`,
-`laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`. Dazu
+`laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`.
+`syntax-markdown-javadoc-doku` erzeugt zusätzlich die Dokumentation des Moduls. Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
