@@ -15,7 +15,7 @@ Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen and
 | [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du Virtual Threads und die Laufzeit der JVM aus. |
 | [`ueberblick/`](ueberblick) | `werkzeuge/` lässt `jdeps` und `jdeprscan` über alle Module der Inkompatibilitäten laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). |
 | [`inkompatibilitaeten/`](inkompatibilitaeten) | **Je Bruchstelle ein Modul**, getrennt nach [`bauzeit/`](inkompatibilitaeten/bauzeit) – der Compiler meldet den Bruch, sobald Du das Release hochstellst – und [`laufzeit/`](inkompatibilitaeten/laufzeit) – der Bruch zeigt sich erst auf dem neuen JDK. Jedes Modul startet auf Java 8 und läuft dort. Dazu `laufzeit/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
-| [`neuerungen/`](neuerungen) | **Je Neuerung ein Modul**, getrennt nach [`syntax/`](neuerungen/syntax) und [`api/`](neuerungen/api). Darin eine Klasse im Stil von Java 8 mit ihrem Test – die baust Du mit der Neuerung um – und unter `beispiel/` ein kleines Programm, das Du direkt aus dem Quelltext startest (`java neuerungen/syntax/«modul»/beispiel/«Datei».java`). Kein Build übersetzt die Beispiele; so bleibt jedes Modul auf Java 8 baubar. |
+| [`neuerungen/`](neuerungen) | **Je Neuerung ein Modul**, getrennt nach [`syntax/`](neuerungen/syntax) und [`api/`](neuerungen/api). Darin eine Klasse im Stil von Java 8 mit ihrem Test. Kommentare `// Umbauen: …` markieren die Stellen, die Du mit der Neuerung umbaust, und sagen, warum. |
 | [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema, das am Code geübt wird, ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. |
 | [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
 | [`.run/`](.run), [`eclipse/`](eclipse) | Fertige Run Configurations für IntelliJ IDEA und Eclipse. |
@@ -60,7 +60,18 @@ abzubrechen. `ueberblick-werkzeuge-jdeps` und `ueberblick-werkzeuge-jdeprscan` l
 Werkzeuge des JDK über die übersetzten Klassen aller Module der Inkompatibilitäten laufen.
 Zu den Brüchen zur Laufzeit gibt es eine zweite mit `-jdk8` am Ende – etwa
 `laufzeit-reflection-jdk8` –, die die Tests auf JDK 8 laufen lässt (siehe
-[Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Dazu
+[Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Wo eine Übung einen
+Kompatibilitätsschalter ausprobiert, gibt es eine Run Configuration mit dem Schalter am
+Ende – `laufzeit-datumsformat-compat`, `laufzeit-reflection-add-opens`,
+`laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`.
+`syntax-markdown-javadoc-doku` erzeugt zusätzlich die Dokumentation des Moduls,
+`syntax-kompakte-quelldateien-start` startet das Werkzeug `Lagerliste`. Zum Modulsystem
+bauen `schwerpunkte-modulsystem-…` die drei Teile und führen danach je einen Befehl der
+Übung aus: `-klassenpfad` und `-modulpfad-automatisch` starten den `Exportlauf` auf dem
+Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
+`-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
+ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
+Laufzeit-Image und starten es. Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;

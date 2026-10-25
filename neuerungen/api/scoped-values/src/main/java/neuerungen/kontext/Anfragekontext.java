@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
  */
 public final class Anfragekontext {
 
+    // Umbauen: ein ScopedValue – die Bindung endet mit dem Aufruf von selbst.
     private static final ThreadLocal<String> ANFRAGE = new ThreadLocal<String>();
 
     private Anfragekontext() {
@@ -18,6 +19,7 @@ public final class Anfragekontext {
 
     /** Bearbeitet die Aufgabe im Kontext der Anfrage und gibt ihr Ergebnis zurück. */
     public static <T> T bearbeite(String anfrage, Callable<T> aufgabe) throws Exception {
+        // Umbauen: Binden und Aufrufen in einer Zeile – Merken und Zurücksetzen entfallen.
         String vorher = ANFRAGE.get();
         ANFRAGE.set(anfrage);
         try {
@@ -33,6 +35,7 @@ public final class Anfragekontext {
 
     /** Die Kennung der laufenden Anfrage, oder „–“ außerhalb einer Anfrage. */
     public static String aktuelleAnfrage() {
+        // Umbauen: orElse statt der Prüfung auf null.
         String anfrage = ANFRAGE.get();
         return anfrage == null ? "–" : anfrage;
     }

@@ -18,6 +18,7 @@ public final class Umsatzauswertung {
 
     /** Alle Beträge je Kundennummer, sortiert nach Kundennummer. */
     public static Map<String, List<BigDecimal>> beträgeJeKunde(List<String> zeilen) {
+        // Umbauen: Die Typen der lokalen Variablen stehen schon rechts oder ergeben sich – „var“ genügt.
         Map<String, List<BigDecimal>> ergebnis = new TreeMap<String, List<BigDecimal>>();
         for (String zeile : zeilen) {
             String[] felder = zeile.split(";");
@@ -33,6 +34,7 @@ public final class Umsatzauswertung {
 
     /** Der Umsatz je Kundennummer. */
     public static Map<String, BigDecimal> umsatzJeKunde(List<String> zeilen) {
+        // Umbauen: Auch hier genügt „var“ – am meisten spart es beim Map.Entry.
         Map<String, BigDecimal> umsätze = new TreeMap<String, BigDecimal>();
         for (Map.Entry<String, List<BigDecimal>> eintrag : beträgeJeKunde(zeilen).entrySet()) {
             BigDecimal summe = BigDecimal.ZERO;
@@ -46,6 +48,7 @@ public final class Umsatzauswertung {
 
     /** Eine Berichtszeile je Kunde, etwa „K-2001: 37.80 EUR“. */
     public static List<String> berichtszeilen(List<String> zeilen) {
+        // Umbauen: „var“ für die Parameter des Lambdas und die übrigen Variablen.
         BiFunction<String, BigDecimal, String> zeile =
                 (String kundennummer, BigDecimal umsatz) -> kundennummer + ": " + umsatz + " EUR";
         List<String> bericht = new ArrayList<String>();
