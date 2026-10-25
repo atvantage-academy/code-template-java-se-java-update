@@ -11,7 +11,6 @@ public final class Zahlartregeln {
 
     /** Liest die Zahlart aus dem Kürzel einer Importdatei, etwa „RE“ oder „pp“. */
     public static Zahlart ausKürzel(String kürzel) {
-        // Umbauen: Ein switch-Ausdruck liefert den Wert direkt – ohne Variable und break.
         Zahlart zahlart;
         switch (kürzel.trim().toUpperCase()) {
             case "RE":
@@ -35,7 +34,6 @@ public final class Zahlartregeln {
 
     /** Nach wie vielen Tagen der Betrag spätestens eingeht. */
     public static int zahlungszielTage(Zahlart zahlart) {
-        // Umbauen: Als switch-Ausdruck über das enum braucht es kein default – fehlt ein Fall, meldet es der Compiler.
         switch (zahlart) {
             case RECHNUNG:
                 return 14;
@@ -51,7 +49,6 @@ public final class Zahlartregeln {
 
     /** Ein Hinweis für die Bestellbestätigung. */
     public static String hinweis(Zahlart zahlart) {
-        // Umbauen: switch-Ausdruck; der Fall RECHNUNG liefert seinen Wert mit yield.
         String hinweis;
         switch (zahlart) {
             case RECHNUNG:
