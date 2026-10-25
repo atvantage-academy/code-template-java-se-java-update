@@ -7,6 +7,7 @@ import java.util.Objects;
  * Die Kreditkarte, mit der eine Bestellung bezahlt wird. Ihre Nummer gehört in keine
  * Log-Datei.
  */
+// Umbauen: ein Record – aber toString bleibt, sonst stünde die volle Kartennummer im Log.
 public final class Kreditkarte {
 
     private final String kartennummer;
