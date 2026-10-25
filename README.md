@@ -60,7 +60,10 @@ abzubrechen. `ueberblick-werkzeuge-jdeps` und `ueberblick-werkzeuge-jdeprscan` l
 Werkzeuge des JDK über die übersetzten Klassen aller Module der Inkompatibilitäten laufen.
 Zu den Brüchen zur Laufzeit gibt es eine zweite mit `-jdk8` am Ende – etwa
 `laufzeit-reflection-jdk8` –, die die Tests auf JDK 8 laufen lässt (siehe
-[Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Dazu
+[Der Stand vorher, mit JDK 8](#der-stand-vorher-mit-jdk-8)). Wo eine Übung einen
+Kompatibilitätsschalter ausprobiert, gibt es eine Run Configuration mit dem Schalter am
+Ende – `laufzeit-datumsformat-compat`, `laufzeit-reflection-add-opens`,
+`laufzeit-security-manager-allow`, `laufzeit-zeichensatz-compat`. Dazu
 kommen `RestAnwendung`, `BatchAnwendung` und `Lasttest` zum Starten.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
