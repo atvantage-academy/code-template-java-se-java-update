@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="schwerpunkte-virtual-threads-rest-starten" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="bestellung.rest.RestAnwendung" />
+    <module name="bestellung-rest" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
