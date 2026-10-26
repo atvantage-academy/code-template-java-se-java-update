@@ -13,10 +13,11 @@
   <artifactId>ueberblick</artifactId>
   <packaging>pom</packaging>
   <name>Überblick</name>
-  <description>Werkzeuge, die vor dem Umstieg zeigen, was bricht.</description>
+  <description>Das erste Programm ohne Build und die Werkzeuge, die vor dem Umstieg zeigen, was bricht.</description>
 
   <modules>
     <!-- Kein Bruch: lässt jdeps und jdeprscan über alle Module der Inkompatibilitäten laufen. -->
+    <module>plattform-und-release-modell</module>
     <module>werkzeuge</module>
   </modules>
 </project>
