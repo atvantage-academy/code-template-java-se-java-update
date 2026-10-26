@@ -16,6 +16,7 @@
   <description>Je Neuerung der Bibliotheken ein Modul.</description>
 
   <modules>
+    <module>apis</module>
     <module>collection-factories</module>
     <module>scoped-values</module>
   </modules>
