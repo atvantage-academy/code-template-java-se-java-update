@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>schwerpunkte-virtual-threads</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>bestellung-batch</artifactId>
+  <name>Virtual Threads · Batch-Import</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>bestellung-domaene</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+      STARTBAR OHNE MAVEN: „package“ legt das JAR als target/bestellung-batch.jar ab und die
+      Abhängigkeiten daneben nach target/lib; das Manifest nennt Startklasse und
+      Klassenpfad. So lässt sich die JVM direkt mit Optionen starten:
+        java -jar schwerpunkte/virtual-threads/bestellung-batch/target/bestellung-batch.jar
+    -->
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>bestellung.batch.BatchAnwendung</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>abhaengigkeiten-kopieren</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>bestellung.batch.BatchAnwendung</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
