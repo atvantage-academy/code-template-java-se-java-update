@@ -1,0 +1,1072 @@
+// Die Run Configurations des Projekts für VS Code – dieselben Namen wie in .run/ (IntelliJ)
+// und eclipse/ (Eclipse). Alles, was Maven aufruft, ist hier ein Task: Terminal → Run Task…
+// Maven läuft mit dem JDK aus JAVA_HOME bzw. dem PATH des Terminals.
+// Programme, die direkt aus der IDE starten, stehen in launch.json.
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "api-apis-pakete",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "neuerungen/api/apis/pom.xml",
+        "-Ppakete"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "api-collection-factories",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/api/collection-factories",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "api-scoped-values",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/api/scoped-values",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bauzeit-eingeschraenkte-bezeichner",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/bauzeit/eingeschraenkte-bezeichner",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bauzeit-sequenced",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/bauzeit/sequenced",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bauzeit-unterstrich",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/bauzeit/unterstrich",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "java-update",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-fae",
+        "-Dmaven.test.failure.ignore=true"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-datumsformat-compat",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/datumsformat",
+        "-am",
+        "-DargLine=-Djava.locale.providers=COMPAT"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-datumsformat-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/datumsformat",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-datumsformat",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/datumsformat",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-jaxb-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/jaxb",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-jaxb",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/jaxb",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-reflection-add-opens",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/reflection",
+        "-am",
+        "-DargLine=--add-opens=java.base/java.util=ALL-UNNAMED"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-reflection-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/reflection",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-reflection",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/reflection",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-security-manager-allow",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/security-manager",
+        "-am",
+        "-DargLine=-Djava.security.manager=allow"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-security-manager-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/security-manager",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-security-manager",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/security-manager",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-toolchain",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/toolchain",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-zeichensatz-compat",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/zeichensatz",
+        "-am",
+        "-DargLine=-Dfile.encoding=COMPAT"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-zeichensatz-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/zeichensatz",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-zeichensatz",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/zeichensatz",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-zeitstempel-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/zeitstempel",
+        "-am",
+        "-Pjdk8"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "laufzeit-zeitstempel",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "inkompatibilitaeten/laufzeit/zeitstempel",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-ergonomie-klein",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pergonomie-klein"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-ergonomie",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pergonomie"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-flight-recorder",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pflight-recorder"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-gc-g1",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pgc-g1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-gc-parallel",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pgc-parallel"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-gc-serial",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pgc-serial"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-gc-shenandoah",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pgc-shenandoah"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-gc-z",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pgc-z"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-header-klassisch",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pheader-klassisch"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-header-kompakt",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pheader-kompakt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-pinning",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Ppinning"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-start-aot-training",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pstart-aot-training"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-start-aot",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pstart-aot"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-start-cds-training",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pstart-cds-training"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-start-cds",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pstart-cds"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler-start",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml",
+        "-Pstart"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-jvm-fuer-entwickler",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/jvm-fuer-entwickler/pom.xml"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-beschreiben",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pbeschreiben"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-image-mit-csv",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pimage-mit-csv"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-image",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pimage"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-klassenpfad",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pklassenpfad"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-modulpfad-automatisch",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pmodulpfad-automatisch"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem-modulpfad",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml",
+        "-Pmodulpfad"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-modulsystem",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/modulsystem/pom.xml"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-valhalla-diagnose",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/valhalla/pom.xml",
+        "-Pdiagnose"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-valhalla-wertbasiert",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "schwerpunkte/valhalla/pom.xml",
+        "-Pwertbasiert"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-f",
+        "schwerpunkte/virtual-threads/pom.xml"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-flexible-konstruktoren",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/flexible-konstruktoren",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-kompakte-quelldateien-start",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "compile",
+        "-pl",
+        "neuerungen/syntax/kompakte-quelldateien",
+        "-am",
+        "-Pstart"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-kompakte-quelldateien",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/kompakte-quelldateien",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-markdown-javadoc-doku",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "javadoc:javadoc",
+        "-pl",
+        "neuerungen/syntax/markdown-javadoc",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-markdown-javadoc",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/markdown-javadoc",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-pattern-matching",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/pattern-matching",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-private-interface-methoden",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/private-interface-methoden",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-records",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/records",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-sealed-classes",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/sealed-classes",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-switch-expressions",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/switch-expressions",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-text-bloecke",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/text-bloecke",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-unbenannte-variablen",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/unbenannte-variablen",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "syntax-var",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "verify",
+        "-pl",
+        "neuerungen/syntax/var",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ueberblick-plattform-und-release-modell-versionsinfo",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "validate",
+        "-f",
+        "ueberblick/plattform-und-release-modell/pom.xml",
+        "-Pversionsinfo"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ueberblick-werkzeuge-jdeprscan",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "compile",
+        "-pl",
+        "ueberblick/werkzeuge",
+        "-am",
+        "-Pjdeprscan"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ueberblick-werkzeuge-jdeps",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "compile",
+        "-pl",
+        "ueberblick/werkzeuge",
+        "-am",
+        "-Pjdeps"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
