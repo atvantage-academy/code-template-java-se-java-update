@@ -1,0 +1,32 @@
+// Programme, die VS Code direkt startet (Run and Debug) – dieselben Namen wie in .run/
+// (IntelliJ) und eclipse/ (Eclipse). Alles, was Maven aufruft, steht in tasks.json.
+// Braucht das „Extension Pack for Java“.
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "schwerpunkte-virtual-threads-batch-messen",
+      "request": "launch",
+      "mainClass": "bestellung.batch.BatchAnwendung",
+      "projectName": "bestellung-batch",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "java",
+      "name": "schwerpunkte-virtual-threads-rest-lasttest",
+      "request": "launch",
+      "mainClass": "bestellung.rest.Lasttest",
+      "projectName": "bestellung-rest",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "java",
+      "name": "schwerpunkte-virtual-threads-rest-starten",
+      "request": "launch",
+      "mainClass": "bestellung.rest.RestAnwendung",
+      "projectName": "bestellung-rest",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
