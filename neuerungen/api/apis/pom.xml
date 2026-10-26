@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>neuerungen-api</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>api-apis</artifactId>
+  <packaging>pom</packaging>
+  <name>API · Die kleinen API-Neuerungen</name>
+  <description>
+    Pakete.java verteilt Artikel mit einem Stream Gatherer (JEP 485) auf Pakete und startet
+    direkt aus dem Quelltext – nur auf JDK 25. Maven übersetzt es nicht.
+  </description>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--
+          Die Befehle laufen in diesem Ordner – wie auf der Kommandozeile nach
+          „cd neuerungen/api/apis“. java und jfr kommen aus dem JDK, mit dem Maven läuft.
+        -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <configuration>
+            <workingDirectory>${project.basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <!--
+      Je Befehl der Übung ein Profil, damit er auch aus der IDE läuft. Aufruf jeweils mit
+      mvn validate -f neuerungen/api/apis/pom.xml -P«profil»
+    -->
+    <!--
+      JDK 25: Pakete direkt aus dem Quelltext starten.
+    -->
+    <profile>
+      <id>pakete</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>java</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <arguments>
+                    <argument>Pakete.java</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
