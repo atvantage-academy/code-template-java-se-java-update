@@ -47,6 +47,13 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
+            <!--
+              Nicht in Eclipse: m2e führte das Kopieren bei jedem eigenen Build aus und
+              löst das Nachbarmodul dabei auf seinen Ordner target/classes auf statt auf
+              ein JAR – das lässt sich nicht nach target/lib kopieren. Maven auf der
+              Kommandozeile und die Run Configurations kopieren weiter.
+            -->
+            <?m2e ignore?>
             <id>abhaengigkeiten-kopieren</id>
             <phase>package</phase>
             <goals>
