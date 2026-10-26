@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>schwerpunkte</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>schwerpunkte-valhalla</artifactId>
+  <packaging>pom</packaging>
+  <name>Schwerpunkt · Valhalla</name>
+  <description>
+    Zwei Programme, die direkt aus dem Quelltext starten – Maven übersetzt sie nicht:
+    Wertbasiert.java setzt an vier Stellen auf die Identität wertbasierter Klassen
+    (ab Java 11; die Warnungen kommen vom Compiler des JDK, mit dem es startet),
+    Wertklassen.java braucht einen Early-Access-Build von JDK 28 mit --enable-preview.
+  </description>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--
+          Die Befehle laufen in diesem Ordner – wie auf der Kommandozeile nach
+          „cd schwerpunkte/valhalla“. java und jfr kommen aus dem JDK, mit dem Maven läuft.
+        -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <configuration>
+            <workingDirectory>${project.basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <!--
+      Je Befehl der Übung ein Profil, damit er auch aus der IDE läuft. Aufruf jeweils mit
+      mvn validate -f schwerpunkte/valhalla/pom.xml -P«profil»
+    -->
+    <!--
+      Wertbasiert direkt aus dem Quelltext starten; der Compiler warnt dabei.
+    -->
+    <profile>
+      <id>wertbasiert</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>java</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <arguments>
+                    <argument>Wertbasiert.java</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+      Wertbasiert mit der Diagnose der JVM und dem Flight Recorder; danach die Sperren als Tabelle.
+    -->
+    <profile>
+      <id>diagnose</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>java-1</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <arguments>
+                    <argument>-XX:+UnlockDiagnosticVMOptions</argument>
+                    <argument>-XX:DiagnoseSyncOnValueBasedClasses=2</argument>
+                    <argument>-XX:StartFlightRecording=filename=wert.jfr</argument>
+                    <argument>Wertbasiert.java</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jfr-2</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/jfr</executable>
+                  <arguments>
+                    <argument>view</argument>
+                    <argument>SyncOnValueBasedClass</argument>
+                    <argument>wert.jfr</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
