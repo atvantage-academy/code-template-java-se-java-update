@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>ueberblick</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>ueberblick-plattform-und-release-modell</artifactId>
+  <packaging>pom</packaging>
+  <name>Überblick · Plattform und Release-Modell</name>
+  <description>
+    Zwei Programme, die direkt aus dem Quelltext starten (seit Java 11, JEP 330) – Maven
+    übersetzt sie nicht: Versionsinfo.java zeigt, auf welchem Java es läuft; an
+    Leerzeile.java zeigt sich der Unterschied zwischen --release und -source/-target.
+  </description>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--
+          Die Befehle laufen in diesem Ordner – wie auf der Kommandozeile nach
+          „cd ueberblick/plattform-und-release-modell“. java und jfr kommen aus dem JDK, mit dem Maven läuft.
+        -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <configuration>
+            <workingDirectory>${project.basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <!--
+      Je Befehl der Übung ein Profil, damit er auch aus der IDE läuft. Aufruf jeweils mit
+      mvn validate -f ueberblick/plattform-und-release-modell/pom.xml -P«profil»
+    -->
+    <!--
+      Versionsinfo direkt aus dem Quelltext starten.
+    -->
+    <profile>
+      <id>versionsinfo</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>java</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <arguments>
+                    <argument>Versionsinfo.java</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
