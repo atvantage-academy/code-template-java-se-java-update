@@ -4,20 +4,20 @@ Dieses Repository ist das Übungsprojekt der Schulung **„Java-Update: Neuerung
 Java 9 bis 25“** der ATVANTAGE Academy. Die Übungen selbst stehen in den
 [Lernenden-Unterlagen](https://atvantage-academy.github.io/training-material-java-se/java-update/).
 
-Auf `main` liegt der **Startstand**: eine Anwendung, wie sie mit Java 8 geschrieben
-wurde und jahrelang lief, und je Übung ein eigenes Modul. Jedes Modul startet auf
-Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen anderen.
+Auf `main` liegt der **Startstand**: je Übung ein eigenes Modul mit eigener `pom.xml`,
+geschrieben wie mit Java 8. Jedes Modul startet auf Java 8; in der Übung stellst Du sein
+Release hoch – unabhängig von allen anderen. Was mehrere Übungen brauchen, liegt in jeder
+davon noch einmal: Die Bestellabwicklung steckt in den Schwerpunkten Virtual Threads und
+JVM, damit eine Übung die andere nicht verändert.
 
 ## Was hier liegt
 
 | Ordner | Inhalt |
 |--------|--------|
-| [`altbestand/`](altbestand) | Die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. Daran probierst Du Virtual Threads und die Laufzeit der JVM aus. |
-| [`ueberblick/`](ueberblick) | `werkzeuge/` lässt `jdeps` und `jdeprscan` über alle Module der Inkompatibilitäten laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). |
+| [`ueberblick/`](ueberblick) | `plattform-und-release-modell/` startet ein erstes Programm direkt aus dem Quelltext (`Versionsinfo.java`). `werkzeuge/` lässt `jdeps` und `jdeprscan` über alle Module der Inkompatibilitäten laufen – und über eigene Klassen mit der internen API `sun.misc.Unsafe` und mit abgekündigten APIs (`new Integer(…)`, `finalize()`, `Thread.stop()`). |
 | [`inkompatibilitaeten/`](inkompatibilitaeten) | **Je Bruchstelle ein Modul**, getrennt nach [`bauzeit/`](inkompatibilitaeten/bauzeit) – der Compiler meldet den Bruch, sobald Du das Release hochstellst – und [`laufzeit/`](inkompatibilitaeten/laufzeit) – der Bruch zeigt sich erst auf dem neuen JDK. Jedes Modul startet auf Java 8 und läuft dort. Dazu `laufzeit/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
 | [`neuerungen/`](neuerungen) | **Je Neuerung ein Modul**, getrennt nach [`syntax/`](neuerungen/syntax) und [`api/`](neuerungen/api). Darin eine Klasse im Stil von Java 8 mit ihrem Test. Kommentare `// Umbauen: …` markieren die Stellen, die Du mit der Neuerung umbaust, und sagen, warum. |
-| [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema, das am Code geübt wird, ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. |
-| [`spielwiese/`](spielwiese) | Einzelne Programme zum Ausprobieren, ohne Build. |
+| [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. `virtual-threads/` ist die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. `jvm-fuer-entwickler/` bringt dieselbe REST-Schnittstelle als startbares JAR mit und zwei Programme für den Garbage Collector und das Pinning. `valhalla/` sammelt Stellen, die auf die Identität von `Integer` und Co. setzen. |
 | [`.run/`](.run), [`eclipse/`](eclipse) | Fertige Run Configurations für IntelliJ IDEA und Eclipse. |
 
 ## Voraussetzungen
@@ -30,15 +30,6 @@ Java 8; in der Übung stellst Du sein Release hoch – unabhängig von allen and
 - Optional ein **JDK 8**, um den Stand vor dem Umstieg selbst zu sehen (siehe unten).
 
 ## Loslegen
-
-Baue und teste den Altbestand:
-
-```shell
-mvn verify -f altbestand/pom.xml
-```
-
-Der Altbestand übersetzt und seine Tests laufen – auch auf Deinem neuen JDK.
-Übersetzt wird er dabei für Java 8 (`--release 8`).
 
 Baue das ganze Projekt auf einmal, ohne bei Testfehlern abzubrechen:
 
@@ -71,10 +62,18 @@ bauen `schwerpunkte-modulsystem-…` die drei Teile und führen danach je einen 
 Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
 `-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
 ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
-Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile. Dazu
-kommen zum Starten `altbestand-rest-starten` (die REST-Schnittstelle),
-`altbestand-rest-lasttest` (Lasttest gegen die REST-Schnittstelle) und
-`altbestand-batch-messen` (der Batch-Import mit Zeitmessung).
+Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile.
+Zu Virtual Threads starten `schwerpunkte-virtual-threads-rest-starten` die
+REST-Schnittstelle, `schwerpunkte-virtual-threads-rest-lasttest` den Lasttest gegen sie
+und `schwerpunkte-virtual-threads-batch-messen` den Batch-Import mit Zeitmessung.
+
+**Programme, die direkt aus dem Quelltext starten** (`java Datei.java`), liegen im
+Ordner ihres Moduls, nicht unter `src/` – Maven übersetzt sie nicht, weil manche ein
+neueres JDK brauchen als Java 8. Für jeden Befehl, den eine Übung damit ausführt, gibt es
+ein Maven-Profil im Modul und eine Run Configuration mit dem Profil am Ende, etwa
+`ueberblick-plattform-und-release-modell-versionsinfo`, `schwerpunkte-valhalla-diagnose`
+oder `schwerpunkte-jvm-fuer-entwickler-gc-z`. Sie laufen im Ordner des Moduls, mit dem
+JDK, mit dem Maven läuft.
 
 - **IntelliJ IDEA** liest die Dateien in [`.run/`](.run) beim Öffnen des Projekts;
   Du findest sie oben rechts in der Auswahl neben dem Startknopf.
@@ -86,7 +85,8 @@ kommen zum Starten `altbestand-rest-starten` (die REST-Schnittstelle),
 
 Für welche Java-Version übersetzt wird, steht in der Standard-Property
 **`maven.compiler.release`** – im Wurzel-`pom.xml` für alle und in jedem Übungsmodul
-noch einmal für dieses Modul (für den Altbestand in `altbestand/pom.xml`). Zum
+noch einmal für dieses Modul (für die Bestellabwicklung einmal in
+`schwerpunkte/virtual-threads/pom.xml`). Zum
 Hochstellen änderst Du den Wert in der `pom.xml` des Moduls, so wie bei einer echten
 Migration.
 
@@ -162,7 +162,7 @@ Suchen, nicht im Ergebnis.
 
 [`build.yml`](.github/workflows/build.yml) prüft auf `main` dreierlei:
 
-- **Altbestand auf Java 8** – das ganze Projekt auf JDK 8. Muss grün sein: So lief
+- **Startstand auf Java 8** – das ganze Projekt auf JDK 8. Muss grün sein: So lief
   der Code, bevor wir ihn angefasst haben.
 - **Stand vorher über Toolchains** – dasselbe mit dem Profil `jdk8`: Maven auf
   JDK 21, die Tests auf JDK 8.

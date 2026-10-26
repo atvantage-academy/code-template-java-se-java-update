@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.atvantage.academy.javaupdate</groupId>
+    <artifactId>schwerpunkte-virtual-threads</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>bestellung-rest</artifactId>
+  <name>Virtual Threads · REST-Schnittstelle</name>
+
+  <properties>
+    <!--
+      Was exec:java startet. Als Property, nicht fest im Plugin: So lässt sich auf der
+      Kommandozeile der Lasttest wählen (-Dexec.mainClass=bestellung.rest.Lasttest).
+      Eine feste <mainClass> in der Plugin-Konfiguration ginge dem immer vor.
+    -->
+    <exec.mainClass>bestellung.rest.RestAnwendung</exec.mainClass>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.atvantage.academy.javaupdate</groupId>
+      <artifactId>bestellung-domaene</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+      STARTBAR OHNE MAVEN: „package“ legt das JAR als target/bestellung-rest.jar ab und die
+      Abhängigkeiten daneben nach target/lib; das Manifest nennt Startklasse und
+      Klassenpfad. So lässt sich die JVM direkt mit Optionen starten:
+        java -jar schwerpunkte/virtual-threads/bestellung-rest/target/bestellung-rest.jar
+    -->
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>bestellung.rest.RestAnwendung</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>abhaengigkeiten-kopieren</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
