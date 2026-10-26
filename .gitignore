@@ -7,7 +7,10 @@ bin/
 # IDE-Dateien – das Projekt wird über die pom.xml importiert.
 .idea/
 *.iml
-.vscode/
+.vscode/*
+# … außer den Run Configurations für VS Code.
+!.vscode/launch.json
+!.vscode/tasks.json
 .settings/
 .project
 .classpath
