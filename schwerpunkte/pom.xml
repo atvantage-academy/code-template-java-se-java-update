@@ -13,9 +13,12 @@
   <artifactId>schwerpunkte</artifactId>
   <packaging>pom</packaging>
   <name>Schwerpunkte</name>
-  <description>Je Schwerpunktthema, das am Code geübt wird, ein Modul. Jedes startet auf Java 8.</description>
+  <description>Je Schwerpunktthema ein Modul. Jedes startet auf Java 8.</description>
 
   <modules>
     <module>modulsystem</module>
+    <module>virtual-threads</module>
+    <module>jvm-fuer-entwickler</module>
+    <module>valhalla</module>
   </modules>
 </project>
