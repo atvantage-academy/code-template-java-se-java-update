@@ -10,10 +10,9 @@
   <packaging>pom</packaging>
 
   <name>Java-Update · Übungsprojekt</name>
-  <description>Java-8-Altbestand und Kompatibilitätsbeispiele für die Schulung „Java-Update“.</description>
+  <description>Übungsprojekt der Schulung „Java-Update“: je Übung ein Modul, Startstand Java 8.</description>
 
   <modules>
-    <module>altbestand</module>
     <module>ueberblick</module>
     <module>inkompatibilitaeten</module>
     <module>neuerungen</module>

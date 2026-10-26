@@ -70,7 +70,7 @@ IMAGE_EXTENSIONS = {".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
 LEXER_OVERRIDES = {".svg": XmlLexer}
 README_NAMES = ("README.md", "README.MD", "README.markdown")
 # Darin werden Unterordner als Java-Packages angezeigt (de.schulung.java) – auch
-# in Modulen eines Mehrmodulprojekts (altbestand/bestellung-rest/src/main/java).
+# in Modulen eines Mehrmodulprojekts (schwerpunkte/virtual-threads/bestellung-rest/src/main/java).
 JAVA_SOURCE_ROOTS = ("src/main/java", "src/test/java")
 # Musterlösungen liegen je Übung in einem Branch loesung/«modul» mit einem
 # Draft-PR gegen main; nur diese PRs erscheinen auf der Seite.
