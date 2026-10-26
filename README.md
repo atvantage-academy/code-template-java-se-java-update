@@ -18,7 +18,7 @@ JVM, damit eine Übung die andere nicht verändert.
 | [`inkompatibilitaeten/`](inkompatibilitaeten) | **Je Bruchstelle ein Modul**, getrennt nach [`bauzeit/`](inkompatibilitaeten/bauzeit) – der Compiler meldet den Bruch, sobald Du das Release hochstellst – und [`laufzeit/`](inkompatibilitaeten/laufzeit) – der Bruch zeigt sich erst auf dem neuen JDK. Jedes Modul startet auf Java 8 und läuft dort. Dazu `laufzeit/toolchain`: prüft, ob Deine Toolchain für JDK 8 stimmt. |
 | [`neuerungen/`](neuerungen) | **Je Neuerung ein Modul**, getrennt nach [`syntax/`](neuerungen/syntax) und [`api/`](neuerungen/api). Darin eine Klasse im Stil von Java 8 mit ihrem Test. Kommentare `// Umbauen: …` markieren die Stellen, die Du mit der Neuerung umbaust, und sagen, warum. |
 | [`schwerpunkte/`](schwerpunkte) | **Je Schwerpunktthema ein Modul.** `modulsystem/` ist ein Export von Bestellungen in drei Teilen – Modell, CSV-Format und Anwendung –, die Du zu Java-Modulen machst. `virtual-threads/` ist die **Bestellabwicklung** auf Java 8: Domäne, eine REST-Schnittstelle in Schichten und ein Batch-Import. `jvm-fuer-entwickler/` bringt dieselbe REST-Schnittstelle als startbares JAR mit und zwei Programme für den Garbage Collector und das Pinning. `valhalla/` sammelt Stellen, die auf die Identität von `Integer` und Co. setzen. |
-| [`.run/`](.run), [`eclipse/`](eclipse) | Fertige Run Configurations für IntelliJ IDEA und Eclipse. |
+| [`.run/`](.run), [`eclipse/`](eclipse), [`.vscode/`](.vscode) | Fertige Run Configurations für IntelliJ IDEA, Eclipse und VS Code. |
 
 ## Voraussetzungen
 
@@ -80,6 +80,12 @@ JDK, mit dem Maven läuft.
 - **Eclipse** findet die Dateien in [`eclipse/`](eclipse), sobald Du das Projekt über
   *File → Import → Existing Maven Projects* importiert hast – samt dem Wurzelprojekt
   `java-update`. Du startest sie über *Run → Run Configurations…*.
+- **VS Code** braucht das *Extension Pack for Java*; öffne den Wurzelordner über
+  *File → Open Folder…*. Dieselben Run Configurations liegen in [`.vscode/`](.vscode):
+  Alles, was Maven aufruft, ist ein Task in `tasks.json` – Du startest ihn über
+  *Terminal → Run Task…*. Die Programme, die VS Code direkt startet
+  (`schwerpunkte-virtual-threads-…`), stehen in `launch.json` unter *Run and Debug*.
+  Maven nimmt dabei das JDK, das `mvn -v` im Terminal nennt.
 
 ## Das Release umstellen
 
