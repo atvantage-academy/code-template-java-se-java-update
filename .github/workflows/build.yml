@@ -107,6 +107,12 @@ jobs:
         run: |
           name="${BRANCH#loesung/}"
           modul=$(find inkompatibilitaeten/bauzeit inkompatibilitaeten/laufzeit neuerungen/syntax neuerungen/api schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "$name" | head -n 1)
+          # Eine Lösung, die auf einer anderen aufbaut (loesung/virtual-threads-pinning), gehört
+          # zu deren Modul: hinten Teile abschneiden, bis ein Modul passt.
+          while [ -z "$modul" ] && [ "${name%-*}" != "$name" ]; do
+            name="${name%-*}"
+            modul=$(find inkompatibilitaeten/bauzeit inkompatibilitaeten/laufzeit neuerungen/syntax neuerungen/api schwerpunkte -mindepth 1 -maxdepth 1 -type d -name "$name" | head -n 1)
+          done
           if [ -z "$modul" ]; then
             echo "Kein Modul zu $BRANCH gefunden – baue das ganze Projekt."
             mvn -B -ntp verify
