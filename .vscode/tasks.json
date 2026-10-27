@@ -810,6 +810,108 @@
       "problemMatcher": []
     },
     {
+      "label": "schwerpunkte-virtual-threads-batch-messen-jdk21",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-batch",
+        "-am",
+        "-Pjdk21,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads-batch-messen-jdk25",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-batch",
+        "-am",
+        "-Pjdk25,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads-batch-messen-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-batch",
+        "-am",
+        "-Pjdk8,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads-rest-messen-jdk21",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-rest",
+        "-am",
+        "-Pjdk21,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads-rest-messen-jdk25",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-rest",
+        "-am",
+        "-Pjdk25,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "schwerpunkte-virtual-threads-rest-messen-jdk8",
+      "type": "shell",
+      "command": "mvn",
+      "args": [
+        "clean",
+        "package",
+        "-pl",
+        "schwerpunkte/virtual-threads/bestellung-rest",
+        "-am",
+        "-Pjdk8,messen"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "syntax-flexible-konstruktoren",
       "type": "shell",
       "command": "mvn",
