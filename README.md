@@ -63,9 +63,12 @@ Klassen- bzw. Modulpfad, solange die JARs noch keine `module-info` haben,
 `-beschreiben` beschreibt das Modul der Anwendung, `-modulpfad` startet sie unter
 ihrem eigenen Modulnamen, `-image` und `-image-mit-csv` bauen mit `jlink` ein eigenes
 Laufzeit-Image; gestartet wird es über sein Startskript auf der Kommandozeile.
-Zu Virtual Threads starten `schwerpunkte-virtual-threads-rest-starten` die
-REST-Schnittstelle, `schwerpunkte-virtual-threads-rest-lasttest` den Lasttest gegen sie
-und `schwerpunkte-virtual-threads-batch-messen` den Batch-Import mit Zeitmessung.
+Zu Virtual Threads startet `schwerpunkte-virtual-threads-rest-starten` die
+REST-Schnittstelle. Gemessen wird je JDK: `schwerpunkte-virtual-threads-batch-messen-jdk8`,
+`-jdk21` und `-jdk25` bauen den Batch-Import und starten ihn mit Zeitmessung,
+`schwerpunkte-virtual-threads-rest-messen-jdk8`, `-jdk21` und `-jdk25` ebenso den
+Lasttest gegen die REST-Schnittstelle (siehe [Messen mit einem bestimmten
+JDK](#messen-mit-einem-bestimmten-jdk)).
 
 **Programme, die direkt aus dem Quelltext starten** (`java Datei.java`), liegen im
 Ordner ihres Moduls, nicht unter `src/` – Maven übersetzt sie nicht, weil manche ein
@@ -149,6 +152,23 @@ mvn clean verify -pl inkompatibilitaeten/laufzeit/jaxb -am -Pjdk8
 In der IDE startest Du dafür die Run Configuration mit `-jdk8` am Ende, etwa
 `laufzeit-jaxb-jdk8`. IntelliJ IDEA und Eclipse lesen `~/.m2/toolchains.xml`
 wie Maven auf der Kommandozeile.
+
+## Messen mit einem bestimmten JDK
+
+Für die Übung zu Virtual Threads misst Du denselben Code auf JDK 8, 21 und – optional –
+25. Trag dafür, wie oben für JDK 8, auch JDK 21 und 25 in `~/.m2/toolchains.xml` ein
+(`<version>21</version>` bzw. `<version>25</version>`). Die Profile `jdk21` und `jdk25`
+lassen dann Übersetzen, Tests und Programme auf diesem JDK laufen statt auf dem, mit
+dem Maven läuft. Das Profil `messen` startet nach dem Bauen die Messung des Moduls:
+
+```shell
+mvn clean package -pl schwerpunkte/virtual-threads/bestellung-batch -am -Pjdk21,messen
+```
+
+`-am` baut die Domäne mit, ein `mvn install` vorher ist nicht nötig. Für die
+REST-Schnittstelle steht `bestellung-rest` statt `bestellung-batch`. Steht das Release
+höher als das JDK – etwa 25 auf JDK 21 –, überschreibst Du es für diesen Aufruf mit
+`-Dmaven.compiler.release=21`.
 
 ## Die Lösungen
 
