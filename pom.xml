@@ -151,14 +151,38 @@
               </jdkToolchain>
             </configuration>
           </plugin>
+          <!--
+            Erst nach Übersetzen und Tests gilt JDK 8 für alles Weitere – für die Messung
+            mit -Pmessen (exec:exec). Davor übersetzt weiter Dein JDK.
+          -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>jdk8-nach-den-tests</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>toolchain</goal>
+                </goals>
+                <configuration>
+                  <toolchains>
+                    <jdk>
+                      <version>[1.8,9)</version>
+                    </jdk>
+                  </toolchains>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
     <!--
-      EIN BESTIMMTES JDK 21 ODER 25 (optional): mvn clean verify -Pjdk21 bzw. -Pjdk25
-      Mit dem Profil laufen Übersetzen, Tests und exec:exec auf diesem JDK statt auf dem,
-      mit dem Maven läuft. So lässt sich dieselbe Messung auf beiden JDKs vergleichen,
-      im Modul selbst gestartet: mvn -Pjdk21 validate exec:exec -Dexec.mainClass=…
+      EIN BESTIMMTES JDK 21 ODER 25: mvn clean verify -Pjdk21 bzw. -Pjdk25 (25 optional)
+      Mit dem Profil laufen Übersetzen, Tests und Programme (exec:exec) auf diesem JDK
+      statt auf dem, mit dem Maven läuft. Das Release des Moduls muss das JDK kennen –
+      sonst auf der Kommandozeile überschreiben: -Dmaven.compiler.release=21
       Voraussetzung: das JDK, eingetragen in ~/.m2/toolchains.xml.
     -->
     <profile>
@@ -182,19 +206,6 @@
                 </configuration>
               </execution>
             </executions>
-          </plugin>
-          <plugin>
-            <!-- exec:java liefe in der JVM von Maven; exec:exec startet eine eigene mit dem JDK. -->
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <executable>java</executable>
-              <arguments>
-                <argument>-classpath</argument>
-                <classpath/>
-                <argument>${exec.mainClass}</argument>
-              </arguments>
-            </configuration>
           </plugin>
         </plugins>
       </build>
@@ -220,19 +231,6 @@
                 </configuration>
               </execution>
             </executions>
-          </plugin>
-          <plugin>
-            <!-- exec:java liefe in der JVM von Maven; exec:exec startet eine eigene mit dem JDK. -->
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <executable>java</executable>
-              <arguments>
-                <argument>-classpath</argument>
-                <classpath/>
-                <argument>${exec.mainClass}</argument>
-              </arguments>
-            </configuration>
           </plugin>
         </plugins>
       </build>
