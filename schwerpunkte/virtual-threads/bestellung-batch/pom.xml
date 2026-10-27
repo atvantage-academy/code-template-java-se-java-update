@@ -13,6 +13,11 @@
   <artifactId>bestellung-batch</artifactId>
   <name>Virtual Threads · Batch-Import</name>
 
+  <properties>
+    <!-- Was das Profil messen startet. -->
+    <messen.mainClass>bestellung.batch.BatchAnwendung</messen.mainClass>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>de.atvantage.academy.javaupdate</groupId>
