@@ -1,0 +1,28 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="schwerpunkte-virtual-threads-batch-messen-jdk25" type="MavenRunConfiguration" factoryName="Maven">
+    <MavenSettings>
+      <option name="myGeneralSettings" />
+      <option name="myRunnerSettings" />
+      <option name="myRunnerParameters">
+        <MavenRunnerParameters>
+          <option name="goals">
+            <list>
+                <option value="validate" />
+                <option value="exec:exec" />
+                <option value="-Pjdk25" />
+                <option value="-Dexec.mainClass=bestellung.batch.BatchAnwendung" />
+            </list>
+          </option>
+          <option name="profiles">
+            <set />
+          </option>
+          <option name="resolveToWorkspace" value="true" />
+          <option name="workingDirPath" value="$PROJECT_DIR$/schwerpunkte/virtual-threads/bestellung-batch" />
+        </MavenRunnerParameters>
+      </option>
+    </MavenSettings>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
