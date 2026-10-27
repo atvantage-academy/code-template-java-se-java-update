@@ -44,7 +44,7 @@ public class RestAnwendung {
         BestellService service = new BestellService(new InMemoryBestellRepository());
         Beispieldaten.befülle(service);
 
-        executor = Executors.newFixedThreadPool(10);
+        executor = Executors.newVirtualThreadPerTaskExecutor();
         server = HttpServer.create(new InetSocketAddress(port), BACKLOG);
         server.createContext("/bestellungen",
                 new BestellHandler(service, new Lagerdienst(LAGER_LATENZ_MILLIS), new BestellMapper()));
