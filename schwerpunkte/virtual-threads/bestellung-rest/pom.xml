@@ -20,6 +20,8 @@
       Eine feste <mainClass> in der Plugin-Konfiguration ginge dem immer vor.
     -->
     <exec.mainClass>bestellung.rest.RestAnwendung</exec.mainClass>
+    <!-- Was das Profil messen startet: der Lasttest, der die Schnittstelle selbst hochfährt. -->
+    <messen.mainClass>bestellung.rest.Lasttest</messen.mainClass>
   </properties>
 
   <dependencies>
