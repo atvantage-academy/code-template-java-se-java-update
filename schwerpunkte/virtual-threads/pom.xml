@@ -25,4 +25,44 @@
     <module>bestellung-rest</module>
     <module>bestellung-batch</module>
   </modules>
+
+  <profiles>
+    <!--
+      MESSEN: mvn clean package -pl schwerpunkte/virtual-threads/bestellung-batch -am -Pjdk21,messen
+      Nach dem Bauen startet exec:exec die Messung des Moduls (messen.mainClass) – in
+      einer eigenen JVM, auf dem JDK aus -Pjdk8, -Pjdk21 oder -Pjdk25. Mit -am baut
+      Maven die Domäne mit; ein mvn install vorher ist nicht nötig.
+    -->
+    <profile>
+      <id>messen</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <!-- Läuft nur in den Modulen, die das Plugin nutzen: Batch-Import und REST-Schnittstelle. -->
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>messen</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                      <argument>-classpath</argument>
+                      <classpath/>
+                      <argument>${messen.mainClass}</argument>
+                    </arguments>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
 </project>
