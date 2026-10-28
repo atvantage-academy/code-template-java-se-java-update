@@ -4,9 +4,9 @@ package kompatibilitaet.werkzeuge;
  * Startet einen Export in einem eigenen Thread und bricht ihn ab, wenn er das Zeitlimit
  * überschreitet – mit {@code Thread.stop()}.
  */
-public final class Exportwächter {
+public final class Exportwaechter {
 
-    private Exportwächter() {
+    private Exportwaechter() {
     }
 
     /**
