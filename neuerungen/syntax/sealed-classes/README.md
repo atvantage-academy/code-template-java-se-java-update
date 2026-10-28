@@ -6,7 +6,7 @@ LTS 21)
 - `Zahlart` ist eine versiegelte abstrakte Klasse mit
   `permits Rechnung, Lastschrift, Kreditkarte, PayPal`. Die vier Unterklassen waren
   schon `final` und bleiben es.
-- `GebührenRechner.gebühr` ist ein `switch` über die Zahlart **ohne `default`**. Der
+- `GebuehrenRechner.gebühr` ist ein `switch` über die Zahlart **ohne `default`**. Der
   Compiler kennt alle Unterarten und prüft, dass jede behandelt ist.
 - `ZahlartVisitor` und alle `accept`-Methoden sind gelöscht – ihre Aufgabe, keine
   Zahlart zu vergessen, übernimmt jetzt der Compiler.

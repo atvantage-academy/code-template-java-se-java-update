@@ -8,14 +8,14 @@ import java.math.RoundingMode;
  * über die versiegelte {@link Zahlart} braucht keinen {@code default}: Fehlt eine
  * Zahlart, übersetzt er nicht.
  */
-public final class GebührenRechner {
+public final class GebuehrenRechner {
 
     private static final BigDecimal RECHNUNGSGEBÜHR = new BigDecimal("1.50");
     private static final BigDecimal KREDITKARTE_PROZENT = new BigDecimal("0.019");
     private static final BigDecimal PAYPAL_FIX = new BigDecimal("0.35");
     private static final BigDecimal PAYPAL_PROZENT = new BigDecimal("0.0249");
 
-    private GebührenRechner() {
+    private GebuehrenRechner() {
     }
 
     public static BigDecimal gebühr(Zahlart zahlart, BigDecimal betrag) {
