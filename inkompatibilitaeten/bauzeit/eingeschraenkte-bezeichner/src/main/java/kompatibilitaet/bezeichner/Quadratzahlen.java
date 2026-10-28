@@ -14,7 +14,7 @@ public class Quadratzahlen extends Erzeuger<Integer> {
     @Override
     protected void erzeuge() {
         for (int i = 1; i <= anzahl; i++) {
-            yield(i * i);
+            liefere(i * i);
         }
     }
 }
