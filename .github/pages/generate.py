@@ -73,7 +73,8 @@ README_NAMES = ("README.md", "README.MD", "README.markdown")
 # in Modulen eines Mehrmodulprojekts (schwerpunkte/virtual-threads/bestellung-rest/src/main/java).
 JAVA_SOURCE_ROOTS = ("src/main/java", "src/test/java")
 # Musterlösungen liegen je Übung in einem Branch loesung/«modul» mit einem
-# Draft-PR gegen main; nur diese PRs erscheinen auf der Seite.
+# Draft-PR gegen main; nur diese PRs erscheinen auf der Seite. Baut eine Lösung
+# auf einer anderen auf, zielt ihr PR auf deren Branch (loesung/…).
 SOLUTION_BRANCH_PREFIX = "loesung/"
 
 LOCAL_PR_ID = "lokal"
@@ -671,6 +672,7 @@ def load_prs() -> list[dict]:
       "mergedAt": item.get("mergedAt") or "",
       "head": item.get("headRefOid"),
       "branch": item.get("headRefName", ""),
+      "baseBranch": item.get("baseRefName", ""),
     })
 
   open_prs.sort(key=lambda pr: pr["number"])
@@ -1019,16 +1021,30 @@ def main() -> None:
     main_commit = git("rev-parse", "HEAD")
     versions.append(main_version(CommitTree(main_commit)))
 
-    for pr in load_prs():
+    prs = load_prs()
+    # Die Spitze jeder offenen Lösung – Basis für eine Lösung, die darauf aufbaut.
+    solution_heads = {pr["branch"]: pr["sha"] for pr in prs if pr["state"] == "OPEN"}
+
+    for pr in prs:
       if pr["state"] == "OPEN":
-        # Wie auf GitHub: Änderungen gegenüber dem Abzweig von main.
-        base = git("merge-base", main_commit, pr["sha"])
         title = pr["title"].removeprefix("Musterlösung:").strip()
         label = f"{title} (#{pr['number']})"
-        intro = (
-          f"Musterlösung aus dem Branch {pr['branch']}: Änderungen gegenüber dem "
-          "Startstand auf main, wie unter „Files changed“ im Pull Request."
-        )
+        basis = solution_heads.get(pr["baseBranch"])
+        if basis:
+          # Wie auf GitHub: Änderungen gegenüber dem Abzweig von der Lösung darunter.
+          base = git("merge-base", basis, pr["sha"])
+          intro = (
+            f"Musterlösung aus dem Branch {pr['branch']}: Änderungen gegenüber der "
+            f"Musterlösung aus {pr['baseBranch']}, auf der sie aufbaut, wie unter "
+            "„Files changed“ im Pull Request."
+          )
+        else:
+          # Wie auf GitHub: Änderungen gegenüber dem Abzweig von main.
+          base = git("merge-base", main_commit, pr["sha"])
+          intro = (
+            f"Musterlösung aus dem Branch {pr['branch']}: Änderungen gegenüber dem "
+            "Startstand auf main, wie unter „Files changed“ im Pull Request."
+          )
       else:
         base = merged_pr_base(pr)
         label = f"PR #{pr['number']} – {pr['title']}"
