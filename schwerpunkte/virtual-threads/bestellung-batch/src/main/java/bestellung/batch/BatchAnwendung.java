@@ -8,7 +8,7 @@ import java.util.List;
 import bestellung.domaene.BestellService;
 import bestellung.domaene.Bestellung;
 import bestellung.domaene.InMemoryBestellRepository;
-import bestellung.extern.Bonitätsprüfung;
+import bestellung.extern.Bonitaetspruefung;
 
 /**
  * Der nächtliche Import: liest eine CSV-Datei und legt die geprüften Bestellungen an.
@@ -31,7 +31,7 @@ public class BatchAnwendung {
 
         BestellService service = new BestellService(new InMemoryBestellRepository());
         BestellImport bestellImport = new BestellImport(service,
-                new Bonitätsprüfung(AUSKUNFT_LATENZ_MILLIS));
+                new Bonitaetspruefung(AUSKUNFT_LATENZ_MILLIS));
         ImportErgebnis ergebnis = bestellImport.importiere(bestellungen);
 
         System.out.printf("%d Bestellungen gelesen: %s (Auskunft-Latenz %d ms)%n",

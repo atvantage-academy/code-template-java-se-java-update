@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 
 import bestellung.domaene.BestellService;
 import bestellung.domaene.Bestellung;
-import bestellung.extern.Bonitätsprüfung;
+import bestellung.extern.Bonitaetspruefung;
 
 /**
  * Importiert Bestellungen: Jede wird bei der Auskunftei geprüft und nur angelegt,
@@ -20,9 +20,9 @@ import bestellung.extern.Bonitätsprüfung;
 public class BestellImport {
 
     private final BestellService service;
-    private final Bonitätsprüfung bonitätsprüfung;
+    private final Bonitaetspruefung bonitätsprüfung;
 
-    public BestellImport(BestellService service, Bonitätsprüfung bonitätsprüfung) {
+    public BestellImport(BestellService service, Bonitaetspruefung bonitätsprüfung) {
         this.service = service;
         this.bonitätsprüfung = bonitätsprüfung;
     }
