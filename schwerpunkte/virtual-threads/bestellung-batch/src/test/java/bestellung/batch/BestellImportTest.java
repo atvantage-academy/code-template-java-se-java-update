@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import bestellung.domaene.BestellService;
 import bestellung.domaene.Bestellung;
 import bestellung.domaene.InMemoryBestellRepository;
-import bestellung.extern.Bonitätsprüfung;
+import bestellung.extern.Bonitaetspruefung;
 
 class BestellImportTest {
 
@@ -27,7 +27,7 @@ class BestellImportTest {
         List<Bestellung> bestellungen = new CsvLeser().lies(getClass().getResourceAsStream("/bestellungen.csv"));
         BestellService service = new BestellService(new InMemoryBestellRepository());
 
-        ImportErgebnis ergebnis = new BestellImport(service, new Bonitätsprüfung(1)).importiere(bestellungen);
+        ImportErgebnis ergebnis = new BestellImport(service, new Bonitaetspruefung(1)).importiere(bestellungen);
 
         assertEquals(180, ergebnis.getAngenommen());
         assertEquals(20, ergebnis.getAbgelehnt().size());

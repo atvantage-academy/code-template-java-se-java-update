@@ -7,9 +7,9 @@ import java.security.Permission;
  * soll nicht die ganze Anwendung enden – das verhindert ein Security Manager,
  * der genau diesen Aufruf abfängt und alles andere erlaubt.
  */
-public final class PluginAusführer {
+public final class PluginAusfuehrer {
 
-    private PluginAusführer() {
+    private PluginAusfuehrer() {
     }
 
     public static void führeAus(Runnable plugin) {
