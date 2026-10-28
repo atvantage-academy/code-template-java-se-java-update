@@ -29,7 +29,7 @@ public class BestellImport {
 
     public ImportErgebnis importiere(List<Bestellung> bestellungen) throws InterruptedException {
         long start = System.nanoTime();
-        ExecutorService pool = Executors.newFixedThreadPool(8);
+        ExecutorService pool = Executors.newVirtualThreadPerTaskExecutor();
         try {
             List<Future<Boolean>> prüfungen = new ArrayList<Future<Boolean>>();
             for (final Bestellung bestellung : bestellungen) {
