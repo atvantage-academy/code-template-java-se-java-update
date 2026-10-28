@@ -8,8 +8,8 @@ import java.util.TreeMap;
 import java.util.function.BiFunction;
 
 /**
- * Wertet Umsätze je Kunde aus, aus Zeilen der Form „K-2001;18.90“. Jeder Typ steht
- * ausgeschrieben da – auch dort, wo er rechts vom Gleichheitszeichen schon steht.
+ * Wertet Umsätze je Kunde aus, aus Zeilen der Form „K-2001;18.90“. Lokale Variablen
+ * nennen ihren Typ nur, wo er nicht schon dasteht (JEP 286, JEP 323).
  */
 public final class Umsatzauswertung {
 
@@ -18,13 +18,12 @@ public final class Umsatzauswertung {
 
     /** Alle Beträge je Kundennummer, sortiert nach Kundennummer. */
     public static Map<String, List<BigDecimal>> beträgeJeKunde(List<String> zeilen) {
-        // Umbauen: Die Typen der lokalen Variablen stehen schon rechts oder ergeben sich – „var“ genügt.
-        Map<String, List<BigDecimal>> ergebnis = new TreeMap<String, List<BigDecimal>>();
-        for (String zeile : zeilen) {
-            String[] felder = zeile.split(";");
-            List<BigDecimal> beträge = ergebnis.get(felder[0]);
+        var ergebnis = new TreeMap<String, List<BigDecimal>>();
+        for (var zeile : zeilen) {
+            var felder = zeile.split(";");
+            var beträge = ergebnis.get(felder[0]);
             if (beträge == null) {
-                beträge = new ArrayList<BigDecimal>();
+                beträge = new ArrayList<>();
                 ergebnis.put(felder[0], beträge);
             }
             beträge.add(new BigDecimal(felder[1]));
@@ -34,11 +33,10 @@ public final class Umsatzauswertung {
 
     /** Der Umsatz je Kundennummer. */
     public static Map<String, BigDecimal> umsatzJeKunde(List<String> zeilen) {
-        // Umbauen: Auch hier genügt „var“ – am meisten spart es beim Map.Entry.
-        Map<String, BigDecimal> umsätze = new TreeMap<String, BigDecimal>();
-        for (Map.Entry<String, List<BigDecimal>> eintrag : beträgeJeKunde(zeilen).entrySet()) {
-            BigDecimal summe = BigDecimal.ZERO;
-            for (BigDecimal betrag : eintrag.getValue()) {
+        var umsätze = new TreeMap<String, BigDecimal>();
+        for (var eintrag : beträgeJeKunde(zeilen).entrySet()) {
+            var summe = BigDecimal.ZERO;
+            for (var betrag : eintrag.getValue()) {
                 summe = summe.add(betrag);
             }
             umsätze.put(eintrag.getKey(), summe);
@@ -48,11 +46,10 @@ public final class Umsatzauswertung {
 
     /** Eine Berichtszeile je Kunde, etwa „K-2001: 37.80 EUR“. */
     public static List<String> berichtszeilen(List<String> zeilen) {
-        // Umbauen: „var“ für die Parameter des Lambdas und die übrigen Variablen.
         BiFunction<String, BigDecimal, String> zeile =
-                (String kundennummer, BigDecimal umsatz) -> kundennummer + ": " + umsatz + " EUR";
-        List<String> bericht = new ArrayList<String>();
-        for (Map.Entry<String, BigDecimal> eintrag : umsatzJeKunde(zeilen).entrySet()) {
+                (var kundennummer, var umsatz) -> kundennummer + ": " + umsatz + " EUR";
+        var bericht = new ArrayList<String>();
+        for (var eintrag : umsatzJeKunde(zeilen).entrySet()) {
             bericht.add(zeile.apply(eintrag.getKey(), eintrag.getValue()));
         }
         return bericht;
