@@ -3,11 +3,11 @@ package bestellung.extern;
 /**
  * Fragt bei einer Auskunftei nach, ob ein Kunde kreditwürdig ist.
  */
-public class Bonitätsprüfung {
+public class Bonitaetspruefung {
 
     private final long latenzMillis;
 
-    public Bonitätsprüfung(long latenzMillis) {
+    public Bonitaetspruefung(long latenzMillis) {
         this.latenzMillis = latenzMillis;
     }
 
