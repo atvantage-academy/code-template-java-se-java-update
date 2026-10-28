@@ -14,9 +14,4 @@ public final class Lastschrift extends Zahlart {
     public String getIban() {
         return iban;
     }
-
-    @Override
-    public <R> R accept(ZahlartVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
 }

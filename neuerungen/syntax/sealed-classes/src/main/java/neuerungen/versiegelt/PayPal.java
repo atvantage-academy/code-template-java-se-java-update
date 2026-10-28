@@ -14,9 +14,4 @@ public final class PayPal extends Zahlart {
     public String getKonto() {
         return konto;
     }
-
-    @Override
-    public <R> R accept(ZahlartVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
 }
