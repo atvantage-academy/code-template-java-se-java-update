@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
-class PluginAusführerTest {
+class PluginAusfuehrerTest {
 
     @Test
     void führtEinPluginAus() {
         final AtomicBoolean gelaufen = new AtomicBoolean();
-        PluginAusführer.führeAus(new Runnable() {
+        PluginAusfuehrer.führeAus(new Runnable() {
             @Override
             public void run() {
                 gelaufen.set(true);
@@ -23,8 +23,8 @@ class PluginAusführerTest {
 
     @Test
     void verhindertDassEinPluginDieAnwendungBeendet() {
-        PluginAusführer.PluginBeendetException e = assertThrows(PluginAusführer.PluginBeendetException.class,
-                () -> PluginAusführer.führeAus(() -> System.exit(3)));
+        PluginAusfuehrer.PluginBeendetException e = assertThrows(PluginAusfuehrer.PluginBeendetException.class,
+                () -> PluginAusfuehrer.führeAus(() -> System.exit(3)));
         assertEquals(3, e.getStatus());
     }
 }
