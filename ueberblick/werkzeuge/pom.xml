@@ -18,7 +18,7 @@
     Die Abhängigkeiten sorgen nur dafür, dass Maven die Bruch-Module vorher übersetzt.
     Dazu kommen eigene Klassen mit typischem Java-8-Code: Nummernkreis nutzt
     sun.misc.Unsafe, eine interne API des JDK (jdeps mit „jdk-internals“); Lagerbestand,
-    Druckauftrag und Exportwächter nutzen abgekündigte APIs (jdeprscan). Aufruf (oder Run Configuration gleichen Namens):
+    Druckauftrag und Exportwaechter nutzen abgekündigte APIs (jdeprscan). Aufruf (oder Run Configuration gleichen Namens):
 
       mvn clean compile -pl ueberblick/werkzeuge -am -Pjdeps
       mvn clean compile -pl ueberblick/werkzeuge -am -Pjdeprscan
