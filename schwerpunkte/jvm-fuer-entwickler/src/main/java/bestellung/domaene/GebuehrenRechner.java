@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Berechnet die Gebühr, die eine Zahlart für einen Betrag kostet.
  */
-public class GebührenRechner implements ZahlartVisitor<BigDecimal> {
+public class GebuehrenRechner implements ZahlartVisitor<BigDecimal> {
 
     private static final BigDecimal RECHNUNGSGEBÜHR = new BigDecimal("1.50");
     private static final BigDecimal KREDITKARTE_PROZENT = new BigDecimal("0.019");
@@ -15,12 +15,12 @@ public class GebührenRechner implements ZahlartVisitor<BigDecimal> {
 
     private final BigDecimal betrag;
 
-    public GebührenRechner(BigDecimal betrag) {
+    public GebuehrenRechner(BigDecimal betrag) {
         this.betrag = betrag;
     }
 
     public static BigDecimal gebühr(Zahlart zahlart, BigDecimal betrag) {
-        return zahlart.accept(new GebührenRechner(betrag));
+        return zahlart.accept(new GebuehrenRechner(betrag));
     }
 
     @Override
