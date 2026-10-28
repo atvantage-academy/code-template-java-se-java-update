@@ -15,6 +15,26 @@
 
   <properties>
     <!-- Hier hochstellen. -->
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
   </properties>
+
+  <!--
+    JAXB IST SEIT JAVA 11 NICHT MEHR IM JDK (JEP 320). Es kommt jetzt als Abhängigkeit –
+    als Jakarta XML Binding mit dem Namensraum jakarta.xml.bind. Der Namensraum ist keine
+    Änderung des JDK, sondern der Wechsel der Spezifikation zur Eclipse Foundation.
+    Auf einem Jakarta-EE-Server bringt der Server beides mit: dort scope „provided“.
+  -->
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>4.0.9</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
 </project>
