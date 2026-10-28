@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * das zu groß angelegte Puffer findet. Eine öffentliche Methode dafür gibt es nicht,
  * also liest der Monitor das interne Feld {@code elementData} per Reflection.
  */
-public final class Kapazitätsmonitor {
+public final class Kapazitaetsmonitor {
 
     private static final Field ELEMENT_DATA;
 
@@ -21,7 +21,7 @@ public final class Kapazitätsmonitor {
         }
     }
 
-    private Kapazitätsmonitor() {
+    private Kapazitaetsmonitor() {
     }
 
     public static int kapazität(ArrayList<?> liste) {
