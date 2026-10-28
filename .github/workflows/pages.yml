@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - main
-  # Die Musterlösungen (offene PRs aus loesung/…) erscheinen auf der Seite. pull_request_target läuft
+  # Die Musterlösungen (offene PRs aus loesung/…) erscheinen auf der Seite – auch eine, die
+  # auf einer anderen aufbaut (PR gegen loesung/…). pull_request_target läuft
   # im Kontext von main – nur von dort darf in die Umgebung github-pages
   # deployt werden. Der Inhalt der PRs wird dabei nur gelesen, nie ausgeführt.
   pull_request_target:
     branches:
       - main
+      - 'loesung/**'
     types: [opened, synchronize, reopened, edited, closed]
   workflow_dispatch:
 
@@ -62,9 +64,8 @@ jobs:
         run: |
           gh pr list \
             --state all \
-            --base "${{ github.event.repository.default_branch }}" \
             --limit 1000 \
-            --json number,title,state,mergeCommit,mergedAt,headRefOid,headRefName,isCrossRepository \
+            --json number,title,state,mergeCommit,mergedAt,headRefOid,headRefName,baseRefName,isCrossRepository \
             > "$RUNNER_TEMP/prs.json"
 
       - name: Validate generator
