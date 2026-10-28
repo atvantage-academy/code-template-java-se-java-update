@@ -15,11 +15,11 @@ import java.util.concurrent.TimeUnit;
  * ohne Ersatz im JDK. Die Abgrenzung übernimmt jetzt das Betriebssystem: Jedes Plugin
  * läuft in einer eigenen JVM. Ein {@code System.exit} beendet nur diese.
  */
-public final class PluginAusführer {
+public final class PluginAusfuehrer {
 
     private static final long ZEITLIMIT_SEKUNDEN = 30;
 
-    private PluginAusführer() {
+    private PluginAusfuehrer() {
     }
 
     /**

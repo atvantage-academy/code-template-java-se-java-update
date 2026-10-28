@@ -13,11 +13,11 @@ class ZahlartTest {
 
     @Test
     void gebührenJeZahlart() {
-        assertEquals(new BigDecimal("1.50"), GebührenRechner.gebühr(new Rechnung(14), HUNDERT));
-        assertEquals(new BigDecimal("0.00"), GebührenRechner.gebühr(new Lastschrift("DE02"), HUNDERT));
+        assertEquals(new BigDecimal("1.50"), GebuehrenRechner.gebühr(new Rechnung(14), HUNDERT));
+        assertEquals(new BigDecimal("0.00"), GebuehrenRechner.gebühr(new Lastschrift("DE02"), HUNDERT));
         assertEquals(new BigDecimal("1.90"),
-                GebührenRechner.gebühr(new Kreditkarte("4111111111111111", YearMonth.of(2028, 3)), HUNDERT));
-        assertEquals(new BigDecimal("2.84"), GebührenRechner.gebühr(new PayPal("a@example.com"), HUNDERT));
+                GebuehrenRechner.gebühr(new Kreditkarte("4111111111111111", YearMonth.of(2028, 3)), HUNDERT));
+        assertEquals(new BigDecimal("2.84"), GebuehrenRechner.gebühr(new PayPal("a@example.com"), HUNDERT));
     }
 
     @Test

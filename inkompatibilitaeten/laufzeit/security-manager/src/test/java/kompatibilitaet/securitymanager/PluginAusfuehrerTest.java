@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class PluginAusführerTest {
+class PluginAusfuehrerTest {
 
     public static class GrüßendesPlugin implements Runnable {
 
@@ -25,13 +25,13 @@ class PluginAusführerTest {
 
     @Test
     void führtEinPluginAus() throws Exception {
-        assertEquals("Hallo aus dem Plugin", PluginAusführer.führeAus(GrüßendesPlugin.class));
+        assertEquals("Hallo aus dem Plugin", PluginAusfuehrer.führeAus(GrüßendesPlugin.class));
     }
 
     @Test
     void verhindertDassEinPluginDieAnwendungBeendet() {
-        PluginAusführer.PluginBeendetException e = assertThrows(PluginAusführer.PluginBeendetException.class,
-                () -> PluginAusführer.führeAus(BeendendesPlugin.class));
+        PluginAusfuehrer.PluginBeendetException e = assertThrows(PluginAusfuehrer.PluginBeendetException.class,
+                () -> PluginAusfuehrer.führeAus(BeendendesPlugin.class));
         assertEquals(3, e.getStatus());
     }
 }

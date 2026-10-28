@@ -1,7 +1,7 @@
 package kompatibilitaet.securitymanager;
 
 /**
- * Startet ein Plugin in einer eigenen JVM – aufgerufen vom {@link PluginAusführer}.
+ * Startet ein Plugin in einer eigenen JVM – aufgerufen vom {@link PluginAusfuehrer}.
  */
 public final class PluginStarter {
 
