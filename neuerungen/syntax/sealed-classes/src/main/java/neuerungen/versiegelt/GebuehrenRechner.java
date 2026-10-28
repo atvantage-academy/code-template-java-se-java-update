@@ -1,12 +1,14 @@
-package bestellung.domaene;
+package neuerungen.versiegelt;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Berechnet die Gebühr, die eine Zahlart für einen Betrag kostet.
+ * Berechnet die Gebühr, die eine Zahlart für einen Betrag kostet – als Visitor, damit
+ * der Compiler meldet, wenn eine Zahlart fehlt.
  */
-public class GebührenRechner implements ZahlartVisitor<BigDecimal> {
+// Umbauen: Über eine versiegelte Zahlart genügt ein switch ohne default – der Visitor entfällt.
+public final class GebuehrenRechner implements ZahlartVisitor<BigDecimal> {
 
     private static final BigDecimal RECHNUNGSGEBÜHR = new BigDecimal("1.50");
     private static final BigDecimal KREDITKARTE_PROZENT = new BigDecimal("0.019");
@@ -15,12 +17,12 @@ public class GebührenRechner implements ZahlartVisitor<BigDecimal> {
 
     private final BigDecimal betrag;
 
-    public GebührenRechner(BigDecimal betrag) {
+    private GebuehrenRechner(BigDecimal betrag) {
         this.betrag = betrag;
     }
 
     public static BigDecimal gebühr(Zahlart zahlart, BigDecimal betrag) {
-        return zahlart.accept(new GebührenRechner(betrag));
+        return zahlart.accept(new GebuehrenRechner(betrag));
     }
 
     @Override

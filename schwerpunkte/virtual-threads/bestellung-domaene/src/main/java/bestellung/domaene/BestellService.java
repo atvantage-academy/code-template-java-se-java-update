@@ -59,7 +59,7 @@ public class BestellService {
      */
     public BigDecimal gesamtbetrag(Bestellung bestellung) {
         BigDecimal warenwert = bestellung.getWarenwert();
-        return warenwert.add(GebührenRechner.gebühr(bestellung.getZahlart(), warenwert));
+        return warenwert.add(GebuehrenRechner.gebühr(bestellung.getZahlart(), warenwert));
     }
 
     public Bestellung stornieren(String id) {
