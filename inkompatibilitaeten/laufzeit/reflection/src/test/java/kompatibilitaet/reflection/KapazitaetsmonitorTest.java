@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-class KapazitätsmonitorTest {
+class KapazitaetsmonitorTest {
 
     @Test
     void misstDieReservierteKapazität() {
@@ -14,7 +14,7 @@ class KapazitätsmonitorTest {
         liste.add("eins");
         liste.add("zwei");
 
-        assertEquals(100, Kapazitätsmonitor.kapazität(liste));
-        assertEquals(0.02, Kapazitätsmonitor.auslastung(liste), 0.0001);
+        assertEquals(100, Kapazitaetsmonitor.kapazität(liste));
+        assertEquals(0.02, Kapazitaetsmonitor.auslastung(liste), 0.0001);
     }
 }
